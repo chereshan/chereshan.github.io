@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+   <meta charset="UTF-8">
+   <title>The Robot Test</title>
+   <link rel="home" title="Home" href="/">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" type="text/css" href="/main.css">
+   
+
+<style type="text/css">
+
+td > *
+   {vertical-align: middle;}
+tr > td:first-child + td
+   {text-align: center;}
+
+#your-total, #your-outcome
+   {font-weight: bold;}
+
+img
+  {float: left;
+   margin-right: 10px;}
+img, .outcome p
+  {margin-top: 10px;}
+img, .outcome p
+  {margin-bottom: 1em;}
+.outcome
+  {clear: both;}
+
+</style>
+
+<script type="text/javascript">"use strict"; window.onload = function() {
+
+var ary = function(x) {return Array.prototype.slice.call(x);};
+
+var outcomes = [];
+for (var outcome of ary(document.getElementsByClassName('outcome')))
+   {var results = outcome.textContent.match(/(\d+).+?: (.+)/);
+    outcomes.push([parseInt(results[1]), results[2]]);}
+
+var update_score = function()
+   {var span = document.getElementById('your-total');
+    var total = 0;
+    for (var checkbox of ary(document.getElementsByTagName('input')))
+       {if (checkbox.checked)
+           {total += checkbox.point_value;}}
+    span.textContent = total;
+    span = document.getElementById('your-outcome');
+    for (outcome of outcomes)
+       {if (total >= outcome[0])
+           {span.textContent = outcome[1];
+            break;}}};
+update_score();
+
+for (var td of ary(document.getElementsByTagName('td')))
+   {if (!/^\s*\d+\s*$/.test(td.textContent))
+       {var checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.point_value = parseInt(td.nextSibling.textContent);
+        checkbox.addEventListener('change', update_score);
+        var text = document.createElement('span');
+        text.textContent = td.textContent;
+        td.textContent = '';
+        td.appendChild(checkbox);
+        td.appendChild(text);}}
+
+} </script> 
+   
+</head>
+
+<body>
+
+
+
+<div class='crumb_bar'><a href='/'>Kodi Arfer</a> / <a href='/games'>Amusements</a></div>
+
+<div class="top_header"><h1>The Robot Test</h1></div>
+
+
+<p>This page is a translation of <a href="robot-test/images/original.jpg">the "Robot Test" (V4.0, Darker and Edgier)</a> to HTML and JavaScript. The image describing the test seems to have first <a href="http://4archive.org/board/r9k/thread/25988831">appeared on /r9k/</a> in January 2016. Its author is anonymous. I've tried to reproduce the contents of the test faithfully. As I hope goes without saying, it isn't representative of my own views on autism, gender, sexuality, etc., and it isn't any good as a personality test. But it's pretty funny.</p>
+
+<p>As of 18 October 2016, I'm a 91-point "Slightly Strange" person, which seems fair, if a bit of an understatement.</p>
+
+<p>See also <a href="/w/pquiz-pquiz">a stupid personality test I wrote myself</a>.</p>
+
+<h2>The test</h2>
+
+<ul>
+<li>Questions must be answered honestly
+<li>No half-points, these are "yes" or "no" questions
+<li>Judge each other and share feels
+</ul>
+
+<table id="items" style="border: thin solid black; margin-left: auto; margin-right: auto;">
+<tr><th style="background-color: lightgray">Characteristic
+<th style="background-color: lightgray">Points
+<tr><th colspan="2">Физическое
+<tr><td>Имеешь привлекательное лицо<td>5
+<tr><td>Здоровый вес для твоего возраста и пола<td>4
+<tr><td>Спортивный/сильный/мускулистый<td>2
+<tr><td>Выше 180 см (M) / Красивая фигура (Ж)<td>3
+<tr><td>Регулярно физически упражняешься<td>1
+<tr><td>Достаточно здоровая диета<td>1
+<tr><td>Не имеешь значительных физических недостатков<td>3
+<tr><td>Не куришь или вейпишь<td>1
+<tr><td>Не имеешь пристрастия к марихуане<td>1
+<tr><td>Не имеешь алкогольной зависимости<td>1
+<tr><td>Не имеешь зависимости от других наркотиков<td>2
+<tr><td>Поддерживаешь гигиену рта<td>1
+<tr><td>Регулярно принимаешь душ<td>2
+<tr><td>Нормально одеваешься<td>2
+<tr><td>Регулярно посещаешь врача (при необходимости)<td>1
+<tr><td>Имеешь вполне приличную прическу<td>2
+<tr><td>Доволен собственным телом<td>1
+<tr><th colspan="2">Ментальное
+<tr><td>Не имеешь значительного аутизма/Аспергера и т.д.<td>3
+<tr><td>Не имеешь значительной депрессии<td>3
+<tr><td>Принимаешь таблетки или проходишь терапию, если они прописаны<td>1
+<tr><td>Чувствуешь себя счасливым/удовлетворительно бОльшую часть времени<td>3
+<tr><td>Любишь кого-то (включая семью)<td>2
+<tr><td>Считаешь себя хорошим человеком<td>1
+<tr><td>Не чувствуешь себя беспокойно среди друзей/семьи<td>3
+<tr><td>Не чувствуешь себя неловко среди незнакомцев<td>1
+<tr><td>Не чувствуешь себя беспокойно по поводу выхода на улицу<td>2
+<tr><td>Не чувствуешь, что за тобой следят в течение дня<td>1
+<tr><td>Чувствуешь себя мотивированным в течение дня<td>2
+<tr><td>Не бывает регулярных резких перепадов настроения<td>1
+<tr><td>Твоя совесть чиста<td>2
+<tr><td>Не находишь удовольствия в шок-контенте<td>1
+<tr><td>Достаточно легко засыпаешь по вечерам<td>1
+<tr><td>Достаточно легко встаешь по утрам<td>1
+<tr><td>Не привлекают лица младше 15<td>3
+<tr><th colspan="2">Социальное
+<tr><td>Был по крайней мере один романтический партнер<td>5
+<tr><td>Было более одного романтического партнера<td>3
+<tr><td>Не девственник<td>8
+<tr><td>Был секс более чем с одним партнером<td>4
+<tr><td>Целовался романтически<td>3
+<tr><td>Держался романтически за руку<td>1
+<tr><td>Имел романтические отношения за последние 6 месяцев<td>2
+<tr><td>Имеешь хорошие отношения с семьей<td>2
+<tr><td>Имеешь по крайней мере один друг в реальной жизни<td>2
+<tr><td>Имеешь несколько друзей в реальной жизни<td>4
+<tr><td>Социализируешься хотя бы раз в неделю<td>1
+<tr><td>Социализируешься хотя бы раз в день<td>3
+<tr><td>Регулярно выходишь из дома<td>1
+<tr><td>Получаешь удовольствие от общения время от времени<td>1
+<tr><td>Получаешь удовольствие от общения когда это возможно<td>4
+<tr><td>Проводишь менее 4 часов перед экранов в день<td>1
+<tr><td>Регулярно пользуешься соцсетями<td>2
+<tr><th colspan="2">Достижения
+<tr><td>Не живешь с родителями<td>3
+<tr><td>Имеешь авто<td>1
+<tr><td>Получаешь образование или работаешь<td>4
+<tr><td>Имеешь хобби или занимаешься спортом (не видеоигры и т.д.)<td>2
+<tr><td>У тебя есть продуктивный талант, вроде готовки<td>2
+<tr><td>Имеешь или снимаешь квартиру<td>1
+<tr><td>У тебя дома порядок<td>1
+<tr><td>Ты движешься вперед по жизни<td>2
+<tr><td>У тебя есть вещи, которыми ты гордишься<td>2
+<tr><td>Ты выиграл награду, которой нестыдно гордиться<td>1
+<tr><td>У тебя есть дети, которыми ты гордишься<td>1
+<tr><td>Ты путешествовал / был в отпуске за последний год<td>1
+<tr><td>Ты разумно управляешь своим бюджетом<td>1
+<tr><td>Живешь преимущественно независимую жизнь<td>2
+<tr><td>Есть питомец<td>1
+<tr><td>Получил или получаешь высшее образование<td>3
+<tr><td>Есть высшее образование<td>3
+<tr><th colspan="2">Бонус-раунд!
+<tr><td>Ты женщина<td>6
+<tr><td>Имеешь значительный доход<td>1
+<tr><td>Большое число знакомых<td>3
+<tr><td>Нет интереса к аниме<td>2
+<tr><td>Нет интереса к мобильным играм<td>1
+<tr><td>Если ты играешь в игры, то преимущественно на консоле<td>2
+<tr><td>Здоровое отношение к противоположному полу<td>3
+<tr><td>Нет приводов в полицию<td>1
+<tr><td>Тебе недавно писал реальный человек<td>2
+<tr><td>????Enjoy using YikYak and/or Snapchat<td>1
+<tr><td>Имеешь вполне нормальный смартфон<td>3
+<tr><td>Нет фетишей: ноги, БДСМ, двойное проникновение и т.д.<td>1
+<tr><td>Не смотришь хентай, эччи и т.п.<td>3
+</table>
+
+<div style="display: table; margin-left: auto; margin-right: auto; margin-top: 1em;">
+Your total: <span id="your-total">(Requires JavaScript to compute)</span><br>
+Your class: <span id="your-outcome">(Ditto)</span></div>
+
+<h2>The possible outcomes</h2>
+
+<div class="outcome">
+<div>130+: Successful</div>
+<img src="robot-test/images/successful.png" alt="Some businessmen">
+<p>Your looks, intelligence, and charisma have helped you overcome struggles, leading you to a wealthy and comfortable point in your life. All thanks to a mix of luck and talent, you are a shining example of a human.</p>
+</div>
+
+<div class="outcome">
+<div>116 – 129: Chad / Stacey</div>
+<img src="robot-test/images/chad.png" alt="A bare-chested, tough-looking man in a gym">
+<p>You are a step above the average normie. Blessed with some fine genetics, you don't need to work very hard to get what you want—finding a bf/gf is like child's play to you, and even the normies get a little jealous.</p>
+</div>
+
+<div class="outcome">
+<div>95 – 115: Normalfag</div>
+<img src="robot-test/images/normal.png" alt="Some men smiling for a group portrait">
+<p>You don't necessarily have the best genes or looks, but you find socialising easy and probably have had plenty of relationships before. You have a very typical personality and set of interests, and need to get off my board.</p>
+</div>
+
+<div class="outcome">
+<div>82 – 94: Slightly Strange</div>
+<img src="robot-test/images/slightly-strange.png" alt="A man whose head is mostly obscured by a black hood">
+<p>You have several qualities of a robot but participate largely in the normalfag world. You probably even hang out with normals, although they can sense you are not one of them so you struggle socially.</p>
+</div>
+
+<div class="outcome">
+<div>59 – 81: Cyborg</div>
+<img src="robot-test/images/cyborg.png" alt="A man looking thoughtfully at a noose">
+<p>You are a sorry amalgam of robot and regular human. You linger in two worlds at once, an outsider to both the normies and the robots. As a result, you may be on your own with your feels.</p>
+</div>
+
+<div class="outcome">
+<div>35 – 58: Robot</div>
+<img src="robot-test/images/robot.png" alt='A "neckbeard" wearing a trilby and half-gloves'>
+<p>Your flesh has turned to metal from feels. A little magic flows through your enlightened veins, and you are a likely suspect for a mass shooting in the beta uprising—however, this would require going outside.</p>
+</div>
+
+<div class="outcome">
+<div>25 – 34: Wizard Apprentice</div>
+<img src="robot-test/images/wizard-apprentice.png" alt="A man wearing a trilby and holding a body pillow with an anime girl on it">
+<p>Although hope for you is bleak, it is not impossible. You have a great potential for magical powers but time may yet heal your soul into that of a mortal.</p>
+</div>
+
+<div class="outcome">
+<div>9 – 24: Wizard</div>
+<img src="robot-test/images/wizard.png" alt="A pimply-faced man with a skeptical expression">
+<p>You have given up conventional human desires and needs in favor of magical powers, only attainable by some of the most concentrated, powerful autism physically possible.</p>
+</div>
+
+<div class="outcome">
+<div>0 – 8: Grand Wizard</div>
+<img src="robot-test/images/grand-wizard.png" alt="A fantastic humanoid with a pointy head and two large horns">
+<p>No longer human, you are barely attached to the living world by a thin thread. The curse of autism eternal and spaghetti all-powerful has consumed your life and soul as you straddle the line between this world and the next.</p>
+</div>
