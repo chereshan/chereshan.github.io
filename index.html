@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
     <title>Чернышев Егор</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <!-- Google Tag Manager -->
+    <script>
+        $(function(){
+            $("#header").load("header.html");
+        });
+    </script>
+            <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -43,9 +49,10 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-
 </head>
 <body>
+    <div id="header"></div>
+
     <h1>Чернышев Егор</h1>
     <img width="200" height="260" src="images/my_facemug.png">
     <h2>Обо мне</h2>
@@ -70,11 +77,7 @@
 
     <h2>Оглавление</h2>
     <p>Тут будет автооглавление для учебников и прочего. Затем я его перенесу в header (или другое подходящее место).</p>
-    <ul>
-        <li><a href="learning_networks/networks_textbook.html">Учебник по сетям</a></li>
-        <li><a href="learning_html/html_textbook.html">Учебник по HTML</a></li>
-        <li><a href="learning_js/JS_textbook.html">Учебник по JS</a></li>
-    </ul>
+
 
 
 
