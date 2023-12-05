@@ -1,0 +1,16 @@
+#header header {
+    border-color: black;
+    background: aliceblue;
+    border-width:1px;
+    border-style:solid
+}
+#header ul {
+    margin: 0; /* Обнуляем значение отступов */
+    padding: 0px; /* Значение полей */
+}
+#header ul li {
+    display: inline; /* Отображать как строчный элемент */
+    margin-right: 5px; /* Отступ слева */
+    border: 1px solid #000; /* Рамка вокруг текста */
+    padding: 3px; /* Поля вокруг текста */
+}
