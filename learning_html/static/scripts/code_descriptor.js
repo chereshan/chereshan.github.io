@@ -19,7 +19,6 @@ function add_label_span(x){
 
 
 for (let i=0;i<collection.length; i++){
-    console.log(collection[i].innerHTML);
     var pstring=collection[i].innerHTML.split('\n');
 
 
@@ -82,11 +81,29 @@ for (let i=0;i<collection.length; i++){
         pstring[5]=pstring[5].join(', ')
     }
     pstring[5]=add_label_span('Содержит: ')+pstring[5]
-
+    //возможность дать коммент, а не описание атрибута
     for (let j=6;j<pstring.length;j++){
         pstring[j]=pstring[j].trim();
-        pstring[j]=pstring[j].split(' ');
-        pstring[j]=add_label_span('Атрибут '+add_code_span(pstring[j][0])+': ')+pstring[j].slice(1).join(' ');
+        if (pstring[j].startsWith('//')){
+            pstring[j]=add_label_span('Замечание: ')+pstring[j].slice(2);
+        }
+        else {
+            pstring[j]=pstring[j].split(' ');
+            if (pstring[j][0].includes(',')){
+                pstring[j][0]=pstring[j][0].split(',')
+                for (let k=0; k<pstring[j][0].length;k++){
+                    pstring[j][0][k]=add_code_span(pstring[j][0][k]);
+                }
+                pstring[j][0]=pstring[j][0].join(', ');
+                pstring[j]=add_label_span('Атрибуты '+pstring[j][0]+': ')+pstring[j].slice(1).join(' ');
+
+            }
+            else{
+                pstring[j]=add_label_span('Атрибут '+add_code_span(pstring[j][0])+': ')+pstring[j].slice(1).join(' ');
+            }
+        }
+
+
     }
 
     for (let j=1;j<pstring.length;j++){
