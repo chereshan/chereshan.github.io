@@ -9,6 +9,12 @@
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>$(function(){$("#header").load("../common/header.html");});</script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <title>Учебник по CSS</title>
 </head>
 <body>
 <div id="header"></div>
@@ -18,9 +24,62 @@
     <li><a href="https://stepik.org/course/38218/syllabus">Stepik: Веб-разработка для начинающих: HTML и CSS</a></li>
     <li><a href="https://stepik.org/course/135466/syllabus">Stepik: HTML CSS JS</a></li>
     <li><a href="https://stepik.org/course/120494/syllabus">Stepik: Инди-курс по HTML и CSS</a></li>
+    <li>Дэвид Макфарланд. Новая большая книга CSS</li>
+    <li>Кристофер Шмитт. CSS рецепты программирования</li>
 </ol>
-<h2>Каскадность</h2>
-<p><b>Каскадность</b> - </p>
+<h1>Глава 1. Введение</h1>
+<h2>Размещение CSS-стилей</h2>
+<p>Код CSS можно разместить в отдельном документе, а затем подключить его к HTML-документу с помощью link-тега в head-разделе документа.</p>
+<pre><code class="language-html">&lt;link rel = "stylesheet"
+    type = "text/css"
+    href = "style.css"&gt;</code></pre>
+
+<p>Стили CSS также можно разместить внутри документа напрямую внутри содержимого style-тега в head документа.</p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;style type = "text/css"&gt;
+            body p
+            {   background: white;
+                color: black;
+                font-family: Arial, sans-serif;
+                font-size: 16px;
+                line-height: 1.58;
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;}
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;p&gt;CSS-стили внутри элемента style и применяются к этому абзацу в HTML-коде веб-страницы&lt;/p&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre>
+<p>CSS-стиль также можно задать для конкретного элемента документа.</p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;&lt;/head&gt;
+    &lt;body style = "font-family: Arial;"&gt;
+    &lt;p&gt;При выводе в браузере этот абзац наследует форматирование шрифтом Arial из строкового стиля в родительском элементе.&lt;/p&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre>
+<h2>Селекторы</h2>
+<p>Селектор определяет каким элементам веб-страницы назначается стилевое оформление.</p>
+<ul>
+    <b>Виды селекторов:</b>
+    <li><span class="code">ul</span> - селектор типа.</li>
+    <li><span class="code">.class</span> - селектор класса.</li>
+    <li><span class="code">ul.class1.class2</span> - селектор всех элементов класса1 и класса2 (одновременно).</li>
+    <li><span class="code">ul</span> - селектор типа.</li>
+    <li><span class="code">#id</span> - селектор id</li>
+    <li><span class="code">ul li</span> - селектор потомка</li>
+    <li><span class="code">*</span> - универсальный селектор</li>
+</ul>
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>

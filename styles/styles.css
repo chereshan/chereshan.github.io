@@ -1,16 +1,71 @@
+/*Оформление шапки*/
 #header header {
     border-color: black;
     background: aliceblue;
     border-width:1px;
     border-style:solid
 }
+
 #header ul {
     margin: 0; /* Обнуляем значение отступов */
     padding: 0px; /* Значение полей */
 }
+
 #header ul li {
     display: inline; /* Отображать как строчный элемент */
     margin-right: 5px; /* Отступ слева */
     border: 1px solid #000; /* Рамка вокруг текста */
     padding: 3px; /* Поля вокруг текста */
+}
+
+/*
+Блок справки по html-тегам
+*/
+.html_tag_description .label{
+    font-family: Georgia;
+    font-weight: bold;
+}
+.html_tag_description ul{
+    list-style-type: none;
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    margin-left: 20px;
+}
+
+div.html_tag_description{
+    border-color: black;
+    border-width:1px;
+    border-style:solid;
+    border-radius: 4px;
+}
+
+span.code, span span.html_tag_description_name{
+    font-family: "Courier New";
+    background: #f6e9b6;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.html_tag_description_name{
+    font-family: Georgia;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: Georgia;
+}
+
+.html_example {
+    border-color: black;
+    background: aliceblue;
+    border-width:1px;
+    border-style:solid;
+    font-family: "JetBrains Mono Thin";
+}
+
+.html_example span.html_tag {
+    font-weight: bold;
+    font-size: x-large;
+    font-family: "JetBrains Mono";
 }
