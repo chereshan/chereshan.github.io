@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>$(function(){$("#header").load("../common/header.html");});</script>
+
+
+  <title>Учебник по JS</title>
+</head>
+<body>
+<div id="header"></div>
+<h1>JS в веб-браузерах</h1>
+<h2>Клиентский JS</h2>
+<p>Объект window - это окно веб-браузер. Он определяет свойства, например, location, которые ссылаются на объект Location, определяющий URL текущего окна, и позволяет сценарию загружать в окно содержимое других адресов </p>
+<pre><code class="language-javascript">// Установить значение свойства для переход на новую веб-страницу
+window.location = "http://www.oreilly.com/";</code></pre>
+<p>Также объект Window опрежедяет методы, такие как alert()? который отображает диалог с сообщением, и setTimeout(), которые регистрирует функцию для вызова через указанный промежуток времени.</p>
+<pre><code class="language-javascript">// ждать 2 секунды и вывести диалог с приветствием
+setTimeout(function() { alert("Привет, Мир!"); }, 2000);</code></pre>
+<p>Объект Window глобальный, т.е. он находится на вершине областей видимости и его свойства и методы - глобальные переменные и функции. </p>
+<p>Важным свойством объекта Window является свойство document, которое ссылается на объект Document, которые представляет содержимое объекта, отоброжаемого в окне. Его методом является, например, getElementById(), которые возвращает единственный элемент документа (пару открывающихся и закрывающихся тегов) по его id и все, что содержится между ними</p>
+<pre><code class="language-javascript">// Отыскать элемент с атрибутом id="timestamp"
+var timestamp = document.getElementById("timestamp");</code></pre>
+<p>Здесь возвращается объект Element, который также имеет ряж важный свойств и методов, позволяющих скрипту извлекать содержимое элемента и устанавливать значение его атрибутов. </p>
+<pre><code class="language-javascript">// Если элемент пуст, вставить в него текущую дату и время
+if (timestamp.firstChild == null)
+ timestamp.appendChild(document.createTextNode(new Date().toString()));</code></pre>
+<p>Каждый эобъект Element имеет свойства style и classNamr, позволяющие определять стили CSS или изменять имена классов CSS, применяемых к элементу. Это позоляет изменять визуальное представление элемента документа:</p>
+<pre><code class="language-javascript">// Явно изменить представление элемента заголовка
+timestamp.style.backgroundColor = "yellow";
+// Или просто изменить класс и позволить определять особенности
+// визуального представления с помощью каскадных таблиц стилей:
+timestamp.className = "highlight";</code></pre>
+<p>Другим важным множеством свойств объектов Window, Document и Element являются свойства, ссылающиеся на обработчики событий. Они позволяют сценариям определять функции, которые должны вызываться асинхронно при возникновении определенных событий. Обработчики событий позволяют программам на языке JavaScript изменять поведение окон, документов и элементов, составляющих документы. Свойства, ссылающиеся на обработчики событий, имеют имена, начинающиеся с «on», и могут использоваться, как показано ниже:</p>
+<pre><code class="language-javascript">// Обновить содержимое элемента timestamp, когда пользователь щелкнет на нем
+timestamp.onclick = function() { this.innerHTML = new Date().toString(); }</code></pre>
+<p>Одним из наиболее важных обработчиков событий является обработчик onload объекта Window. Это событие возникает, когда содержимое документа, отображаемое в окне, будет загружено полностью и станет доступно для выполнения манипуляций. Программный код на языке JavaScript обычно заключается в обработчик события onload. Пример 13.1 использует обработчик onload и демонстрирует дополнительные приемы получения ссылок на элементы документа, изменения классов CSS и определения обработчиков других событий вклиентском JavaScript. В этом примере программный код на языке JavaScript заключен в HTML-тег script. Подробнее этот тег описывается в разделе 13.2. Обратите внимание, что в этом примере имеется определение функции, заключенное в определение другой функции. Вложенные функции часто используются в клиентских сценариях на языке JavaScript, особенно в виде обработчиков событий.</p>
+<pre><code class="language-html">
+<!DOCTYPE html>
+&lt;html>
+&lt;head>
+&lt;style>
+/* Стили CSS для этой страницы */
+.reveal * { display: none; } /* Элементы с атрибутом class="reveal" невидимы */
+.reveal *.handle { display: block;} /* Кроме элементов с class="handle" */
+&lt;/style>
+&lt;script>
+// Ничего не делать, пока документ не будет загружен полностью
+window.onload = function() {
+  // Отыскать все контейнерные элементы с классом "reveal"
+  var elements = document.getElementsByClassName("reveal");
+  for(var i = 0; i &lt; elements.length; i++) { // Для каждого такого элемента...
+    var elt = elements[i];
+    // Отыскать элементы с классом "handle" в контейнере
+    var title = elt.getElementsByClassName("handle")[0];
+    // После щелчка на этом элементе сделать видимым остальное содержимое
+    addRevealHandler(title, elt);
+  }
+  function addRevealHandler(title, elt) {
+    title.onclick = function() {
+      if (elt.className == "reveal") elt.className = "revealed";
+      else if (elt.className == "revealed") elt.className = "reveal";
+    }
+  }
+};
+&lt;/script>
+&lt;/head>
+&lt;body>
+&lt;div class="reveal">
+&lt;h1 class="handle">Щелкните здесь, чтобы увидеть скрытый текст&lt;/h1>
+&lt;p>Этот абзац невидим. Он появляется после щелчка на заголовке.&lt;/p>
+&lt;/div>
+&lt;/body>
+&lt;/html>
+</code></pre>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+
+</body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+</html>
