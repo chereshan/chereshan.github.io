@@ -29,9 +29,11 @@
 <p>Язык JavaScript был создан в компании Netscape Communications на заре истории веб-сети. Формально “JavaScript” — это торговая марка, зарегистрированная компанией Sun Microsystems (теперь Oracle), которая применяется для описания реализации языка от Netscape (в настоящее время Mozilla).</p>
 <p>На протяжении большей части 2010-х годов все веб-браузеры поддерживали версию 5 стандарта ECMAScript. В этой книге ES5 рассматривается как отправная точка совместимости и предшествующие ей версии языка больше не обсуждаются. Стандарт ES6 был выпущен в 2015 году и обзавелся важными новыми средствами, включая синтаксис классов и модулей, которые превратили JavaScript из языка написания сценариев в серьезный универсальный язык, подходящий для крупномасштабной разработки ПО.</p>
 <p>Чтобы быть полезным, каждый язык обязан иметь платформу, или стандартную библиотеку, для выполнения таких действий, как базовый ввод и вывод. В основном языке JavaScript определен минимальный API-интерфейс для чисел, текста, массивов, множеств, отображений и т.д., но какая-либо функциональность ввода или вывода отсутствует. За ввод и вывод (а также за более сложные средства наподобие работы с сетью, хранилищем и графикой) несет ответственность “среда размещения”, внутрь котор'ой встраивается JavaScript. Изнчально такой исполняющей средой был веб-браузер.</p>
+
 <h2>Hello, world!</h2>
 <pre><code class="language-javascript">console.log('Hello, world!');
 </code></pre>
+
 <h2>Базовые типы</h2>
 <pre><code class="language-javascript">// Все, что следует за двумя символами косой черты, является комментарием.
 // Читайте комментарии внимательно: в них объясняется код JavaScript.
@@ -39,15 +41,57 @@
 // Переменные объявляются с помощью ключевого слова let:
 let x; // Объявление переменной по имени х.
 // Присваивать значения переменным можно посредством знака =.
-x=0;
-// JavaScript поддерживает несколько типов значений
-x=1;
-x=0.01;
-x='Hello, world!';
-x=true;
-x=null;
-x=undefined;
-//--------------------------------------
+x=12;              // int
+x=0.01;            // float
+x='Hello, world!'; // string
+x=true;            // bool
+x=/javascript/gi   // regex
+x=null;            // Пустой объект
+x=undefined;       //
+</code></pre>
+
+<h3>Строки</h3>
+<pre><code class="language-javascript">let msg = "Hello," + "world"; //Образует строку "Hello, world"
+let name = 'egor';
+let greeting = "Welcome to my blog," + " " + name;
+
+let s = "Hello, world";
+
+s.substring(1,4)      //ell
+s.slice(1,4)          //ell
+s.slice(-3)           //rld
+s.split(", ")         //[ 'Hello', 'world' ]
+s.indexOf("1")        //-1
+s.indexOf("1", 3)     //-1
+s.indexOf("zz")       //-1
+s.lastIndexOf("l")    //10
+s.startsWith("Hell")  //true
+s.endsWith("!")       //false
+s.includes("or")      //true
+s.replace ("Но", "уа")//Hello, world
+s.toLowerCase()       //hello, world
+s.toUpperCase()       //HELLO, WORLD
+" test ".trim()       //test
+s.concat("!")         //Hello, world!
+" о ".repeat(5)       // о  о  о  о  о
+s[0]                  //H
+s[s.length-1]         //d
+
+// Шаблонные литералы
+let greetings = `Hello ${ name }.`; //Hello egor.
+</code> </pre>
+<h3>Дата и время</h3>
+<pre><code class="language-javascript">
+let timestamp = Date.now(); //Текущее время как отметка времени (число) .
+let now = new Date(); // Текущее время как объект Date.
+let ms = now.getTime(); // Преобразовать в миллисекундную
+let iso = now.toISOString(); // Преобразовать в строку со стандартным
+console.log(timestamp,now, ms, iso)
+//1702701966891 2023-12-16T04:46:06.891Z 1702701966891 2023-12-16T04:46:06.891Z
+</code></pre>
+
+<h3>Объекты</h3>
+<pre><code class="language-javascript">
 // Самым важным типом данных JavaScript является объект.
 // Объект - это коллекция пар имя/значение
 let book = { // объект заключается в фигурные скобки
@@ -60,7 +104,10 @@ console.log('До добавления нового свойства:',book.topi
 book.author='Flanagan'; //создаем новое свойство присваиванием
 book.contents={};
 console.log('После добавления нового свойства:',book.author);
-//--------------------------------------------------------
+</code></pre>
+
+<h3>Массивы</h3>
+<pre><code class="language-javascript">
 // js также поддерживает массивы
 let primes =[2,3,5,7];
 // -1 для массивов js не работает
@@ -79,6 +126,109 @@ let data = {
     trial2:[[2,3],[4,5]]
 };
 </code></pre>
+
+<pre><code class="language-javascript">
+    // Функции - это параметризованные блоки кода JavaScript,
+// которые мы можем вызывать.
+function plus1(x){
+    return x+1;
+}
+console.log(plus1(99))
+
+let square = function(x) {
+    return x*x;
+}
+
+console.log(square(plus1(10)))
+// аналог лямбда-функций - стрелочные функции
+const plus1 = x => x+1;
+const square = x => x*x;
+</code></pre>
+<h3>Методы</h3>
+<pre><code class="language-javascript">
+    // когда мы применяем функции к объектам, то получаем методы
+let a= [];
+a.push(1,2,3)
+a.reverse();
+console.log(a);
+// объекту можно присвоить метод
+let points=[
+    {x:0,y:0},
+    {x:1,y:1}
+];
+// ключевое слово ссылается на используемый объект
+points.dist=function(){
+    let p1 = this[0];
+    let p2=this[1];
+    let a = p2.x-p1.x;
+    let b =p2.y-p1.y1;
+    return Math.sqrt(a*a+b*b);
+}
+console.log(points.dist());
+//классические функции
+// модуль
+function abs(x){
+    if (x>=0){
+        return x;
+    }
+    else{return -x;}
+}
+//сумма массива
+function sum(array){
+    let sum=0;
+    for (let x of array){sum+=x;}
+    return sum;
+}
+//факториал
+function factorial(n){
+    let product=1;
+    while (n>1){
+        product*=n;
+        n--;
+    }
+    return product;
+}
+
+console.log(
+    abs(-100),
+    sum([1,2,3,4,5]),
+    factorial(8)
+);
+</code></pre>
+<h4>Численные методы</h4>
+<pre><code class="language-javascript">
+console.log(
+    Math.pow(2,53),
+    Math.round( .6),
+    Math.ceil(.6),
+    Math.floor(.6),
+    Math.abs(-5),
+    Math.max(1,2,3 ),
+    Math.min(1,2,3),
+    Math.random(),
+    Math.PI,
+    Math.E,
+    Math.sqrt(3),
+    Math.pow(3, 1/3),
+    Math.sin (0),
+    Math.log(10),
+    Math.exp(3),
+    Math.cbrt(27),
+    Math.hypot(3,4),
+    Math.log10(100),
+    Math.sign(-10),
+    Math.trunc(3.9),
+    Math.sinh(10)
+);
+let x=10;
+Number.NEGATIVE_INFINITY;
+Number.parseInt();
+Number.parseFloat();
+Number.isNaN(x);
+Number.isFinite(x);
+Number.isInteger(x);
+</code></pre>
+
 <h2>Лексическая структура языка</h2>
     <h3>Основное</h3>
     <p>JS обладает следующими особенностями:</p>
@@ -140,7 +290,7 @@ let data = {
     <h3>Глобальные объекты</h3>
     <p>Глобальный объект — это обыкновенный объект JavaScript, который служит крайне важной цели: его свойствами являются глобально определенные идентификаторы, доступные программе JavaScript. Когда интерпретатор JavaScript запускается (или всякий раз, когда веб-браузер загружает новую страницу), он создает новый глобальный объект и предоставляет ему начальный набор свойств, которые определяют:</p>
     <ul>
-        <li> глобальные константы вроде undefined , Infinfity и NaN;</li>
+        <li> глобальные константы вроде undefined , Infinity и NaN;</li>
         <li>глобальные функции наподобие isNaN (), parseInt () и eval() </li>
         <li>функции конструкторов вроде Date(), RegExp (), String(), Object() и Array() </li>
         <li>глобальные объекты наподобие Math и JSON</li>
@@ -180,14 +330,13 @@ let data = {
 
 Були
 <pre><code class="language-javascript">console.log(
-    false==undefined,
-    false==null,
-    false==0,
-    false==-0,
-    false==NaN,
-    false==""
+    false==undefined, //false
+    false==null,      //false
+    false==0,         //true
+    false==-0,        //true
+    false==NaN,       //false
+    false==""         //true
 )
-//false false true true false true
 </code></pre>
 
 Арифметика
@@ -222,7 +371,7 @@ let x=2, y=3;
 console.log(
     x===y,
     x!==y,
-    x<y,
+    x&lt;y,
     x<=y,
     'two'==='three',
     'two'>'three',
