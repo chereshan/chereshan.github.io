@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="../scripts/header.js"></script>
+
+  <title>Глава 3. JavaScript в веб-браузере</title>
+</head>
+<body>
+<div id="header"></div>
+<h1>Глава 3. JavaScript в веб-браузере</h1>
+<h2>Клиентский JS</h2>
+<p>Объект window - это окно веб-браузер. Он определяет свойства, например, location, которые ссылаются на объект Location, определяющий URL текущего окна, и позволяет сценарию загружать в окно содержимое других адресов </p>
+<pre><code class="language-javascript">// Установить значение свойства для переход на новую веб-страницу
+window.location = "http://www.oreilly.com/";</code></pre>
+<p>Также объект Window определяет методы, такие как alert()? который отображает диалог с сообщением, и setTimeout(), которые регистрирует функцию для вызова через указанный промежуток времени.</p>
+<pre><code class="language-javascript">// ждать 2 секунды и вывести диалог с приветствием
+setTimeout(function() { alert("Привет, Мир!"); }, 2000);</code></pre>
+<p>Объект Window глобальный, т.е. он находится на вершине областей видимости и его свойства и методы - глобальные переменные и функции. </p>
+<p>Важным свойством объекта Window является свойство document, которое ссылается на объект Document, которые представляет содержимое объекта, отображаемого в окне. Его методом является, например, getElementById(), которые возвращает единственный элемент документа (пару открывающихся и закрывающихся тегов) по его id и все, что содержится между ними</p>
+<pre><code class="language-javascript">// Отыскать элемент с атрибутом id="timestamp"
+var timestamp = document.getElementById("timestamp");</code></pre>
+<p>Здесь возвращается объект Element, который также имеет ряж важный свойств и методов, позволяющих скрипту извлекать содержимое элемента и устанавливать значение его атрибутов. </p>
+<pre><code class="language-javascript">// Если элемент пуст, вставить в него текущую дату и время
+if (timestamp.firstChild == null)
+ timestamp.appendChild(document.createTextNode(new Date().toString()));</code></pre>
+<p>Каждый объект Element имеет свойства style и classNamr, позволяющие определять стили CSS или изменять имена классов CSS, применяемых к элементу. Это позволяет изменять визуальное представление элемента документа:</p>
+<pre><code class="language-javascript">// Явно изменить представление элемента заголовка
+timestamp.style.backgroundColor = "yellow";
+// Или просто изменить класс и позволить определять особенности
+// визуального представления с помощью каскадных таблиц стилей:
+timestamp.className = "highlight";</code></pre>
+<p>Другим важным множеством свойств объектов Window, Document и Element являются свойства, ссылающиеся на обработчики событий. Они позволяют сценариям определять функции, которые должны вызываться асинхронно при возникновении определенных событий. Обработчики событий позволяют программам на языке JavaScript изменять поведение окон, документов и элементов, составляющих документы. Свойства, ссылающиеся на обработчики событий, имеют имена, начинающиеся с «on», и могут использоваться, как показано ниже:</p>
+<pre><code class="language-javascript">// Обновить содержимое элемента timestamp, когда пользователь щелкнет на нем
+timestamp.onclick = function() { this.innerHTML = new Date().toString(); }</code></pre>
+<p>Одним из наиболее важных обработчиков событий является обработчик onload объекта Window. Это событие возникает, когда содержимое документа, отображаемое в окне, будет загружено полностью и станет доступно для выполнения манипуляций. Программный код на языке JavaScript обычно заключается в обработчик события onload. Пример 13.1 использует обработчик onload и демонстрирует дополнительные приемы получения ссылок на элементы документа, изменения классов CSS и определения обработчиков других событий в клиентском JavaScript. В этом примере программный код на языке JavaScript заключен в HTML-тег script. Подробнее этот тег описывается в разделе 13.2. Обратите внимание, что в этом примере имеется определение функции, заключенное в определение другой функции. Вложенные функции часто используются в клиентских сценариях на языке JavaScript, особенно в виде обработчиков событий.</p>
+<pre><code class="language-html">//открывающийся элемент
+&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+&lt;style>
+/* Стили CSS для этой страницы */
+.reveal * { display: none; } /* Элементы с атрибутом class="reveal" невидимы */
+.reveal *.handle { display: block;} /* Кроме элементов с class="handle" */
+&lt;/style>
+&lt;script>
+// Ничего не делать, пока документ не будет загружен полностью
+window.onload = function() {
+  // Отыскать все контейнерные элементы с классом "reveal"
+  var elements = document.getElementsByClassName("reveal");
+  for(var i = 0; i &lt; elements.length; i++) { // Для каждого такого элемента...
+    var elt = elements[i];
+    // Отыскать элементы с классом "handle" в контейнере
+    var title = elt.getElementsByClassName("handle")[0];
+    // После щелчка на этом элементе сделать видимым остальное содержимое
+    addRevealHandler(title, elt);
+  }
+  function addRevealHandler(title, elt) {
+    title.onclick = function() {
+      if (elt.className == "reveal") elt.className = "revealed";
+      else if (elt.className == "revealed") elt.className = "reveal";
+    }
+  }
+};
+&lt;/script>
+&lt;/head>
+&lt;body>
+&lt;div class="reveal">
+&lt;h1 class="handle">Щелкните здесь, чтобы увидеть скрытый текст&lt;/h1>
+&lt;p>Этот абзац невидим. Он появляется после щелчка на заголовке.&lt;/p>
+&lt;/div>
+&lt;/body>
+&lt;/html></code></pre>
+
+<style>
+  /* Стили CSS для этой страницы */
+  .reveal * { display: none; } /* Элементы с атрибутом class="reveal" невидимы */
+  .reveal *.handle { display: block;} /* Кроме элементов с class="handle" */
+</style>
+
+<script>
+  // Ничего не делать, пока документ не будет загружен полностью
+  window.onload = function() {
+    // Отыскать все контейнерные элементы с классом "reveal"
+    var elements = document.getElementsByClassName("reveal");
+    for(var i = 0; i < elements.length; i++) { // Для каждого такого элемента...
+      var elt = elements[i];
+      // Отыскать элементы с классом "handle" в контейнере
+      var title = elt.getElementsByClassName("handle")[0];
+      // После щелчка на этом элементе сделать видимым остальное содержимое
+      addRevealHandler(title, elt);
+    }
+    function addRevealHandler(title, elt) {
+      title.onclick = function() {
+        if (elt.className == "reveal") elt.className = "revealed";
+        else if (elt.className == "revealed") elt.className = "reveal";
+      }
+    }
+  };
+</script>
+
+<div class="reveal">
+  <button class="handle">Щелкните здесь, чтобы увидеть скрытый текст</button>
+  <p>Этот абзац невидим. Он появляется после щелчка на заголовке. </p>
+</div>
+
+<h2>Скрипты JS в веб-документах</h2>
+<p>Клиентский JS-код может встраиваться в HTML-документы 4 способами:</p>
+<ol>
+  <li>встроенные сценарии между парой тегов script;</li>
+  <li>из внешнего файла, заданного атрибутом src тега script;</li>
+  <li>в обработчик события, заданный в качестве значения HTML-атрибута, такого как onclick или onmouseover</li>
+  <li>как тело URL-адреса, использующего специальный спецификатор псевдопротокола JavaScript (<i>сейчас редко используется</i>)</li>
+</ol>
+<p>Сейчас на уровне этикета <i>Ненавязчивого JS</i> (unobtrusive JS) принято разделять содержимое (разметка HTML) и поведение (код на JS). И потому при прочих равных предпочтительнее второй вариант (встраивание скрипта из внешнего файла с помощью атрибута src тега script).</p>
+<h3>Элемент &lt;script></h3>
+<p>Начнем с примера простого встраиваемого в HTML-документ кода - часов.</p>
+<pre><code class="language-javascript">&lt;script> // Определение функции для отображения текущего времени
+function displayTime() {
+ var elt = document.getElementById("clock"); // Найти элемент с id="clock"
+ var now = new Date(); // Получить текущее время
+ elt.innerHTML = now.toLocaleTimeString(); // Отобразить его
+ setTimeout(displayTime, 1000); // Вызвать снова через 1 сек.
+}
+window.onload = displayTime; // Начать отображение времени после загрузки документа.
+&lt;/script>
+&lt;/head>
+&lt;body> &lt;!-- Тело - отображаемая часть документа -->
+&lt;h1>Цифровые часы&lt;/h1> &lt;!-- Вывести заголовок -->
+  &lt;span id="clock" style="
+    font: bold 24pt sans;
+    background: #ddf;
+    padding: 10px;
+    border: solid black 2px;
+    border-radius: 10px;">
+  &lt;/span>
+&lt;/body>
+</code></pre>
+<script>
+  // Определение функции для отображения текущего времени
+  function displayTime() {
+    var elt = document.getElementById("clock"); // Найти элемент с id="clock"
+    var now = new Date(); // Получить текущее время
+    elt.innerHTML = now.toLocaleTimeString(); // Отобразить его
+    setTimeout(displayTime, 1000); // Вызвать снова через 1 сек.
+  }
+  window.addEventListener("load",displayTime, false); // Начать отображение времени после загрузки документа.
+</script>
+<span id="clock" style="font: bold 24pt sans;background: #ddf; padding: 10px;border: solid black 2px;border-radius: 10px;"></span> <!-- Время выводится здесь -->
+<h3>Сценарии во внешних файлах</h3>
+<p>Программы на языке JavaScript могут манипулировать содержимым документа
+  через объект Document и содержащиеся в нем объекты Element. Они могут изменять визуальное представление содержимого, управляя стилями и классами CSS, и определять поведение элементов документа, регистрируя соответствующие обработчики событий. Комбинация управляемого содержимого, представления и поведения называется динамическим HTML (Dynamic HTML, или DHTML).</p>
+<p>Сценарии на JavaScript можно отнести к подручным средствам, которые:</p>
+<ul>
+  <li>Создают анимационные и другие визуальные эффекты, ненавязчиво руководя действиями пользователя и помогая ему передвигаться по странице.</li>
+  <li>Сортируют столбцы таблиц, упрощая пользователю поиск требуемой информации.</li>
+  <li>Скрывают определенное содержимое и отображают детали по мере «погружения» пользователя в содержимое.</li>
+</ul>
+
+<h2>Обработчики событий</h2>
+<p><b>Обработчик событий</b> – это функция JavaScript, которая регистрируется в броузере и вызывается броузером, когда возникает событие определенного типа. Таким событием может быть щелчок мышью или нажатие клавиши (или какое-то движение двумя пальцами на экране смартфона). Обработчик события может также вызываться броузером по окончании загрузки документа, при изменении размеров окна броузера или при вводе данных в элемент HTML-формы.</p>
+<pre><code class="language-javascript">// Выводит сообщение в специальной области для отладочных сообщений внутри документа.
+// Если документ не содержит такой области, она создается.
+function debug(msg) {
+ // Отыскать область для отладочных сообщений в документе, поиск по HTML-атрибуту id
+ var log = document.getElementById("debuglog");
+ // Если элемент с атрибутом id="debuglog" отсутствует, создать его.
+ if (!log) {
+ log = document.createElement("div"); // Создать элемент &lt;div>
+ log.id = "debuglog"; // Установить атрибут id
+ log.innerHTML = "&lt;h1>Debug Log&lt;/h1>"; // Начальное содержимое
+ document.body.appendChild(log); // Добавить в конец документа
+ }
+ // Теперь обернуть сообщение в теги &lt;pre> и добавить в элемент log
+ var pre = document.createElement("pre"); // Создать тег &lt;pre>
+ var text = document.createTextNode(msg); // Обернуть msg в текстовый узел
+ pre.appendChild(text); // Добавить текст в тег &lt;pre>
+ log.appendChild(pre); // Добавить &lt;pre> в элемент log
+}
+</code></pre>
+
+<pre><code class="language-javascript">function hide(e, reflow) { // Скрывает элемент e, изменяя его стиль
+ if (reflow) { // Если 2-й аргумент true,
+ e.style.display = "none" // скрыть элемент и использовать
+ } // занимаемое им место
+ else { // Иначе
+ e.style.visibility = "hidden"; // сделать e невидимым, но оставить
+ } // занимаемое им место пустым
+}
+function highlight(e) { // Выделяет e, устанавливая класс CSS
+ // Просто добавляет или переопределяет HTML-атрибут class.
+ // Предполагается, что таблица стилей CSS уже содержит определение класса "hilite"
+ if (!e.className) e.className = "hilite";
+ else e.className += " hilite";
+}
+</code></pre>
+
+<p>Простейший способ объявления обработчиков событий заключается в использовании HTML-атрибутов, имена которых начинаются с приставки «on». Обработчик «onclick» особенно удобен при создании простых тестовых программ. Предположим, что вы сохранили функции debug() и hide(), представленные выше, в файлах с именами debug.js и hide.js. В этом случае можно было бы написать простой тестовый HTML-файл, использующий элементы &lt;button> с атрибутами onclick, определяющими обработчики событий:</p>
+<pre><code>&lt;button onclick="hide(this,true); debug('hide button 1');">Hide1&lt;/button>
+&lt;button onclick="hide(this); debug('hide button 2');">Hide2&lt;/button>
+</code></pre>
+<script src="debuglog.js"></script>
+<script src="hide.js"></script>
+Hello
+<button onclick="hide(this,true); debug('hide button 1');">Hide1</button>
+<button onclick="hide(this); debug('hide button 2');">Hide2</button>
+World
+
+<h2>Калькулятор платежей по ссуде</h2>
+<p>В следующем примере используются следующие приемы JS:</p>
+<ul>
+  <li>Поиск элементов в документе</li>
+  <li>Получение ввода пользователя с помощью элементов форм.</li>
+  <li>Изменение содержимого элементов документа</li>
+  <li>Сохранение данных в броузере.</li>
+  <li>Управление HTTP-запросами.</li>
+  <li>Создание графики с помощью элемента &lt;canvas>.</li>
+</ul>
+<style> /* Таблица стилей CSS: определяет внешний вид вывода программы */
+.output { font-weight: bold; } /* Жирный шрифт для вычисленных значений */
+#payment { text-decoration: underline; } /* Для элементов с id="payment" */
+#graph { border: solid black 1px; } /* Простая рамка для диаграммы */
+.calculator th, td { vertical-align: top; } /* Выравнивание в ячейках таблицы */
+</style>
+<!--
+ Это HTML-таблица с элементами <input>, позволяющими вводить данные, и с элементами <span>, в которых отображаются результаты вычислений. Эти элементы имеют идентификаторы,
+ такие как "interest" и "years". Данные идентификаторы используются в JavaScript-коде, который следует за определением таблицы. Обратите внимание, что для некоторых элементов ввода определены обработчики событий "onchange" и "onclick". В них заданы строки JavaScript-кода, выполняемого при вводе данных или щелчке на кнопке.
+-->
+<table class="calculator">
+  <tr><th>Enter Loan Data:</th>
+    <td></td>
+    <th>Loan Balance, Cumulative Equity, and Interest Payments</th></tr>
+  <tr><td>Amount of the loan ($):</td>
+    <td><input id="amount" onchange="calculate();"></td>
+    <td rowspan=8>
+      <canvas id="graph" width="400" height="250"></canvas></td></tr>
+  <tr><td>Annual interest (%):</td>
+    <td><input id="apr" onchange="calculate();"></td></tr>
+  <tr><td>Repayment period (years):</td>
+    <td><input id="years" onchange="calculate();"></td>
+  <tr><td>Zipcode (to find lenders):</td>
+    <td><input id="zipcode" onchange="calculate();"></td>
+  <tr><th>Approximate Payments:</th>
+    <td><button onclick="calculate();">Calculate</button></td></tr>
+  <tr><td>Monthly payment:</td>
+    <td>$<span class="output" id="payment"></span></td></tr>
+  <tr><td>Total payment:</td>
+    <td>$<span class="output" id="total"></span></td></tr>
+  <tr><td>Total interest:</td>
+    <td>$<span class="output" id="totalinterest"></span></td></tr>
+  <tr><th>Sponsors:</th><td colspan=2>
+    Apply for your loan with one of these fine lenders:
+    <div id="lenders"></div></td></tr>
+</table>
+<script src="loan_calculator.js"></script>
+
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+
+<pre><code class="language-javascript"></code></pre>
+<pre><code class="language-javascript"></code></pre>
+<pre><code class="language-javascript"></code></pre>
+<pre><code class="language-javascript"></code></pre>
+<pre><code class="language-javascript"></code></pre>
+<pre><code class="language-javascript"></code></pre>
+<pre><code class="language-javascript"></code></pre>
+
+
+</body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js">
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+</html>
