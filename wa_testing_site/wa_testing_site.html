@@ -46,6 +46,25 @@
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <div id="header"></div>
+<h1>Лаборатория веб-аналитики</h1>
+<p>Тут я планирую исследовать то, как счетчики собирают инфу с сайтов. </p>
+
+Имя: <input aria-label="Имя" type="text" name="name" required><br>
+Email: <input aria-label="Email" type="email" name="email" required><br>
+Сообщение: <textarea aria-label="Сообщение" name="message" required></textarea>
+
+<script>
+    function sendEmail() {
+        var name = document.getElementsByName("name")[0].value;
+        var email = document.getElementsByName("email")[0].value;
+        var message = document.getElementsByName("message")[0].value;
+        var subject = "Новое сообщение от " + name;
+        var body = "Имя: " + name;
+        body += "Email: " + email;
+        body += "Сообщение:" + message;
+        window.open("mailto:chereshan.github.io@yandex.ru?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body));
+    }
+</script>
 
 </body>
 </html>
