@@ -40,20 +40,31 @@
 
         gtag('config', 'G-N43FPXHDPN');
     </script>
-
   <title>Глава 3. JavaScript в веб-браузере</title>
+
 </head>
 <body>
+
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
 <div id="header"></div>
 <h1>Глава 3. JavaScript в веб-браузере</h1>
 <h2>Клиентский JS</h2>
+
+
 <p>Объект window - это окно веб-браузер. Он определяет свойства, например, location, которые ссылаются на объект Location, определяющий URL текущего окна, и позволяет сценарию загружать в окно содержимое других адресов </p>
 <pre><code class="language-javascript">// Установить значение свойства для переход на новую веб-страницу
 window.location = "http://www.oreilly.com/";</code></pre>
+<p>На <a href="#js_access">рис. ниже</a> показано, что доступно JS в браузерном окуржении.</p>
+<p>    Как мы видим, имеется корневой объект window, который выступает в 2 ролях:</p>
+<ol>
+    <li>Во-первых, это глобальный объект для JavaScript-кода.</li>
+    <li>Во-вторых, он также представляет собой окно браузера и располагает методами для управления им.</li>
+</ol>
+<img id="js_access" src="images/js_acces.png">
 <p>Также объект Window определяет методы, такие как alert()? который отображает диалог с сообщением, и setTimeout(), которые регистрирует функцию для вызова через указанный промежуток времени.</p>
 <pre><code class="language-javascript">// ждать 2 секунды и вывести диалог с приветствием
 setTimeout(function() { alert("Привет, Мир!"); }, 2000);</code></pre>
@@ -295,22 +306,79 @@ World
 </table>
 <script src="loan_calculator.js"></script>
 
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<p>Document Object Model, сокращённо DOM – объектная модель документа, которая представляет все содержимое страницы в виде объектов, которые можно менять. Объект document – основная «входная точка». С его помощью мы можем что-то создавать или менять на странице.</p>
+<pre><code class="language-javascript"></code></pre>// заменим цвет фона на красный,
+document.body.style.background = "red";
+// а через секунду вернём как было
+setTimeout(() => document.body.style.background = "", 1000);<pre><code class="language-javascript"></code></pre>
+<p>  Спецификация DOM описывает структуру документа и предоставляет объекты для манипуляций со страницей. Существуют и другие, отличные от браузеров, инструменты, использующие DOM. Например, серверные скрипты, которые загружают и обрабатывают HTML-страницы, также могут использовать DOM. При этом они могут поддерживать спецификацию не полностью.</p>
+<p>Правила стилей CSS структурированы иначе чем HTML. Для них есть отдельная спецификация CSSOM, которая объясняет, как стили должны представляться в виде объектов, как их читать и писать. CSSOM используется вместе с DOM при изменении стилей документа. В реальности CSSOM требуется редко, обычно правила CSS статичны. Мы редко добавляем/удаляем стили из JavaScript, но и это возможно.</p>
+<p>Объектная модель браузера (Browser Object Model, BOM) – это дополнительные объекты, предоставляемые браузером (окружением), чтобы работать со всем, кроме документа.</p>
+<ol>
+    <li>Объект navigator даёт информацию о самом браузере и операционной системе. Среди множества его свойств самыми известными являются: navigator.userAgent – информация о текущем браузере, и navigator.platform – информация о платформе (может помочь в понимании того, в какой ОС открыт браузер – Windows/Linux/Mac и так далее).</li>
+    <li>Объект location позволяет получить текущий URL и перенаправить браузер по новому адресу.</li>
+</ol>
+<pre><code class="language-javascript">alert(location.href); // показывает текущий URL
+if (confirm("Перейти на Wikipedia?")) {
+  location.href = "https://wikipedia.org"; // перенаправляет браузер на другой URL
+}</code></pre>
+<h2>Браузерные события</h2>
+<p> Событие – это сигнал от браузера о том, что что-то произошло. Все DOM-узлы подают такие сигналы (хотя события бывают и не только в DOM).</p>
+<p>Вот список самых часто используемых DOM-событий:</p>
+<p>События мыши:</p>
+<ul>
+    <li>click – происходит, когда кликнули на элемент левой кнопкой мыши (на устройствах с сенсорными экранами оно происходит при касании).</li>
+    <li>contextmenu – происходит, когда кликнули на элемент правой кнопкой мыши.</li>
+    <li>contextmenu – происходит, когда кликнули на элемент правой кнопкой мыши.</li>
+    <li>mousedown / mouseup – когда нажали / отжали кнопку мыши на элементе.</li>
+    <li>mousemove – при движении мыши.</li>
+</ul>
+<p>События на элементах управления:</p>
+<ul>
+    <li>submit – пользователь отправил форму &lt;form>.</li>
+    <li>focus – пользователь фокусируется на элементе, например нажимает на &lt;&lt;&lt;input>.</li>
+</ul>
+<p>Клавиатурные события:</p>
+<ul>
+    <li>keydown и keyup – когда пользователь нажимает / отпускает клавишу..</li>
+</ul>
+<p>События документа:</p>
+<ul>
+    <li>DOMContentLoaded – когда HTML загружен и обработан, DOM документа полностью построен и доступен.</li>
+</ul>
+<p>CSS events:</p>
+<ul>
+    <li>transitionend – когда CSS-анимация завершена.</li>
+</ul>
+
+<h3>Обработчики событий</h3>
+<p>Обработчик может быть назначен прямо в разметке, в атрибуте, который называется on&lt;событие>.</p>
+<p>Например, чтобы назначить обработчик события click на элементе input, можно использовать атрибут onclick, вот так:</p>
+<pre><code class="language-html">&lt;input value="Нажми меня" onclick="alert('Клик!')" type="button"></code></pre>
+<p>При клике мышкой на кнопке выполнится код, указанный в атрибуте onclick. Обратите внимание, для содержимого атрибута onclick используются одинарные кавычки, так как сам атрибут находится в двойных. Если мы забудем об этом и поставим двойные кавычки внутри атрибута, вот так: onclick="alert("Click!")", код не будет работать.</p>
+<p>    Атрибут HTML-тега – не самое удобное место для написания большого количества кода, поэтому лучше создать отдельную JavaScript-функцию и вызвать её там.</p>
+<p>Следующий пример по клику запускает функцию countRabbits():</p>
+<pre><code class="language-javascript">&lt;script>
+  function countRabbits() {
+      for(let i=1; i&lt;=3; i++) {
+          alert("Кролик номер " + i);
+      }
+  }
+&lt;/script>
+
+&lt;input type="button" onclick="countRabbits()" value="Считать кроликов!"></code></pre>
+<p>   Можно назначать обработчик, используя свойство DOM-элемента on&lt;событие>. К примеру, elem.onclick:</p>
+<pre><code class="language-javascript">&lt;input id="elem" type="button" value="Нажми меня!">
+&lt;script>
+  elem.onclick = function() {
+      alert('Спасибо');
+  };
+&lt;/script></code></pre>
+<p>Использование свойства DOM-объекта. Если обработчик задан через атрибут, то браузер читает HTML-разметку, создаёт новую функцию из содержимого атрибута и записывает в свойство. Этот способ, по сути, аналогичен предыдущему. Обработчик всегда хранится в свойстве DOM-объекта, а атрибут – лишь один из способов его инициализации.</p>
 
 <pre><code class="language-javascript"></code></pre>
 <pre><code class="language-javascript"></code></pre>
 <pre><code class="language-javascript"></code></pre>
-<pre><code class="language-javascript"></code></pre>
-<pre><code class="language-javascript"></code></pre>
-<pre><code class="language-javascript"></code></pre>
-<pre><code class="language-javascript"></code></pre>
-
 
 </body>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
