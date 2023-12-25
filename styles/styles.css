@@ -41,9 +41,12 @@ div.html_tag_description{
 
 span.code, span span.html_tag_description_name{
     font-family: "Courier New";
-    background: #f6e9b6;
+    font-weight: 700;
+    background: #f3f3f3;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 15px;
+    color: #800;
+
 }
 
 .html_tag_description_name{
