@@ -72,4 +72,24 @@ h1, h2, h3, h4, h5 {
     font-size: x-large;
     font-family: "JetBrains Mono";
 }
-
+/*Автомасштаб изображений */
+img:not(#site_logo) {
+    max-width:100%;
+    height:auto;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}
+/*Для всех таблиц*/
+table, th, td {
+    border: 1px solid;
+}
+/*Первый столбец любой таблицы*/
+td:nth-child(1) {
+    text-align: center;
+}
+/*Первая строка таблицы*/
+tr:first-child td {
+    text-align: center;
+    font-weight: bold;
+}
