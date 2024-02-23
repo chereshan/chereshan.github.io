@@ -41,7 +41,7 @@
         gtag('config', 'G-N43FPXHDPN');
     </script>
 
-    <title>Глава 2. Ветвление и циклы</title>
+    <title>Глава 2. Ветвление, циклы и ошибки</title>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -49,11 +49,16 @@
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <div id="header"></div>
-<h1>Глава 2. Ветвление и циклы</h1>
+<h1>Глава 2. Ветвление, циклы и ошибки</h1>
 <h2>Условный оператор</h2>
+<h3>Конструкция <span class="code">else if</span></h3>
+<p>В JS нет <i>elseif</i> PHP или <i>elif</i> Python, однако допускается использование по тому же назначению конструкции <span class="code">else if</span>:</p>
+<pre><code class="language-js">if (a > 100){document.write("a больше 100")}
+else if(a &lt; 100){document.write("a меньше 100")}
+else{document.write("a равно 100")}</code></pre>
 <h3>Тренарный оператор</h3>
 <pre><code class="language-javascript">let result = условие ? значение1 : значение2;</code></pre>
-<h3>Конструкция switch</h3>
+<h3>Инструкция switch</h3>
 <p>Данная конструкция позволяет выбирать один из многих вариантов кода на выполнение в зависимости от условия (обычно это значение одиночной переменной). Синтаксис команды выглядит следующим образом:</p>
 <pre><code class="language-javascript">switch(n) {
   case 1:
@@ -69,49 +74,182 @@
   default:
     // блок кода если не подошло ни одно условие;
 }</code></pre>
+
+
+
 <h2>Циклы</h2>
+
+
+
 <h3>Цикл while</h3>
-<pre><code class="language-javascript">while (condition) {
-  // код
-  // также называемый "телом цикла"
-}</code></pre>
-<p>while (i) – более краткий вариант while (i != 0):</p>
+<pre><code class="language-html">&lt;script>
+    counter=0
+    while (counter &lt; 5)
+    {
+        document.write("Счетчик: " + counter + "&lt;br>")
+        ++counter
+    }
+&lt;/script></code></pre>
+<script>
+    counter=0
+    while (counter < 5)
+    {
+        document.write("Счетчик: " + counter + "<br>")
+        ++counter
+    }
+</script>
+
+<p><span class="code">while(i)</span> – более краткий вариант <span class="code">while(i!= 0)</span>:</p>
 <pre><code class="language-javascript">let i = 3;
-while (i) { // когда i будет равно 0, условие станет ложным, и цикл остановится
-  alert( i );
+while(i) { // когда i будет равно 0, условие станет ложным, и цикл остановится
+  alert(i);
   i--;
 }</code></pre>
-    <p>Проверку условия можно разместить под телом цикла, используя специальный синтаксис do..while:</p>
-<pre><code class="language-javascript">do {
-  // тело цикла
-} while (condition);</code></pre>
-<p> Цикл сначала выполнит тело, а затем проверит условие condition, и пока его значение равно true, он будет выполняться снова и снова.</p>
-<pre><code class="language-javascript">let i = 0;
-do {
-  alert( i );
-  i++;
-} while (i < 3);</code></pre>
-<p>Такая форма синтаксиса оправдана, если вы хотите, чтобы тело цикла выполнилось хотя бы один раз, даже если условие окажется ложным. На практике чаще используется форма с предусловием: while(…) {…}.</p>
+    <p>Проверку условия можно разместить под телом цикла, используя специальный синтаксис <span class="code">do..while</span>. Это делается когда необходимо, чтобы цикл выполнил как минимум 1 итерацию. Цикл сначала выполнит тело, а затем проверит условие <span class="code">condition</span>, и пока его значение равно <span class="code">true</span>, он будет выполняться снова и снова.</p>
+<pre><code class="language-html">&lt;script>
+    count = 1
+    do
+    {
+        document.write(count + " умножить на 7 равно " + count * 7 + "&lt;br>")
+    } while (++count &lt;= 4)
+&lt;/script></code></pre>
+<script>
+    count = 1
+    do
+    {
+        document.write(count + " умножить на 7 равно " + count * 7 + "<br>")
+    } while (++count <= 4)
+</script>
+<!--todo: написать css или шаблон для вывода примеров-->
+
+
+
 <h3>Цикл for</h3>
-<pre><code class="language-javascript">for (начало; условие; шаг) {
+<pre><code class="language-javascript">for (инициализация; условие; модификация) {
   // ... тело цикла ...
 }</code></pre>
-<pre><code class="language-javascript">// for (let i = 0; i < 3; i++) alert(i)
-
-// Выполнить начало
-let i = 0;
-// Если условие == true → Выполнить тело, Выполнить шаг
-if (i < 3) { alert(i); i++ }
-// Если условие == true → Выполнить тело, Выполнить шаг
-if (i < 3) { alert(i); i++ }
-// Если условие == true → Выполнить тело, Выполнить шаг
-if (i < 3) { alert(i); i++ }
-// ...конец, потому что теперь i == 3</code></pre>
+<p>С первой итерацией выполняется инициализация переменной, по которйо будет осуществляться итерация. Затем при каждом прохождении цикла будет проверяться условие (равно ли оно <span class="code">true</span>). В конце же каждой итерациии будет происходить модификация итерируемой переменной.</p>
+<pre><code class="language-html">&lt;script>
+    for (count = 1 ; count &lt;= 4 ; ++count)
+    {
+        document.write(count + " умножить на 7 равно " + count * 7 + "&lt;br>");
+    }
+&lt;/script></code></pre>
+<script>
+    for (count = 1 ; count <= 4 ; ++count)
+    {
+        document.write(count + " умножить на 7 равно " + count * 7 + "<br>");
+    }
+</script>
 <h3>Обход двумерного массива</h3>
 <pre><code>for (let i=0; i&lt;кол-во строк; i++) {
     for (let j=0; j&lt;кол-во столбцов; j++) {
         console.log(arr[i][j]);} }
 </code></pre>
+<p>Мы также можем задать инициализацию и модификацию через запятую для нескольких переменных, например, так:</p>
+<pre><code class="language-js">for (i = 1, j=10 ; i &lt; 10 ; i++, ––j)</code></pre>
+<h3>Интсрукции <span class="code">break</span> и <span class="code">continue</span></h3>
+<pre><code class="language-html">&lt;script>
+    haystack = new Array()
+    haystack[17] = "Иголка"
+    for (j = 0 ; j &lt; 20 ; ++j)
+    {
+        if (haystack[j] == "Иголка")
+        {
+            document.write("&lt;br>- найдена в элементе " + j)
+            break
+        }
+        else document.write(j + ", ")
+    }
+&lt;/script></code></pre>
+<script>
+    haystack = new Array()
+    haystack[17] = "Иголка"
+    for (j = 0 ; j < 20 ; ++j)
+    {
+        if (haystack[j] == "Иголка")
+        {
+            document.write("<br>- найдена в элементе " + j)
+            break
+        }
+        else document.write(j + ", ")
+    }
+</script>
+
+<pre><code class="language-html">&lt;script>
+    haystack = new Array()
+    haystack[4] = "Иголка"
+    haystack[11] = "Иголка"
+    haystack[17] = "Иголка"
+    for (j = 0 ; j &lt; 20 ; ++j) {
+        if (haystack[j] == "Иголка")
+        {
+            document.write("&lt;br>- найдена в элементе " + j + "&lt;br>")
+            continue
+        }
+        document.write(j + ", ")
+    }
+&lt;/script></code></pre>
+<script>
+    haystack = new Array()
+    haystack[4] = "Иголка"
+    haystack[11] = "Иголка"
+    haystack[17] = "Иголка"
+    for (j = 0 ; j < 20 ; ++j) {
+        if (haystack[j] == "Иголка")
+        {
+            document.write("<br>- найдена в элементе " + j + "<br>")
+            continue
+        }
+        document.write(j + ", ")
+    }
+</script>
+
+<h2>Ошибки</h2>
+<p>В JS перехват ошибок реализован с помощью события <span class="code">onerror</span> и ключевых слов <span class="code">try</span> и <span class="code">catch</span>.</p>
+<h3>Событие <span class="code">onerror</span></h3>
+<pre><code class="language-html">&lt;script>
+onerror = errorHandler
+document.writ("Добро пожаловать на этот сайт!") // Преднамеренная ошибка
+function errorHandler(message, url, line)
+{
+    out = "К сожалению, обнаружена ошибка.\n\n";
+    out += "Ошибка: " + message + "\n";
+    out += "URL: " + url + "\n";
+    out += "Строка: " + line + "\n\n";
+    out += "Нажмите кнопку OK для продолжения работы. \n\n ";
+    document.write(out);
+    return true;
+}
+&lt;/script></code></pre>
+<script>
+    onerror = errorHandler
+    document.writ("Добро пожаловать на этот сайт!") // Преднамеренная ошибка
+    function errorHandler(message, url, line)
+    {
+        out = "К сожалению, обнаружена ошибка.<br>";
+        out += "Ошибка: " + message + "<br>";
+        out += "URL: " + url + "<br>";
+        out += "Строка: " + line + "<br>";
+        out += "Нажмите кнопку OK для продолжения работы. <br>";
+        document.write(out);
+        return true;
+    }
+</script>
+<p>В первой строке скрипту предписывается использовать новую функцию <span class="code">errorHandler</span>, которая принимает 3 параметра: сообщение, URL-адрес и номер строки. Затем мы преднамеренно допускаем ошибку. </p>
+
+
+<h3>Ключевые слова <span class="code">try</span> и <span class="code">catch</span></h3>
+<pre><code class="language-html">&lt;script>
+    try
+    {
+        request = new XMLHTTPRequest()
+    }
+    catch(err)
+    {
+        // Использование другого метода для создания объекта XMLHTTPRequest
+    }
+&lt;/script></code></pre>
     <p></p>
     <p></p>
     <p></p>
@@ -129,15 +267,10 @@ if (i < 3) { alert(i); i++ }
     <p></p>
 
 
-<pre><code class="language-javascript">
 
 
-</code></pre>
-
-<pre><code class="language-javascript">
 
 
-</code></pre>
 </body>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>

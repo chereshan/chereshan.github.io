@@ -1,3 +1,6 @@
+p {
+    text-align: justify;
+}
 /*Оформление шапки*/
 #header header {
     border-color: black;
@@ -46,6 +49,7 @@ span.code, span span.html_tag_description_name{
     border-radius: 4px;
     font-size: 15px;
     color: #800;
+    font-family: monospace;
 
 }
 
