@@ -40,7 +40,7 @@
 
         gtag('config', 'G-N43FPXHDPN');
     </script>
-    <title>Глава 4. Объектно-ориентированное программирование в JS</title>
+    <title>Глава 4. Функции и ООП в JS</title>
 
 </head>
 
@@ -52,7 +52,237 @@
 <!-- End Google Tag Manager (noscript) -->
 <div id="header"></div>
 
-<h1></h1>
+<h1>Глава 4. Функции и ООП в JS</h1>
+<h2>Функции</h2>
+<p>Функции в JS являются объектами и, как результат, могут привсваиваться переменным и передаваться другими функциям.</p>
+<pre><code class="language-js">function printText() {                   //Определение функции
+document.write("Hello World!");        //Тело функции - вывод текста в документ
+};</code></pre>
+<p>У функции может не быть имени:</p>
+<pre><code class="language-js">var printText = function(a) {document.write(a);};</code></pre>
+
+<h3>Рекурсия</h3>
+<pre><code class="language-js">function my_function(n) {
+if (n==1) {return 1}
+return (my_function(n-1)).toString()+" "+n
+}
+my_function(9)
+//1 2 3 4 5 6 7 8 9</code></pre>
+
+<h3>Замыкания</h3>
+<p><b>Замыкание</b> это такая функция, которая была объявлена внутри другой функции. Такая функция (замыкание) имеет доступ к данным внутри себя и внутри родительской функции.
+</p>
+<p>Рассмотрим практический пример:</p>
+<pre><code class="language-js">function greetPirate(pirateName) {            // Объявление родительской функции
+var greeting = "Hello ";
+function checkCaptain() {                   // Объявление замыкания
+if (pirateName != "Jack Sparrow")
+return greeting + pirateName;
+else
+return greeting + "CAPTAIN " + pirateName + "!";
+}
+return checkCaptain();
+}</code></pre>
+<p>Свойства замыканий:</p>
+<ol>
+    <li>Замыкание может обращаться к переменным своей внешней функции даже после ее окончания выполнения.</li>
+    <p>На практике это означает что даже после того как выполнение внешней функции завершено, внутренняя все еще может быть вызвана и имеет доступ к переменным внешней функции:</p>
+    <pre><code class="language-js">function pirate() {
+    var pirateName = "noname";
+    return {
+        getName: function() {
+            return pirateName;
+        },
+        setName: function(newName) {
+            pirateName = newName;
+        }
+        }
+        }</code></pre>
+    <pre><code class="language-js">var newPirate = pirate();
+console.log(newPirate.getName());    // Выводим текущее содержимое переменной - там изначальный "noname"
+newPirate.setName("Jack Sparrow");   //Изменяем значение переменной на "Jack Sparrow"
+console.log(newPirate.getName());    //Выводим текущее содержимое переменной - получаем "Jack Sparrow"</code></pre>
+    <li>Замыкания хранят не содержимое переменных внешней функции, а ссылки на эти переменные.</li>
+    <p>Давайте в этом контексте рассмотрим классический пример замыкания, описываемый в большинстве источников - счетчик.</p>
+    <pre><code class="language-js">function makeCounter(initialValue) {
+        var currentState = initialValue;
+        return function () {
+        currentState = currentState + 1;
+        return currentState;
+        }
+        }</code></pre>
+    <pre><code class="language-js">var myCounter = makeCounter(5);  // Создаем экземпляр счетчика и устанавливаем его начальное значение = 5
+        console.log(myCounter());        // В консоль будет выведено значение 6
+        console.log(myCounter());        // В консоль будет выведено значение 7
+        console.log(myCounter());        // В консоль будет выведено значение 8</code></pre>
+</ol>
+<pre><code class="language-js">function createCounter() {
+var numberOfCalls = 0;
+return function() {
+return ++numberOfCalls;
+}
+}
+var fn = createCounter();
+fn(); //1
+fn(); //2
+fn(); //3</code></pre>
+<pre><code class="language-js">А</code></pre>
+
+
+<h3>Стрелочные функции</h3>
+<p>Стрелочные функции – это более компактный и краткий синтаксис для определения функций в JS.</p>
+<pre><code class="language-js">let addNumbers = (a, b) => a + b;</code></pre>
+<pre><code class="language-js">let greet = () => console.log("Все понятно");</code></pre>
+<pre><code class="language-js">let addNumbers = (a, b) => {
+let result = a + b;
+return result; // если мы используем фигурные скобки, то нам нужно указать "return"
+};
+console.log( addNumbers(1, 2) ); // 3</code></pre>
+
+<h3>Функциональные выражения</h3>
+<pre><code class="language-js">let greet = function(name) {
+console.log("Привет, " + name + "!");
+};
+greet('Василий'); // Выведет "Привет, Василий!"</code></pre>
+
+<h2>Объекты</h2>
+<p><b>Объект</b> - это особый вид данных, обладающий свойствами, описывающими его состояние, и методами, позволяющими работать с объектом. Объект в JavaScript представляет собой ассоциативный массив, то есть фактически является набором пар <span class="code">"ключ: значение"</span>.</p>
+<p><b>Свойства объекта</b> - это некоторые значения, связанные с этим <pre><code class="language-js">объектом.&lt;/p>
+var textString = "Hello world!";
+console.log(textString.length);</code></pre>
+<p><b>Методы</b> - это действия, которые могут быть выполнены над объектом. Они могут присутствовать у объекта, а могут и не присутствовать.</p>
+<pre><code class="language-js">var textString = "Hello world!";
+console.log(textString.toUpperCase());</code></pre>
+
+<h3>Создание объекта</h3>
+<p>Для создания объекта есть два пути - создание напрямую экземпляра объекта и создание конструктора - отдельной функции, которая создает и инициализирует объект.</p>
+<p>Для создания непосредственно экземпляра объекта мы можем воспользоваться двумя конструкциями:</p>
+<pre><code class="language-js">var person = new Object();
+//или просто
+var person = {};</code></pre>
+<p>Для создания объекта через конструктор мы должны описать функцию, которая будет создавать объект и присваивать значения его свойствам. Функция будет выглядеть следующим образом:</p>
+<pre><code class="language-js">function Person(name, age, year) {
+this.name = name;
+this.age = age;
+this.year = year;
+}</code></pre>
+<p><span class="code">this</span> - обращение к текущему экземпляру объекта</p>
+<p>Создание экземпляра объекта с помощью нашего конструктора осуществляется следующим образом:</p>
+<pre><code class="language-js">var employee1 = new Person("Ivan","25","2017");
+var employee2 = new Person("Olga","21","2016");
+var employee3 = new Person("Oleg","32","2010");</code></pre>
+
+<h3>Свойства объектов</h3>
+<pre><code class="language-js">Person.name = "Ivan"
+//или
+Person['name'] = "Ivan</code></pre>
+<p>Также можно добавлять свойства сразу при создании объекта, указав список свойств в фигурных скобках:</p>
+<pre><code class="language-js">var Person = {
+    name : "Ivan",
+    age : 25,
+    hiredYear : 2017
+}</code></pre>
+<p>Соответственно, для доступа к этому свойству тоже можно воспользоваться двумя вариантами:</p>
+<pre><code class="language-js">console.log(Person.name);
+console.log(Person['name'])</code></pre>
+<p>Для удаления свойства используется оператор delete:</p>
+<pre><code class="language-js">delete Person.name;</code></pre>
+
+<h3>Методы объекта</h3>
+<p>Добавление метода в объект осуществляется с помощью следующего синтаксиса:</p>
+<pre><code class="language-js">var person = {};                                  //Объявляем объект person
+person.sayAge = function(n) {                    //Объявляем метод sayAge для объекта person
+    console.log("Person is " + n + " years old");  //Тело метода sayAge - вывод текста
+};</code></pre>
+<p>Добавление метода в объект - это фактически присвоение функции некоторому свойству объекта. В предыдущем примере мы присвоили функцию function(n) свойству sayAge объекта person .</p>
+<p>Как правило нам необходимо чтобы метод не просто выполнял некоторые действия, а использовал какие-либо свойства объекта, в котором он хранится. Для того, чтобы получить доступ к свойствам объекта из метода используется ключевое слово this. Слово this никаким образом не связано с самим объектом, оно всего лишь обозначает объект, вызвавший этот метод. В данном примере метод sayName будет выводить фразу "My name is Ivan"</p>
+<pre><code class="language-js">var person = {
+    name : "Ivan",
+    age : 25,
+    hiredYear : 2017
+}
+person.sayName = function() {
+    console.log("My name is " + this.name);
+}
+</code></pre>
+
+<h3>Перебор свойств и методов объекта</h3>
+<p>Теперь мы можем более подробно рассмотреть оператор, осуществляющий  перебор всех свойств и методов объекта, мельком упомянутый в предыдущем модуле - конструкцию for .. in.</p>
+<p>Давайте рассмотрим пример, создадим объект и в нем метод, выводящий в консоль все свойства этого объекта:</p>
+<pre><code class="language-js">var person = {
+    name : "Ivan",
+    age : 25,
+    hiredYear : 2017
+}
+
+person.sayAll = function() {
+    for (var i in this) {
+        console.log(i + " is " + this[i]);
+}
+}</code></pre>
+
+<h3>Взаимодействие со свойствами м методами объекта</h3>
+<h4>Добавление, удаление и изменение свойств</h4>
+<p>Добавление свойства:</p>
+<pre><code class="language-js">const person = {};
+person.occupation = "programmer";
+console.log(person.occupation); // Выведет programmer</code></pre>
+<p>Удаление свойства:</p>
+<pre><code class="language-js">let person = {name: 'Татьяна'};
+delete person.name;
+console.log(person.name); // Выведет undefined</code></pre>
+
+
+<h4>Отличие объекта и примитива</h4>
+<p>Примитивы являются значимым типом данных, и при их присвоении или передаче они копируются полностью. Изменения в копии не повлияют на оригинальное значение.</p>
+<pre><code class="language-js">let x = 10;
+let y = x; // y получает копию значения x
+y = 20; // Изменение y не влияет на x
+console.log(x); // Выведет 10</code></pre>
+<p>Объекты являются ссылочным типом данных. Это означает, что, когда объект присваивается другой переменной, передается не сам объект, а ссылка на его местоположение в памяти. Изменения в копии объекта повлияют на оригинальное значение объекта.</p>
+<pre><code class="language-js">const apple = {color: "green"};
+const banana = apple; // теперь banana ссылается на тот же объект, что и apple
+banana.color = "yellow"; // Изменение banana также изменит apple
+console.log(apple.color); // Выведет yellow</code></pre>
+
+<h4>Методы объектов</h4>
+<p><b>Методы объекта </b>— это функции, которые связаны с определенным объектом. В простых словах они представляют собой действия или операции, которые можно выполнить с объектом.</p>
+<pre><code class="language-js">let car1 = {
+    brand: "Toyota",
+    model: "Camry",
+    start: function() {
+        console.log("Автомобиль заведен");
+    },
+    stop: function() {
+        console.log("Автомобиль заглушен");
+    },
+};</code></pre>
+<pre><code class="language-js">car1.stop() // Выведет "Автомобиль заглушен"</code></pre>
+
+<pre><code class="language-js">const person = {
+    name: "Василий",
+    age: 97,
+    sayHello() {
+        console.log(“Hello”);
+    }
+};</code></pre>
+
+<h4>Ключевое слово <span class="code">this</span></h4>
+<p>Ключевое слово <span class="code">this</span> внутри метода ссылается на сам объект, в котором он находится. Пример:</p>
+<pre><code class="language-js">const person = {
+    name: "Василий",
+    sayName: function() {
+        console.log(this.name); // по смыслу то же, что и console.log(person.name)
+    }
+};</code></pre>
+<p>Ключевое слово <span class="code">this</span> позволяет обращаться к свойствам и методам объекта, даже если имя объекта меняется или неизвестно заранее.</p>
+
 
 </body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+<script>hljs.highlightAll();</script>
 </html>

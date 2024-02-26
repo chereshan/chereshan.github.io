@@ -197,6 +197,15 @@ s[s.length-1]        // => "d"
 // Шаблонные литералы
 let greetings = `Hello ${ name }.`; //Hello egor.
 </code> </pre>
+<p>Преобразования регистра символов</p>
+var catName = "Kitty";
+catName.toLowerCase(); //kitty
+catName.toUpperCase(); //KITTY
+// для языков, правила которых противоречат Unicode
+catName.toLocaleLowerCase(); //kitty
+catName.toLocaleUpperCase(); //KITTY
+
+
 <p>В JS определены так называемые управляющие последовательности: <span class="code">\n</span>, <span class="code">\b</span>, <span class="code">\t</span>, <span class="code">\r</span> и т.д.</p>
 
 <h3>Булевые типы</h3>
@@ -222,10 +231,47 @@ text.search(pattern) // => 9: позиция первого совпадения
 text.match(pattern) // => ["1", "2", "3"]: массив всех совпадений
 text.replace(pattern, "#"); // => "testing: #, #, #"
 text.split(/\D+/); // => ["","1","2","3"]: разбить по нецифровым символам</code></pre>
+<p>Объект <span class="code">RegExp</span> в JavaScript имеет следующие свойства:</p>
+<ul>
+    <li><span class="code">source</span> - собственно текст регулярного выражения</li>
+    <li><span class="code">ignoreCase</span> - логическое значение обозначающее наличие флага "i", доступно только для чтения</li>
+    <li><span class="code">global</span> - логическое значение обозначающее наличие флага "g",  доступно только для чтения</li>
+    <li><span class="code">multiline</span> - логическое значение обозначающее наличие флага "m",  доступно только для чтения</li>
+    <li><span class="code">lastIndex</span> - счетчик, указывающий, с какой позиции в строке начинать поиск</li>
+</ul>
+
+<p>У RegExp есть по крайней мере 2 метода: </p>
+<ul>
+    <li><span class="code">exec(text)</span> - выполнение поиска в строке, указанной в качестве параметра, возвращает массив найденных соответствий.</li>
+    <li><span class="code">test(text)</span> - проверка соответствия регулярному выражению, возвращает true\false</li>
+</ul>
+<pre><code class="language-js">var myString = "This is just a test text";  // Задаем строку для поиска
+var myPattern = /te|is/g;                   // Задаем шаблон - либо "te" либо "is"
+result = myPattern.exec(myString);
+//result будет равен "is" - первому совпадению шаблона, свойство myPattern.lastIndex примет значение 4
+result = myPattern.exec(myString); //result == "is" - второму совпадению шаблона, lastIndex == 7
+result = myPattern.exec(myString); //result == "te" - третьему совпадению шаблона, lastIndex == 17
+result = myPattern.exec(myString); //result == "te" - четвертому совпадению шаблона, lastIndex == 22</code></pre>
+<pre><code class="language-js">var myString = "This is just a test text";  // Задаем строку для поиска
+var myPattern = /te|is/g;                   // Задаем шаблон - либо "te" либо "is"
+
+result = myPattern.test(myString);
+
+// result будет равен true, поскольку будет найдено первое совпадение, свойство lastIndex примет значение 4
+
+result = myPattern.test(myString); // result == true, lastIndex == 7
+result = myPattern.test(myString); // result == true, lastIndex == 17
+result = myPattern.test(myString); // result == true, lastIndex == 22
+result = myPattern.test(myString); // result == false, lastIndex == 0</code></pre>
 
 
 <h3>Дата и время</h3>
-<p>В базовом JS существует конструктор <span class="code">Date()</span> для создания объектов, представляющих дату и время. </p>
+<p>В базовом JS существует конструктор <span class="code">Date()</span> для создания объектов, представляющих дату и время.</p>
+<pre><code class="language-js">var x = new Date(миллисекунды) //Количество миллисекунд отсчитывая с 1 января 1970г
+var myDate = new Date("December 14, 1975 12:10:00") //Sun Dec 14 1975 12:10:00 GMT+0300 (RTZ 2 (зима))
+var myDate = new Date(1989, 6, 14)  //Fri Jul 14 1989 00:00:00 GMT+0400 (RTZ 2 (лето))
+var myDate = new Date(1998, 6, 14, 11, 20, 00) //Tue Jul 14 1998 11:20:00 GMT+0400 (RTZ 2 (лето))</code></pre>
+
 <pre><code class="language-javascript">
 let timestamp = Date.now(); //Текущее время как отметка времени (число) .
 let now = new Date(); // Текущее время как объект Date.
@@ -234,7 +280,13 @@ let iso = now.toISOString(); // Преобразовать в строку со 
 console.log(timestamp,now, ms, iso)
 //1702701966891 2023-12-16T04:46:06.891Z 1702701966891 2023-12-16T04:46:06.891Z
 </code></pre>
-<pre><code class="language-javascript">var then = new Date(2010, 0, 1); // Первый день первого месяца 2010 года
+
+<pre><code class="language-js">var myDate = new Date();               // Создаем объект типа Date, в нем оказывается текущая дата
+myDate.setFullYear(2017, 4, 22);       // Присваиваем ему значение даты - 22 мая 2017
+myDate.setDate(myDate.getDate() + 10); // Устанавливаем новое значение даты, получив прежнее и прибавив 10.</code></pre>
+
+<h4>Получение данных из объекта <span class="code">Date</span></h4>
+<pre><code class="language-js">var then = new Date(2010, 0, 1); // Первый день первого месяца 2010 года
 var later = new Date(2010, 0, 1, 17, 10, 30); // Та же дата, в 17:10:30 локального времени
 var now = new Date(); // Текущие дата и время
 var elapsed = now - then; // Разность дат: интервал в миллисекундах
@@ -243,12 +295,41 @@ later.getMonth() // => 0: счет месяцев начинается с нул
 later.getDate() // => 1: счет дней начинается с единицы
 later.getDay() // => 5: день недели. 0 - воскр., 5 - пятн.
 later.getHours() // => 17: 17 часов локального времени
-later.getUTCHours() // часы по UTC; зависит от часового пояса
+later.getMinutes()
+later.getSeconds()
+later.getMilliseconds()
+later.getUTCHours() // часы по UTC; зависит от часового пояса</code></pre>
+
+<h4>Запись данных в объект <span class="code">Date</span></h4>
+<pre><code class="language-js">later.setYear() - устанавливает значение года минус 1900, к использованию не очень рекомендуется.
+later.setFullYear() // устанавливает значение года.
+later.setMonth() // устанавливает месяц, от 0 до 11
+later.setDate() // устанавливает день месяца, от 1 до 31
+later.setHours() // устанавливает час, от 0 до 23
+later.setMinutes() // устанавливает количество минут, от 0 до 59
+later.setSeconds() // устанавливает количество секунд, от 0 до 59
+later.setMilliseconds() // устанавливает количество миллисекунд, от 0 до 999
+later.setTime() // устанавливает количество миллисекунд, прошедших с полуночи 1 января 1970г GMT.</code></pre>
+
+<h4>Преобразование данных объекта <span class="code">Date</span></h4>
+<pre><code class="language-javascript">
+later.parse() // преобразовывает строку с датой, например "Jul 05, 2017" и возвращает количество миллисекунд, прошедших с полуночи 1 января 1970 г. Если строку преобразовать не удалось - возвращает NaN.
 later.toString() // => "Fri Jan 01 2010 17:10:30 GMT+0300"
 later.toUTCString() // => "Fri, 01 Jan 2010 14:10:30 GMT"
 later.toLocaleDateString() // => "1 Январь 2010 г."
 later.toLocaleTimeString() // => "17:10:30"
 later.toISOString() // => "2010-01-01T14:10:30.000Z"</code></pre>
+<p>Объекты типа Date() можно изменять и сравнивать:</p>
+<pre><code class="language-js">var myDate = new Date();               // Создаем объект типа Date, в нем оказывается текущая дата
+myDate.setFullYear(2017, 4, 22);       // Присваиваем ему значение даты - 22 мая 2017
+myDate.setDate(myDate.getDate() + 10); // Устанавливаем новое значение даты, получив прежнее и прибавив 10.</code></pre>
+<pre><code class="language-js">var currentDate = new Date();             // Объявляем переменную для текущей даты
+var nextNewYear = new Date();             // Объявляем переменную для даты Нового Года
+nextNewYear.setFullYear(2018, 0, 1);        // Записываем значение даты для Нового Года - 1 января 2018
+//  в данном случае, мы хотим проверить, что эти объекты имеют одинаковое значение, а не их идентичность.
+if (+currentDate == +nextNewYear) {
+alert("Поздравляем с Новым, 2018-м Годом! Ура!!!");
+}</code></pre>
 
 <h3>Объекты</h3>
 <p><b>Объект в JS</b> - это неупорядоченная коллекция свойств, где каждое свойство имеет имя и значение.</p>
@@ -292,33 +373,60 @@ let data = {
     <li><b>Разнородность данных</b>: Массивы в JavaScript могут содержать значения различных типов данных, например, числа, строки, булевы значения, объекты и даже другие массивы.</li>
     <li><b>Доступ к элементам</b>: Элементы массива могут быть доступны по их индексу с использованием квадратных скобок и индекса элемента. Например, <span class="code">array[0]</span> обращается к первому элементу массива.</li>
 </ul>
+
 <h4>Методы массивов</h4>
+
+<h5>push</h5>
 <pre><code class="language-javascript">//Метод push() - добавляет элементы в конец массива:
 const fruits = ['apple', 'banana', 'orange'];
 fruits.push('grape');
 console.log(fruits); // Выводит ['apple', 'banana', 'orange', 'grape']</code></pre>
+
+<h5>unshift</h5>
+<p>Добавляет элемент в начало массива. </p>
+<pre><code class="language-js">myArray.unshift("Сергеев", "Дмитриев")</code></pre>
+
+<h5>pop</h5>
 <pre><code class="language-javascript">// Метод pop() - удаляет последний элемент из массива и возвращает его:
 const fruits = ['apple', 'banana', 'orange'];
 const removedFruit = fruits.pop();
 console.log(removedFruit); // Выводит 'orange'
 console.log(fruits); // Выводит ['apple', 'banana']</code></pre>
+
+<h5>delete</h5>
+<p>Удалить элемент массива можно с помощью оператора delete, как обычное свойство.</p>
+<pre><code class="language-javascript">delete myArray[2];</code></pre>
+<p>Значение 3-го элемента массива будет установлено в <span class="code">undefined</span>, т.е. очищено, однако количество элементов в массиве не изменится, все остальные элементы останутся на своих местах.</p>
+
+<h5>shift</h5>
+<p>Метод <span class="code">shift()</span> (противоположный методу unshift) который удаляет элемент в начале массива и сдвигает все элементы на 1 позицию в начало.</p>
+
+<h5>concat</h5>
 <pre><code class="language-javascript">// Метод concat() - объединяет два или более массива:
 const array1 = [1, 2, 3];
 const array2 = [4, 5, 6];
 const combinedArray = array1.concat(array2);
 console.log(combinedArray); // Выводит [1, 2, 3, 4, 5, 6]</code></pre>
+
+<h5>slice</h5>
 <pre><code class="language-javascript">// Метод slice() - создает новый массив, содержащий выбранные элементы из исходного массива:
 const fruits = ['apple', 'banana', 'orange', 'grape', 'mango'];
 const slicedArray = fruits.slice(1, 4);
 console.log(slicedArray); // Выводит ['banana', 'orange', 'grape']</code></pre>
+
+<h5>indexOf</h5>
 <pre><code class="language-javascript">// Метод indexOf() - возвращает индекс первого вхождения заданного элемента в массиве:
 const fruits = ['apple', 'banana', 'orange'];
 const index = fruits.indexOf('banana');
 console.log(index); // Выводит 1</code></pre>
+
+<h5>join</h5>
 <pre><code class="language-javascript">// Метод join() - объединяет все элементы массива в строку, разделенную указанным разделителем:
 const fruits = ['apple', 'banana', 'orange'];
 const joinedString = fruits.join(', ');
 console.log(joinedString); // Выводит 'apple, banana, orange'</code></pre>
+
+<h5>forEach</h5>
 <p>Метод <span class="code">forEach</span> позволяется вызвать определенную функцию для всех элементов массива.</p>
 <pre><code class="language-javascript">arr.forEach(function func(el, ind, arr) {
 //код функции
@@ -331,12 +439,46 @@ arr.forEach(
     }
 )
 </code></pre>
+
+<h5>map</h5>
 <p>Метод <span class="code">map</span> используется для того, чтобы создать новый массив из существующего, используя для каждого элемента функцию, переданную в метод map.</p>
 <pre><code class="language-javascript">let arr = prompt().split(" ").map((n) => n ** 2)</code></pre>
+
+
+<h5>filter</h5>
 <p>Метод <span class="code">filter</span> используется для того, чтобы создать новый массив из существующего, оставляя только те элементы, которые проходят через функцию-условие, которая передается в filter.</p>
 <pre><code class="language-javascript">let arr = [1, 2, 3, 4, 5, 6, 7];
-
 let arr2 = arr.filter(n => n % 2 === 0) // [ 2, 4, 6]</code></pre>
+
+<h5>reverse</h5>
+<p>Меняет порядок массива на обратный.</p>
+<pre><code class="language-js">var myArray = new Array("Иванов","Петров","Сидоров","Кузнецов");
+myArray.reverse() // ['Кузнецов', 'Сидоров', 'Петров', 'Иванов']</code></pre>
+
+<h5>sort</h5>
+<p>Сортирует элементы в исходном массиве и возвращает отсортированный массив. Если метод использовать без аргумента (функции сортировки), то результат будет отсортирован в алфавитном порядке (в порядке следования символов в Unicode), путем преобразования всего, что возможно в строковый тип. Все, что привести к строкам невозможно - помещается в конец массива.</p>
+<pre><code class="language-js">var myArray = new Array("Иванов","Петров","Сидоров","Кузнецов");
+myArray.sort() // ['Иванов', 'Кузнецов', 'Петров', 'Сидоров']</code></pre>
+<p>Чтобы вывести в консоль значения , отсортированные в обратном алфавитном порядке мы можем воспользоваться вот такой командой:</p>
+<pre><code class="language-js">console.log(myArray.sort(function(a, b) {return b - a;}));
+// ['Сидоров', 'Петров', 'Кузнецов','Иванов']</code></pre>
+
+<h5>splice</h5>
+<p>В качестве аргумента в этот метод можно передать следующие данные:</p>
+<ul>
+    <li>позиция элемента, с которого начинается действие метода</li>
+    <li>количество удаляемых элементов, начиная со стартовой позиции, указанной в предыдущем аргументе. (Если второе значение не указано, будут удалены все элементы, начиная с первого аргумента).</li>
+    <li>элементы массива, которые будут добавлены начиная с позиции, указанной в первом аргументе.</li>
+</ul>
+<pre><code class="language-js">var myArray = ["Иванов", "Петров", "Сидоров", "Кузнецов"];
+
+myArray.splice(2, 2);
+// вернет ["Сидоров", "Кузнецов"], исходный массив станет равен ["Иванов", "Петров"]
+myArray.splice(1);
+// вернет ["Петров", "Сидоров", "Кузнецов"], исходный массив превратится в ["Иванов"]
+myArray.splice(2, 0, "Смит");
+// вернет пустое значение [], в myArray добавится элемент ["Иванов", "Петров", "Смит", "Сидоров", "Кузнецов"]</code></pre>
+
 <h3>Операции</h3>
 <pre><code class="language-javascript">// Операторы выполняют действия со значениями (операндами) и воспроизводят
 // новое значение. Наиболее часто используемыми являются арифметические операторы:

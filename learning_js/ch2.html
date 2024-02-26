@@ -52,7 +52,7 @@
 <h1>Глава 2. Ветвление, циклы и ошибки</h1>
 <h2>Условный оператор</h2>
 <h3>Конструкция <span class="code">else if</span></h3>
-<p>В JS нет <i>elseif</i> PHP или <i>elif</i> Python, однако допускается использование по тому же назначению конструкции <span class="code">else if</span>:</p>
+<p>В JS нет elseif PHP или elif Python, однако допускается использование по тому же назначению конструкции <span class="code">else if</span>:</p>
 <pre><code class="language-js">if (a > 100){document.write("a больше 100")}
 else if(a &lt; 100){document.write("a меньше 100")}
 else{document.write("a равно 100")}</code></pre>
@@ -206,6 +206,20 @@ while(i) { // когда i будет равно 0, условие станет 
 </script>
 
 <h2>Ошибки</h2>
+<h3>Оператор <span class="code">throw</span></h3>
+<p>Приведенный ниже пример демонстрирует проверку входного параметра в рекурсивной функции при вычислении:</p>
+<pre><code class="language-js">function testFactorial(inputData) {
+
+    if (inputData == 0) {return 1}
+    if (inputData &lt; 0)                             // Проверяем - положительное ли число
+        throw "Число не должно быть меньше нуля";    // Если отрицательное - "бросаем" исключение
+    return (inputData - 1)?(inputData * testFactorial(inputData - 1)):inputData;
+}</code></pre>
+
+
+
+
+
 <p>В JS перехват ошибок реализован с помощью события <span class="code">onerror</span> и ключевых слов <span class="code">try</span> и <span class="code">catch</span>.</p>
 <h3>Событие <span class="code">onerror</span></h3>
 <pre><code class="language-html">&lt;script>
@@ -239,7 +253,20 @@ function errorHandler(message, url, line)
 <p>В первой строке скрипту предписывается использовать новую функцию <span class="code">errorHandler</span>, которая принимает 3 параметра: сообщение, URL-адрес и номер строки. Затем мы преднамеренно допускаем ошибку. </p>
 
 
-<h3>Ключевые слова <span class="code">try</span> и <span class="code">catch</span></h3>
+<h3>Ключевые слова <span class="code">try</span>, <span class="code">catch</span> и <span class="code">finally</span></h3>
+<pre><code class="language-js">try {
+// код, который нужно "попробовать"
+// в этом коде может быть брошено исключение
+} catch(exception_variable) {
+// в этом месте пишется код, который выполняется только в случае обнаружения
+// исключения в предыдущем блоке "trу"
+// в случае возникновения исключения, в переменную exception_variable будет передан
+// код возникшей ошибки, например аргумент оператора throw
+} finally {
+// Код в этом блоке будет выполнен всегда, независимо от результата завершения блока try:
+// и при завершении без ошибки, и при завершении с ошибкой, и при завершении по любому оператору перехода
+// (break, continue, return)
+}</code></pre>
 <pre><code class="language-html">&lt;script>
     try
     {
@@ -250,6 +277,33 @@ function errorHandler(message, url, line)
         // Использование другого метода для создания объекта XMLHTTPRequest
     }
 &lt;/script></code></pre>
+
+<pre><code class="language-js">// Объявление функции
+function testFactorial(inputData) {
+  if (inputData < 0)                             // Проверяем - положительное ли число
+    throw "Число не должно быть меньше нуля";        // Если отрицательное - "бросаем" исключение
+  return (inputData - 1) ? (inputData * testFactorial(inputData - 1)) : inputData;
+}
+
+// инициируем переменную для входного параметра, зададим ее вручную в этом примере
+var myNumber = -5;  
+
+// начало конструкции обработки ошибок
+try {
+  document.write(testFactorial(myNumber));      //  попытка вызова функции
+} catch(ex) {
+  if (ex != "Число не должно быть меньше нуля")     // Проверяем - если исключение не наше
+    throw (ex);                                 // то "бросаем" его дальше, как бы пропускаем.
+  document.write(ex);                           // вывод строки ошибки если исключение "наше"
+}</code></pre>
+<pre><code class="language-js">new Error(message);
+try {
+  throw new Error('Что-то пошло не так!');
+} catch (e) {
+  console.log(e.name + ': ' + e.message);
+}</code></pre>
+
+
     <p></p>
     <p></p>
     <p></p>
