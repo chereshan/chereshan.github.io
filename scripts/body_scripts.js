@@ -4,7 +4,7 @@ $(document).ready(function(){
         $(this).html('<span class="code">' + $(this).html() + '</span>')
     })
 })
-
+//Автоооглавление
 jQuery('h1').after('<ul id="autonav"><ul>')
 h=[0,0,0,0,0];pos_memory=0;
 jQuery(':header:not(h1)').each(function () {

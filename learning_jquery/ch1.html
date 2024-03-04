@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Глава 1. Введение в jQuery</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <script>$(function(){$("#header").load("../common/header.html");});</script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WD3PT3ZV');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(95750180, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N43FPXHDPN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-N43FPXHDPN');
+    </script>
+
+
+</head>
+
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="header"></div>
+<!--TODO: ADD LEFT SLIDER-->
+<h1>Глава 1. Введение в jQuery</h1>
+<h2>Базовые правила</h2>
+<h3>Селекторы элементов</h3>
+<p>Отыщем и разместим в таблице первые 5 элементов <span class="code">head</span>:</p>
+<pre><code class="language-html">&lt;script>
+    let body_tags=jQuery('head *');
+    let ex1=jQuery('#ex1 ol');
+    for (let i=0; i&lt;5; i++){
+        ex1.append("&lt;li>"+"&lt;span class=\"code\">"+body_tags[i].outerHTML.replace('&lt;','&lt;')+"&lt;/span>"+"&lt;/li>")
+    }
+&lt;/script></code></pre>
+<div id="ex1">
+    <ol></ol>
+</div>
+<script>
+    let body_tags=jQuery('head *');
+    let ex1=jQuery('#ex1 ol');
+    for (let i=0; i<5; i++){
+        ex1.append("<li>"+"<span class=\"code\">"+body_tags[i].outerHTML.replace('<','&lt;')+"</span>"+"</li>")
+    }
+</script>
+
+<h3>Применение к элементам CSS</h3>
+<p>Применим к <a href="#ex1">таблице выше</a> CSS-стили:</p>
+<pre><code class="language-js">jQuery('#ex1 ol').css('border','2px dotted black')</code></pre>
+<script>
+    ex1.css('border','2px dotted black')
+</script>
+
+<h3>Следование элементов</h3>
+<p>Найдем первые 5 первых параграфов, следующих непосредственно после заголовков:</p>
+<pre><code class="language-html">&lt;script>
+    let ex2=jQuery('#ex2')
+    let p_after_header=jQuery(':header + p')
+    for (let i=0; i&lt;5; i++){
+        ex2.append("&lt;li>"+p_after_header[i].innerText+"&lt;/li>")
+    }
+&lt;/script></code></pre>
+<ol id="ex2"></ol>
+<script>
+    let ex2=jQuery('#ex2')
+    let p_after_header=jQuery(':header + p')
+    for (let i=0; i<5; i++){
+        ex2.append("<li>"+p_after_header[i].innerText+"</li>")
+    }
+</script>
+
+<p>К селекторам, прямо указывающих на порядок элемента, такэе относятся:</p>
+<ul>
+    <li><span class="code">:first</span></li>
+    <li><span class="code">:last</span></li>
+    <li><span class="code">:eq(index)</span></li>
+    <li><span class="code">:odd</span></li>
+    <li><span class="code">:even</span></li>
+    <li><span class="code">:gt(index)</span> - все элементы с индексом >=index. Например, все элементы после 5-го задаются селектором <span class="code">:gt(5)</span></li>
+    <li><span class="code">:lt(index)</span> - все элементы с индексом <=index. </li>
+    <li>:nth-child(index/even/odd/equation)</li>
+</ul>
+
+<h3>Поиск всех сестринских элементов</h3>
+<p>Мы можем искать элементы, указав элементом уровень поиска, т.е., другими словами, искать сестринские элементы:</p>
+<pre><code class="language-html">&lt;script>
+    // для начала облегчим себе жизнь, написав функцию, которая
+    //принимает в качестве аргумента id списка на странице, а
+    //затем размещает в нем первые n элементов массива из
+    //jquery-запроса
+    function ol_writer(ol_id, query, n=5){
+        ol_id=jQuery(ol_id)
+        query=jQuery(query)
+        for (let i=0; i&lt;n; i++){
+            ol_id.append('&lt;li>'+query.eq(i).html().replace('<','&lt;')+"&lt;/li>")
+        }
+    }
+    ol_writer('#ex3', '#ex3 ~ *', 3)
+&lt;/script></code></pre>
+<ol id="ex3"></ol>
+<script>
+    // для начала облегчим себе жизнь, написав функцию, которая
+    //принимает в качестве аргумента id списка на странице, а
+    //затем размещает в нем первые n элементов массива из
+    //jquery-запроса
+    function ol_writer(ol_id, query, n=5){
+        ol_id=jQuery(ol_id)
+        query=jQuery(query)
+        for (let i=0; i<n; i++){
+            ol_id.append('<li>'+query.eq(i).html().replace('<','&lt;')+"</li>")
+        }
+    }
+    ol_writer('#ex3', '#ex3 ~ *', 3)
+</script>
+
+<!--TODO: разместить библиотеку jQuery локально-->
+
+<h3>Селектор содержания :contains</h3>
+
+<h3>Практика: оформление таблицы с кодом</h3>
+<p></p>
+
+<h3>Другие важные селекторы</h3>
+<ul>
+    <li>:header - все заголовочные элементы</li>
+    <li>:animated - все элементы, которые находятся в процессе анимации на момент селекции</li>
+    <li>:empty - элементы, которые не содержат текста или других элементов</li>
+    <li>:has(descendant) - элемент, у которого есть дочерний элемент descendant</li>
+    <li>:parent - элементы, имеющие потомков</li>
+    <li>:visible</li>
+    <li>:hidden</li>
+</ul>
+
+<h2>Селекторы атрибутов</h2>
+
+<h3>Элементы, имеющие атрибут</h3>
+<p>Найдем и запишем в список только элементы имеющие id:</p>
+<pre><code class="language-html">&lt;script>
+    jQuery('[id]').each(function(){
+        jQuery('#ex4').append("&lt;li>"+$(this).attr('id')+"&lt;/li>")
+    })
+&lt;/script></code></pre>
+<ol id="ex4"></ol>
+<script>
+    jQuery('[id]').each(function(){
+        jQuery('#ex4').append("<li>"+$(this).attr('id')+"</li>")
+    })
+</script>
+
+<h3>Элементы, имеющие атрибут равный некоторому значению</h3>
+<p>Найдем все ссылки с якорем места в тексте. Для этого используем равенство типа "начинается с...":</p>
+<ol id="ex5"></ol>
+<script>
+    jQuery('a[href^="#"]').each(function(){
+        jQuery('#ex5').append("<li>"+$(this).attr('href')+"</li>")
+    })
+</script>
+
+<h2>Селекторы форм</h2>
+<ol>
+    <li>:input</li>
+    <li>:text - инпут-строка типа text</li>
+    <li>:password - инпут-строка типа password</li>
+    <li>:radio</li>
+    <li>:checkbox</li>
+    <li>:submit</li>
+    <li>:image</li>
+    <li>:reset</li>
+    <li>:button</li>
+    <li>:file</li>
+</ol>
+
+<h3>Доступность форм</h3>
+<p>Запишем во все доступные для ввода элементы плейсхолдеры "Доступно" (наоборот для недоступных):</p>
+<pre><code class="language-html">&lt;form>
+    &lt;input type="text" />&lt;label>Имя&lt;/label>&lt;br />
+    &lt;input type="text" />&lt;label>Фамилия&lt;/label>&lt;br />
+    &lt;input type="text" disabled/>&lt;label>Серия паспорта&lt;/label>&lt;br />
+    &lt;input type="text" disabled/>&lt;label>Номер паспорта&lt;/label>&lt;br />
+    &lt;input type="text" />&lt;label>E-mail адрес&lt;/label>&lt;br />
+&lt;/form>
+&lt;script>
+    $(function(){
+        $("#ex6 input:disabled").attr('placeholder',"Не доступно");
+        $("#ex6 input:enabled").attr('placeholder',"Доступно");
+    });
+&lt;/script></code></pre>
+<form id="ex6">
+    <input type="text" /><label>Имя</label><br />
+    <input type="text" /><label>Фамилия</label><br />
+    <input type="text" disabled/><label>Серия паспорта</label><br />
+    <input type="text" disabled/><label>Номер паспорта</label><br />
+    <input type="text" /><label>E-mail адрес</label><br />
+</form>
+<script>
+    $(function(){
+        $("#ex6 input:disabled").attr('placeholder',"Не доступно");
+        $("#ex6 input:enabled").attr('placeholder',"Доступно");
+    });
+</script>
+
+<h3>Отслеживание состояния элементов checkbox</h3>
+<pre><code class="language-html">&lt;form id="ex7">
+    &lt;div>&lt;/div>&lt;br/>
+    &lt;input type="checkbox" checked data-years="7"/>&lt;label>Детский сад&lt;/label>&lt;br />
+    &lt;input type="checkbox" data-years="4"/>&lt;label>Начальная школа&lt;/label>&lt;br />
+    &lt;input type="checkbox" data-years="5"/>&lt;label>Средняя школа&lt;/label>&lt;br />
+    &lt;input type="checkbox" data-years="2"/>&lt;label>Старшая школа&lt;/label>&lt;br />
+    &lt;input type="checkbox" data-years="4"/>&lt;label>Бакалавриат&lt;/label>&lt;br />
+    &lt;input type="checkbox" data-years="2"/>&lt;label>Магистратура&lt;/label>&lt;br/>
+&lt;/form>
+&lt;script>
+    $(function(){
+        function yearsEstimate() {
+            let years=0;
+            $("#ex7 input:checked").each(function(){
+                years+=$(this).data('years')
+            });
+            $("div").text("Вероятный возраст — " + years);
+        }
+        yearsEstimate();
+        $("#ex7").click(yearsEstimate);
+    });
+&lt;/script></code></pre>
+<form id="ex7">
+    <div></div><br/>
+    <input type="checkbox" checked data-years="7"/><label>Детский сад</label><br />
+    <input type="checkbox" data-years="4"/><label>Начальная школа</label><br />
+    <input type="checkbox" data-years="5"/><label>Средняя школа</label><br />
+    <input type="checkbox" data-years="2"/><label>Старшая школа</label><br />
+    <input type="checkbox" data-years="4"/><label>Бакалавриат</label><br />
+    <input type="checkbox" data-years="2"/><label>Магистратура</label><br/>
+</form>
+<script>
+    $(function(){
+        function yearsEstimate() {
+            let years=0;
+            $("#ex7 input:checked").each(function(){
+                years+=$(this).data('years')
+            });
+            $("#ex7 div").text("Вероятный возраст — " + years);
+        }
+        yearsEstimate(); //вызов
+        $("#ex7").click(yearsEstimate);
+    });
+</script>
+
+
+<h3>Логические селекторы</h3>
+<h4>Оператор :not</h4>
+
+
+<h2>Атрибуты элементов</h2>
+
+<h3>Удаление атрибутов</h3>
+<p>Ранее в качестве примера приводилась форма с отключенными инпутами (<a href="#ex6">см. выше</a>). Напишем кноку, которая включает отключенные инпуты и отключает отключенные.</p>
+<pre><code class="language-html">&lt;script>
+    $('#ex8').click(function(){
+        $('#ex6 input').each(function(){
+            $(this).is(':disabled')? $(this).removeAttr('disabled'): $(this).attr('disabled', 'true')
+
+        })
+        $('#ex6 input:enabled:eq(0)').focus()
+    })
+&lt;/script></code></pre>
+<button id="ex8">Поменять <span class="code">ex6</span></button>
+<script>
+    $('#ex8').click(function(){
+        $('#ex6 input').each(function(){
+            $(this).is(':disabled')? $(this).removeAttr('disabled'): $(this).attr('disabled', 'true')
+
+        })
+        $('#ex6 input:enabled:eq(0)').focus()
+    })
+</script>
+<p>Как мы видим, плейсхолдеры при этом не меняются.</p>
+
+<h3>Работа с классами</h3>
+<p>Ниже приведен очень замороченный пример использования методов <span class="code">.addClass()</span>, <span class="code">.remoceClass()</span>, <span class="code">.toggleClass()</span>:</p>
+<pre><code class="language-html">&lt;style>
+    .ex9 {
+        background-color:#369;
+        color:#fff;
+        border:1px dotted #ccc;
+    }
+&lt;/style>
+&lt;div id="ex9">
+    &lt;p>Параграф №1&lt;/p>
+    &lt;p>Параграф №2&lt;/p>
+    &lt;p>Параграф №3&lt;/p>
+&lt;/div>
+&lt;div id="ex9-output">Строка, выводящая совершенные дейсвтия&lt;/div>
+&lt;input id="ex9-input" type="text" placeholder="Введите номер параграфа">
+&lt;button id="ex9-add">Добавить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
+&lt;button id="ex9-remove">Удалить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
+&lt;button id="ex9-toggle">Переключить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
+&lt;button id="ex9-has">Проверить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
+&lt;script>
+    function check_if_correct(){
+        ex9_value=$('#ex9-input')
+        if(ex9_value.val()==''){
+            $('#ex9-output').html(`Введите номер параграфа в инпут`)
+            $('#ex9-input').focus()
+            return false
+        }
+        else if (ex9_value.val()!=1 && ex9_value.val()!=2 && ex9_value.val()!=3){
+            $('#ex9-output').html(`Некорректное значение инпута`)
+            $('#ex9-input').focus()
+            return false}
+        else return true}
+    $('#ex9-add').click(function(){
+        if(check_if_correct()){
+            let inp_val=+($('#ex9-input').val())-1
+            $(`#ex9 p:eq(${inp_val})`).addClass('ex9')
+            $('#ex9-output').html(`Класс был добавлен в параграф ${inp_val+1}`)
+        }})
+    $('#ex9-remove').click(function(){
+        if(check_if_correct()){
+            let inp_val=+($('#ex9-input').val())-1
+            $(`#ex9 p:eq(${inp_val})`).removeClass('ex9')
+            $('#ex9-output').html(`Класс был удален из параграфа ${inp_val+1}`)
+        }})
+    $('#ex9-toggle').click(function(){
+        if(check_if_correct()){
+            let inp_val=+($('#ex9-input').val())-1
+            $(`#ex9 p:eq(${inp_val})`).toggleClass('ex9')
+            $('#ex9-output').html(`Класс был переключен в параграфе ${inp_val+1}`)
+        }})
+    $('#ex9-has').click(function(){
+        if(check_if_correct()){
+            let inp_val=+($('#ex9-input').val())-1
+            if($(`#ex9 p:eq(${inp_val}).ex9`).length>0){
+                $('#ex9-output').html(`Класс есть в параграфе ${inp_val+1}`)
+            }
+            else{
+                $('#ex9-output').html(`Класса нет в параграфе ${inp_val+1}`)
+            }}})
+
+&lt;style></code></pre>
+<style>
+    .ex9 {
+        background-color:#369; 
+        color:#fff;
+        border:1px dotted #ccc;
+    }
+</style>
+<div id="ex9">
+<p>Параграф №1</p>
+<p>Параграф №2</p>
+<p>Параграф №3</p>
+</div>
+<div id="ex9-output" style="color: #ddddff; background: black">Строка, выводящая совершенные действия</div>
+<input id="ex9-input" type="text" placeholder="Введите номер параграфа">
+<button id="ex9-add">Добавить класс <span class="code">ex9</span></button>
+<button id="ex9-remove">Удалить класс <span class="code">ex9</span></button>
+<button id="ex9-toggle">Переключить класс <span class="code">ex9</span></button>
+<button id="ex9-has">Проверить класс <span class="code">ex9</span></button>
+<script>
+    function check_if_correct(){
+        ex9_value=$('#ex9-input')
+        if(ex9_value.val()==''){
+            $('#ex9-output').html(`Введите номер параграфа в инпут`)
+            $('#ex9-input').focus()
+            return false
+        }
+        else if (ex9_value.val()!=1 && ex9_value.val()!=2 && ex9_value.val()!=3){
+            $('#ex9-output').html(`Некорректное значение инпута`)
+            $('#ex9-input').focus()
+            return false}
+        else return true}
+    $('#ex9-add').click(function(){
+        if(check_if_correct()){
+            let inp_val=+($('#ex9-input').val())-1
+            $(`#ex9 p:eq(${inp_val})`).addClass('ex9')
+            $('#ex9-output').html(`Класс был добавлен в параграф ${inp_val+1}`)
+        }})
+    $('#ex9-remove').click(function(){
+        if(check_if_correct()){
+            let inp_val=+($('#ex9-input').val())-1
+            $(`#ex9 p:eq(${inp_val})`).removeClass('ex9')
+            $('#ex9-output').html(`Класс был удален из параграфа ${inp_val+1}`)
+        }})
+    $('#ex9-toggle').click(function(){
+        if(check_if_correct()){
+            let inp_val=+($('#ex9-input').val())-1
+            $(`#ex9 p:eq(${inp_val})`).toggleClass('ex9')
+            $('#ex9-output').html(`Класс был переключен в параграфе ${inp_val+1}`)
+        }})
+    $('#ex9-has').click(function(){
+        if(check_if_correct()){
+            let inp_val=+($('#ex9-input').val())-1
+            if($(`#ex9 p:eq(${inp_val}).ex9`).length>0){
+                $('#ex9-output').html(`Класс есть в параграфе ${inp_val+1}`)
+            }
+            else{
+                $('#ex9-output').html(`Класса нет в параграфе ${inp_val+1}`)
+            }}})
+</script>
+
+<h3>Работа с текстом и HTML</h3>
+<p>Напишем скрипт, который выводит параграф html-документа с указанным индексом:</p>
+<pre><code class="language-html">&lt;p>Введите индекс параграфа: &lt;input class="ex10" type="range" min=0 max=100 value="0"> &lt;span class="ex10">Пока ничего&lt;/span>&lt;/p>
+&lt;p>&lt;b>Выберите метод вывода:&lt;/b>
+    &lt;button class="ex10 html">&lt;span class="code">html()&lt;/span>&lt;/button>
+    &lt;button class="ex10 text">&lt;span class="code">text()&lt;/span>&lt;/button>&lt;/p>
+&lt;div class="ex10 output">&lt;span>&lt;b>Вывод:&lt;/b> &lt;/span>&lt;span>&lt;/span>&lt;/div>
+&lt;script>
+    //инпут ренджа
+    jQuery('input.ex10[type="range"]').attr('max',jQuery('p').length-1)
+    $(document).on('input', 'input.ex10[type="range"]', function(){
+        $('span.ex10').html($(this).val())
+    })
+    //вывод по клику
+    jQuery('.ex10.html').click(function(){
+        let ex10= jQuery('input.ex10[type="range"]')
+        jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).html())
+    })
+    jQuery('.ex10.text').click(function(){
+        let ex10= jQuery('input.ex10[type="range"]')
+        jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).text())
+    })
+&lt;/script></code></pre>
+<p>Введите индекс параграфа: <input class="ex10" type="range" min=0 max=100 value="0"> <span class="ex10">Пока ничего</span></p>
+<p><b>Выберите метод вывода:</b>
+<button class="ex10 html"><span class="code">html()</span></button>
+<button class="ex10 text"><span class="code">text()</span></button></p>
+<div class="ex10 output"><span><b>Вывод:</b> </span><span></span></div>
+<script>
+    //инпут ренджа
+    jQuery('input.ex10[type="range"]').attr('max',jQuery('p').length-1)
+    $(document).on('input', 'input.ex10[type="range"]', function(){
+        $('span.ex10').html($(this).val())
+    })
+    //вывод по клику
+    jQuery('.ex10.html').click(function(){
+        let ex10= jQuery('input.ex10[type="range"]')
+        jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).html())
+    })
+    jQuery('.ex10.text').click(function(){
+        let ex10= jQuery('input.ex10[type="range"]')
+        jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).text())
+    })
+</script>
+
+
+<h3>Получение набора в инпут в текущем времени</h3>
+<p>Для этих целей можно воспользоваться методом <span class="code">keyup()</span>. Это событие ввода, которое наступает всякий раз, когда в форму вводится текст:</p>
+<pre><code class="language-html">&lt;p>&lt;input class="ex11" type="text" value="какой-то текст"/> &lt;span class="ex11" style="background: aqua; color: blueviolet">какой-то текст&lt;/span>&lt;/p>
+&lt;script>
+    $(function(){
+        $('input.ex11').keyup(function(){
+                let ex11_value=$(this).val()
+                $('span.ex11').text(ex11_value)
+            }
+        )
+    })
+&lt;/script></code></pre>
+<p><input class="ex11" type="text" value="какой-то текст"/> <span class="ex11" style="background: aqua; color: blueviolet">какой-то текст</span></p>
+<script>
+    $(function(){
+        $('input.ex11').keyup(function(){
+            let ex11_value=$(this).val()
+            $('span.ex11').text(ex11_value)
+            }
+        )
+    })
+</script>
+
+<h3>Получение значения элементов <span class="code">radio</span>, <span class="code">checkbox</span> и <span class="code">select</span></h3>
+<pre><code class="language-html">&lt;select class="ex12 single-option">
+    &lt;option value="Сварить">Сварить&lt;/option>
+    &lt;option value="Запечь">Запечь&lt;/option>
+    &lt;option value="Отпарить">Отпарить&lt;/option>
+    &lt;option value="Пожарить">Пожарить&lt;/option>
+    &lt;option value="Закоптить">Закоптить&lt;/option>
+&lt;/select>
+&lt;select class="ex12 multiple-option" multiple="multiple">
+    &lt;option value="Мясо" selected="selected">Мясо&lt;/option>
+    &lt;option value="Овощи">Овощи&lt;/option>
+    &lt;option value="Фрукты" selected="selected">Фрукты&lt;/option>
+    &lt;option value="Зелень">Зелень&lt;/option>
+&lt;/select>
+&lt;br/>
+&lt;input class="ex12 checkbox" type="checkbox" name="c" value="На скорую руку" checked="checked"
+/>&lt;label>На скорую руку&lt;/label>&lt;br />
+&lt;input class="ex12 radio" type="radio" name="r" value="По рецепту" />&lt;label>По рецепту&lt;/label>
+&lt;input class="ex12 radio" type="radio" name="r" value="По памяти" />&lt;label>По памяти&lt;/label>
+&lt;input class="ex12 radio" type="radio" name="r" value="Импровизируя" checked="checked"
+/>&lt;label>Импровизируя&lt;/label>&lt;hr />
+&lt;button id="ex12-getSingle">Выбрать &lt;b>метод готовки&lt;/b>&lt;/button>
+&lt;button id="ex12-getMultiple">Выбрать &lt;b>ингридиенты&lt;/b>&lt;/button>
+&lt;button id="ex12-getCheckbox">Аккуратно?&lt;/button>
+&lt;button id="ex12-getRadio">Радио&lt;/button>
+&lt;p>&lt;span class="ex12">&lt;/span>&lt;/p>
+&lt;script>
+    function cooking_method(){
+        return $('.ex12.single-option').val().toLowerCase()
+    }
+    function cooking_ingridients() {
+        let cooking_ingridients=$('.ex12.multiple-option').val();
+        (cooking_ingridients.length==2)?cooking_ingridients=cooking_ingridients.join(' и '):cooking_ingridients=cooking_ingridients.join(', ');
+        cooking_ingridients=cooking_ingridients.toLowerCase();
+        return cooking_ingridients
+    }
+    function cooking_carefulness() {
+        let cooking_carefulness=$('.ex12.checkbox:checked').val()
+        if (cooking_carefulness==undefined){
+            cooking_carefulness=''
+        }
+        else {
+            cooking_carefulness=cooking_carefulness.toLowerCase()
+        }
+        return cooking_carefulness
+    }
+    function cooking_receipt(){
+        return $('.ex12.radio:checked').val().toLowerCase()
+    }
+    function full_receipt() {
+        return ["&lt;span style='background: antiquewhite'>"+cooking_method()+"&lt;/span>",
+            "&lt;span style='background: gold'>"+cooking_ingridients()+"&lt;/span>",
+            "&lt;span style='background: violet'>"+cooking_carefulness()+"&lt;/span>",
+            "&lt;span style='background: lightskyblue'>"+cooking_receipt()+"&lt;/span>"].join(' ')
+    }
+    $(function(){
+        $('span.ex12').html(full_receipt())
+    })
+
+    $('#ex12-getSingle').click(function(){
+        $('span.ex12').html(full_receipt())
+    })
+    $('#ex12-getMultiple').click(function(){
+        $('span.ex12').html(full_receipt())
+    })
+    $('#ex12-getCheckbox').click(function(){
+        $('span.ex12').html(full_receipt())
+    })
+    $('#ex12-getRadio').click(function(){
+        $('span.ex12').html(full_receipt())
+    })
+&lt;/script></code></pre>
+<select class="ex12 single-option">
+    <option value="Сварить">Сварить</option>
+    <option value="Запечь">Запечь</option>
+    <option value="Отпарить">Отпарить</option>
+    <option value="Пожарить">Пожарить</option>
+    <option value="Закоптить">Закоптить</option>
+</select>
+<select class="ex12 multiple-option" multiple="multiple">
+    <option value="Мясо" selected="selected">Мясо</option>
+    <option value="Овощи">Овощи</option>
+    <option value="Фрукты" selected="selected">Фрукты</option>
+    <option value="Зелень">Зелень</option>
+</select>
+<br/>
+<input class="ex12 checkbox" type="checkbox" name="c" value="На скорую руку" checked="checked"
+/><label>На скорую руку</label><br />
+<input class="ex12 radio" type="radio" name="r" value="По рецепту" /><label>По рецепту</label>
+<input class="ex12 radio" type="radio" name="r" value="По памяти" /><label>По памяти</label>
+<input class="ex12 radio" type="radio" name="r" value="Импровизируя" checked="checked"
+/><label>Импровизируя</label><hr />
+<button id="ex12-getSingle">Выбрать <b>метод готовки</b></button>
+<button id="ex12-getMultiple">Выбрать <b>ингридиенты</b></button>
+<button id="ex12-getCheckbox">Аккуратно?</button>
+<button id="ex12-getRadio">Радио</button>
+<p><span class="ex12"></span></p>
+<script>
+    function cooking_method(){
+        return $('.ex12.single-option').val().toLowerCase()
+    }
+    function cooking_ingridients() {
+        let cooking_ingridients=$('.ex12.multiple-option').val();
+        (cooking_ingridients.length==2)?cooking_ingridients=cooking_ingridients.join(' и '):cooking_ingridients=cooking_ingridients.join(', ');
+        cooking_ingridients=cooking_ingridients.toLowerCase();
+        return cooking_ingridients
+    }
+    function cooking_carefulness() {
+        let cooking_carefulness=$('.ex12.checkbox:checked').val()
+        if (cooking_carefulness==undefined){
+            cooking_carefulness=''
+        }
+        else {
+            cooking_carefulness=cooking_carefulness.toLowerCase()
+        }
+        return cooking_carefulness
+    }
+    function cooking_receipt(){
+        return $('.ex12.radio:checked').val().toLowerCase()
+    }
+    function full_receipt() {
+        return ["<span style='background: antiquewhite'>"+cooking_method()+"</span>",
+            "<span style='background: gold'>"+cooking_ingridients()+"</span>",
+            "<span style='background: violet'>"+cooking_carefulness()+"</span>",
+            "<span style='background: lightskyblue'>"+cooking_receipt()+"</span>"].join(' ')
+    }
+    $(function(){
+        $('span.ex12').html(full_receipt())
+    })
+
+    $('#ex12-getSingle').click(function(){
+        $('span.ex12').html(full_receipt())
+    })
+    $('#ex12-getMultiple').click(function(){
+        $('span.ex12').html(full_receipt())
+    })
+    $('#ex12-getCheckbox').click(function(){
+        $('span.ex12').html(full_receipt())
+    })
+    $('#ex12-getRadio').click(function(){
+        $('span.ex12').html(full_receipt())
+    })
+</script>
+
+</body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!--Автооглавление главы-->
+<script src="../scripts/body_scripts.js"></script>
+</html>

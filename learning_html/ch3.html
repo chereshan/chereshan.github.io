@@ -1,0 +1,224 @@
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="static/styles/styles.css">
+      <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+      <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-WD3PT3ZV');</script>
+      <!-- End Google Tag Manager -->
+      <!-- Yandex.Metrika counter -->
+      <script type="text/javascript" >
+          (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+              m[i].l=1*new Date();
+              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+          (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+          ym(95750180, "init", {
+              clickmap:true,
+              trackLinks:true,
+              accurateTrackBounce:true,
+              webvisor:true
+          });
+      </script>
+      <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+      <!-- /Yandex.Metrika counter -->
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-N43FPXHDPN"></script>
+      <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-N43FPXHDPN');
+      </script>
+      <script>$(function(){$("#header").load("../common/header.html");});</script>
+
+    <title>Глава 2. Формы, поля и кнопки</title>
+  </head>
+  <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header"></div>
+    <h1>Глава 2. Формы, поля и кнопки</h1>
+    <h2>Кнопки</h2>
+  <ol>
+      <li><pre><code class="language-html">&lt;input type="file"></code></pre><input type="file"></li>
+      <li><pre><code class="language-html">&lt;input type="reset"></code></pre><input type="reset"></li>
+      <li><pre><code class="language-html">&lt;input type="submit"></code></pre><input type="submit"></li>
+      <li><pre><code class="language-html">&lt;button>Нажми на меня&lt;/button></code></pre><button>Нажми на меня</button></li>
+      <li><pre><code class="language-html">&lt;input type="radio"></code></pre><input type="radio"></li>
+  </ol>
+
+  <h2>Формы</h2>
+  <h3>Атрибуты <span class="code">action</span> и <span class="code">method</span></h3>
+  <p>Атрибут <span class="code">action</span> указывает URL, куда данные формы будут отправлены при ее отправке. Это может быть URL обработчика формы на сервере.</p>
+  <p>Атрибут <span class="code">method</span> определяет метод, который будет использоваться для отправки данных. Два наиболее распространенных метода - "<span class="code">get</span>" (данные передаются через URL) и "<span class="code">post</span>" (данные передаются в теле запроса).</p>
+
+  
+
+  Элемент label
+  Элемент label используется для создания текстовых меток, связанных с элементами управления в форме. Метки улучшают доступность и удобство использования формы.
+
+  Пример использования элемента label:
+
+  кнопка отправки и сброса
+  Для отправки данных формы используется кнопка "Submit" (отправить), обозначаемая элементом input с атрибутом type="submit".
+
+  Для очистки полей формы можно использовать кнопку "Reset" (сброс), обозначаемую элементом input с атрибутом type="reset".
+
+  <p>Формы используются для сбора информации, которую пользователь вводит в специально отведённые поля этой формы. Когда он введёт свои данные и нажмет кнопку «Отправить», все эти данные будут отправлены на сервер. Затем они будут обработаны и сервер отправит ответ пользователю. Существует два основных метода отправки данных: <b>GET</b> и <b>POST</b>.</p>
+  <h3>GET</h3>
+  <p>Когда ты вводишь в адресной строке браузера какой-либо адрес и переходишь по нему, ты отправляешь серверу запрос, называемый GET. В таком запросе данные могут отсутствовать, как здесь: https://www.google.ru/. А вот запрос https://www.google.ru/search?q=itс+stepik содержит в себе переменную q, которая имеет значение itc stepik. В данном случае запрос отправляется на адрес https://www.google.ru/search, а данные из полей и их названия идут после ? через знак &. Предварительно данные кодируются в URL код, чтобы сервер не перепутал служебные символы (вроде /, или &) с частью запроса.</p>
+  <h3>POST</h3>
+  <p>Методом POST так же можно отправлять данные в URL. Но, в отличие от GET, он может иметь тело - специальную "коробочку", в которую можно положить данные, которые уйдут на сервер.</p>
+  <p>Этот метод обычно используется для отправки форм и загрузки файлов.</p>
+  <h3>Создание формы</h3>
+  <p>Элемент формы создаётся парным тегом &lt;form>. Внутри размещаются сами поля, причем те, что расположены за пределами элемента, отправлены не будут. При необходимости в элементе формы можно использовать стороннюю разметку. Тип отображения по умолчанию block (блочный элемент). Данный тег имеет два обязательных атрибута: action и method.</p>
+  <p>В атрибуте action указывается ссылка на обработчик формы. Обработчиком формы является PHP файл (или файл, написанный на других языках программирования), который будет обрабатывать данные этой формы.</p>
+  <p>Атрибут method предназначен для указания метода отправки данных на сервер (GET или POST).</p>
+  <p>Поле задается одинарным тегом &lt;input>. Данный тег стилизуется браузерами по-разному. Тип отображения по умолчанию inline (встроенный элемент), поэтому все поля отображаются в одной строке. Эта проблема решается подключением стилей, а пока мы до них не дошли - используй тег <br>.</p>
+  <h2>Поля</h2>
+  <ol>
+      <li>
+          <pre><code class="language-html">Имя: &lt;input type="text"> </code>Имя: <input type="text"></pre>
+      </li>
+      <li>
+          <pre><code class="language-html">&lt;input type="password"></code><input type="password"></pre>
+      </li>
+      <li>
+          <pre><code class="language-html">&lt;input type="checkbox"></code><input type="checkbox"></pre>
+      </li>
+      <li><p>Это выбор одного из нескольких вариантов. Для создания в атрибуте прописываем radio. Переключатели между собой нужно связывать: пишем атрибут name с одинаковыми значениями. Также необходим атрибут value.</p>
+          <pre><code class="language-html">&lt;input type="radio" name="gender" value="male" checked> Мужской&lt;br>
+&lt;input type="radio" name="gender" value="female"> Женский&lt;br>
+&lt;input type="radio" name="gender" value="other"> Другой</code><input type="radio" name="gender" value="male" checked> Мужской<br>
+<input type="radio" name="gender" value="female"> Женский<br>
+<input type="radio" name="gender" value="other"> Другой</pre>
+      </li>
+  </ol>
+
+  <h3>Дополнительные типы полей</h3>
+  <ol>
+      <li><p>Текстовое поле, у которого на клавиатуре мобильных устройств появляется символ @.</p>
+          <pre><code class="language-html">&lt;input type="email"></code></pre> <input type="email">
+      </li>
+      <li><p>На мобильных устройствах открывается клавиатура с числами.</p>
+          <pre><code class="language-html">&lt;form>
+      &lt;input type="tel" placeholder="XXX-XX-XXX" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+      &lt;button type="submit">Отправить&lt;/button>
+&lt;/form></code></pre>
+          <form>
+              <input type="tel" placeholder="XXX-XX-XXX" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+              <button type="submit">Отправить</button>
+          </form>
+
+      </li>
+      <li>
+          <pre><code class="language-html">&lt;input type="url"></code></pre><input type="url">
+      </li>
+      <li><p>Помимо клавиатуры с цифрами появляется возможность переключать значения поля. Атрибуты min и max определяют нижнее и верхнее возможное значение, step - шаг изменения, a value - начальное значение.</p>
+          <pre><code class="language-html">Оценка (от 1 до 5): &lt;input type="number" min=1 max=5></code></pre>Оценка (от 1 до 5): <input type="number" min=1 max=5>
+      </li>
+      <li><p>Появляются уже указанные атрибуты min, max, step и value.</p>
+          <pre><code class="language-html">Проценты (от 0 до 100): &lt;input type="range" min=0 max=100></code></pre>Проценты (от 0 до 100): <input type="range"  min=0 max=100>
+      </li>
+      <li><p>Google Chrome добавляет крестик для очистки введенной строки. На мобильных устройствах появляется кнопка поиска.</p>
+          <pre><code class="language-html">&lt;input type="search"></code></pre><input type="search">
+      </li>
+  </ol>
+  <h3>Время</h3>
+  <ol>
+      <li>
+          <pre><code class="language-html">&lt;input type="date"></code></pre><input type="date">
+      </li>
+      <li>
+          <pre><code class="language-html">&lt;input type="datetime-local"></code></pre><input type="datetime-local">
+      </li>
+      <li>
+          <pre><code class="language-html">&lt;input type="month"></code></pre><input type="month">>
+      </li>
+      <li>
+          <pre><code class="language-html">&lt;input type="time"></code></pre><input type="time">
+      </li>
+      <li>
+          <pre><code class="language-html">&lt;input type="week"></code></pre><input type="week">
+      </li>
+  </ol>
+  </ol>
+
+
+
+
+  <form>
+      <fieldset>
+          <legend>Поле входа</legend>
+          <p><label for="name"><em>Имя</em></label><input type="text" id="name" placeholder="имя"></p>
+          <p><label for="email">E-mail</label><input type="email" id="email"></p>
+          <p><label for="pass">Password</label><input type="pasword" id="pass" autocomplete="on"></p>
+      </fieldset>
+      <p><input type="submit" value="Отправить"></p>
+  </form>
+
+
+
+  <form>
+
+      <fieldset>
+          <legend>Personal Information</legend>
+          <p><label>Name <input type="text" name="name" required></label></p>
+          <p><label>Telephone number <input type="tel" name="phone" required
+                                            pattern="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" title="North American format:
+            XXX-XXX-XXXX"></label></p>
+          <p><label>E-mail address <input type="email" name="email"></label></p>
+          <p><label>Date of birth <input type="date" name="dob"></label></p>
+      </fieldset>
+
+      <fieldset>
+          <legend>Appointment Request</legend>
+          <p><label for="reason">What is the reason for your visit?</label>
+              <datalist id="reasons">
+                  <select name="reason">
+                      <option>Annual physical</option>
+                      <option>Cold or flu symptoms</option>
+                      <option>Blood test</option>
+                      <option>Post-operative</option>
+                      <option>Other</option>
+                  </select>
+                  If other, please specify:
+              </datalist>
+              <input id="reason" name="reason" list="reasons"></p>
+          <p><label>Current pain level <input type="range" name="pain" min="0"
+                                              max="10" step=".5" value="5" title="0 is no pain, 10 is worst pain
+            imaginable"></label></p>
+          <p><label>Preferred date <input type="date" name="date" required
+                                          min="2011-03-15" max="2012-03-14"></label></p>
+          <p><label>Preferred time <input type="time" name="time" required
+                                          min="08:00" max="18:00" step="1:00"></label></p>
+      </fieldset>
+
+      <p><button type="submit">Submit</button></p>
+  </form>
+
+
+
+
+
+
+  <script type="text/javascript" src="static/scripts/code_descriptor.js"></script>
+  </body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <script>hljs.highlightAll();</script>
+  <script src="../scripts/body_scripts.js"></script>
+</html>

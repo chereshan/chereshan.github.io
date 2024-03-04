@@ -1,6 +1,7 @@
 <html>
   <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" type="text/css" href="static/styles/styles.css">
       <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
       <link rel="stylesheet" type="text/css" href="../styles/styles.css">
@@ -40,7 +41,8 @@
           gtag('config', 'G-N43FPXHDPN');
       </script>
       <script>$(function(){$("#header").load("../common/header.html");});</script>
-    <title>Учебник по HTML</title>
+
+    <title>Глава 1. Введение в HTML</title>
   </head>
   <body>
   <!-- Google Tag Manager (noscript) -->
@@ -48,7 +50,7 @@
                     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <div id="header"></div>
-    <h1>Учебник по HTML</h1>
+    <h1>Глава 1. Введение в HTML</h1>
     <h2>Источники</h2>
     <ol>
         <li>Муссиано Ч., Кеннеди Б. HTML и XHTML. Подробное руководство, 6-е издание. – Пер. с англ, 2008</li>
@@ -259,17 +261,17 @@ head_content</div>
 
 <h2>Специальные теги заголовков</h2>
 <ul>
-  <li>&lt;base&gt;
-    и &lt;link&gt; - Они определяют базовый адрес (который будет использоваться для
+  <li><span class="code">&lt;base&gt;</span>
+    и <span class="code">&lt;link&gt;</span> - Они определяют базовый адрес (который будет использоваться для
     относительных ссылок) текущего документа и ссылки на другие документы (например, другие версии данного документа или внешние таблицы стилей).
   </li>
-  <li>&lt;isindex&gt; - Нежелательный в HTML 4 тег раньше применяли для создания автоматизированных форм поиска, позволявших искать в базах данных нужную информацию, используя текущий документ как средство осуществления запросов.</li>
-  <li>&lt;nextid&gt; - Не поддерживается в HTML 4 и XHTML. 
-  </li>
-  <li>&lt;meta&gt; - Содержит дополнительные данные о документе, которые нельзя поместить в другие теги заголовка.</li>
-  <li>&lt;object&gt; - Определяет методы, которыми броузер может обрабатывать нестандартные объекты.</li>
-  <li>&lt;object&gt; - Определяет один или несколько сценариев, которые могут быть вызваны элементами документа.</li>
-  <li>&lt;style&gt; - Позволяет определять свойства каскадных таблиц стилей (CSS) для управления характеристиками отображения документа в целом.</li>
+  <li><span class="code">&lt;meta&gt;</span> - Содержит дополнительные данные о документе, которые нельзя поместить в другие теги заголовка. В частности, это информация о кодировке документа как например у данного документа: </li><pre><code class="language-html"><span id="meta-tag-example"></span>    </code></pre>
+    <script>
+        $('#meta-tag-example').html($('head meta')[0].outerHTML.replace('<','&lt;'))
+    </script>
+  <li><span class="code">&lt;object&gt;</span> - Определяет методы, которыми броузер может обрабатывать нестандартные объекты.</li>
+  <li><span class="code">&lt;script&gt;</span> - Определяет один или несколько сценариев, которые могут быть вызваны элементами документа.</li>
+  <li><span class="code">&lt;style&gt;</span> - Позволяет определять свойства каскадных таблиц стилей (CSS) для управления характеристиками отображения документа в целом.</li>
   </ul>
 
     <div class="html_tag_description">body
@@ -362,131 +364,6 @@ head_content</div>
   <p></p>
   <p></p>
   <p></p>
-    <h2>Кнопки</h2>
-    <pre>
-    Атрибут name задаёт имя кнопки. Может использоваться для идентификации элемента в скриптах.
-
-    Атрибут disabled блокирует доступ к кнопке.
-
-    Атрибут type определяет тип кнопки. Ему задают одно из трёх значений:
-
-    button — значение по умолчанию. Означает, что элемент — обычная кнопка. Она может добавлять товары в корзину или избранное, переключать слайдеры или закрывать всплывающие окна.
-
-    submit — задаётся кнопкам для отправки формы. Когда пользователь нажимает на кнопку с таким типом, браузер отправляет данные формы на сервер.
-
-    reset — добавляется кнопкам сброса формы. Когда пользователь нажимает на такую кнопку, браузер возвращает значения всех полей формы к изначальным.
-    </pre>
-  <p></p>
-  <p></p>
-    <h3>Формы</h3>
-    Атрибуты action и method
-    Атрибут action указывает URL, куда данные формы будут отправлены при ее отправке. Это может быть URL обработчика формы на сервере.
-
-    Атрибут method определяет метод, который будет использоваться для отправки данных. Два наиболее распространенных метода - "get" (данные передаются через URL) и "post" (данные передаются в теле запроса).
-
-    Элемент label
-        Элемент label используется для создания текстовых меток, связанных с элементами управления в форме. Метки улучшают доступность и удобство использования формы.
-
-        Пример использования элемента label:
-
-    кнопка отправки и сброса
-    Для отправки данных формы используется кнопка "Submit" (отправить), обозначаемая элементом input с атрибутом type="submit".
-
-    Для очистки полей формы можно использовать кнопку "Reset" (сброс), обозначаемую элементом input с атрибутом type="reset".
-
-<p>Формы используются для сбора информации, которую пользователь вводит в специально отведённые поля этой формы. Когда он введёт свои данные и нажмет кнопку «Отправить», все эти данные будут отправлены на сервер. Затем они будут обработаны и сервер отправит ответ пользователю. Существует два основных метода отправки данных: <b>GET</b> и <b>POST</b>.</p>
-  <h3>GET</h3>
-  <p>Когда ты вводишь в адресной строке браузера какой-либо адрес и переходишь по нему, ты отправляешь серверу запрос, называемый GET. В таком запросе данные могут отсутствовать, как здесь: https://www.google.ru/. А вот запрос https://www.google.ru/search?q=itс+stepik содержит в себе переменную q, которая имеет значение itc stepik. В данном случае запрос отправляется на адрес https://www.google.ru/search, а данные из полей и их названия идут после ? через знак &. Предварительно данные кодируются в URL код, чтобы сервер не перепутал служебные символы (вроде /, или &) с частью запроса.</p>
-  <h3>POST</h3>
-  <p>Методом POST так же можно отправлять данные в URL. Но, в отличие от GET, он может иметь тело - специальную "коробочку", в которую можно положить данные, которые уйдут на сервер.</p>
-  <p>Этот метод обычно используется для отправки форм и загрузки файлов.</p>
-  <h3>Создание формы</h3>
-  <p>Элемент формы создаётся парным тегом &lt;form>. Внутри размещаются сами поля, причем те, что расположены за пределами элемента, отправлены не будут. При необходимости в элементе формы можно использовать стороннюю разметку. Тип отображения по умолчанию block (блочный элемент). Данный тег имеет два обязательных атрибута: action и method.</p>
-  <p>В атрибуте action указывается ссылка на обработчик формы. Обработчиком формы является PHP файл (или файл, написанный на других языках программирования), который будет обрабатывать данные этой формы.</p>
-  <p>Атрибут method предназначен для указания метода отправки данных на сервер (GET или POST).</p>
-  <p>Поле задается одинарным тегом &lt;input>. Данный тег стилизуется браузерами по-разному. Тип отображения по умолчанию inline (встроенный элемент), поэтому все поля отображаются в одной строке. Эта проблема решается подключением стилей, а пока мы до них не дошли - используй тег <br>.</p>
-  <h3>Типы полей форм</h3>
-  <h4>Поля</h4>
-  <ol>
-      <li>
-          <pre><code class="language-html">Имя: &lt;input type="text"> </code>Имя: <input type="text"></pre>
-      </li>
-      <li>
-          <pre><code class="language-html">&lt;input type="password"></code><input type="password"></pre>
-      </li>
-      <li>
-          <pre><code class="language-html">&lt;input type="checkbox"></code><input type="checkbox"></pre>
-      </li>
-      <li><p>Это выбор одного из нескольких вариантов. Для создания в атрибуте прописываем radio. Переключатели между собой нужно связывать: пишем атрибут name с одинаковыми значениями. Также необходим атрибут value.</p>
-          <pre><code class="language-html">&lt;input type="radio" name="gender" value="male" checked> Мужской&lt;br>
-&lt;input type="radio" name="gender" value="female"> Женский&lt;br>
-&lt;input type="radio" name="gender" value="other"> Другой</code><input type="radio" name="gender" value="male" checked> Мужской<br>
-<input type="radio" name="gender" value="female"> Женский<br>
-<input type="radio" name="gender" value="other"> Другой</pre>
-      </li>
-  </ol>
-  <h4>Кнопки</h4>
-  <ol>
-      <li><pre><code class="language-html">&lt;input type="file"></code></pre><input type="file"></li>
-      <li><pre><code class="language-html">&lt;input type="reset"></code></pre><input type="reset"></li>
-      <li><pre><code class="language-html">&lt;input type="submit"></code></pre><input type="submit"></li>
-      <li><pre><code class="language-html">&lt;button>Нажми на меня&lt;/button></code></pre><button>Нажми на меня</button></li>
-      <li><pre><code class="language-html">&lt;input type="radio"></code></pre><input type="radio"></li>
-  </ol>
-    <h4>Дополнительные типы полей</h4>
-  <ol>
-      <li><p>Текстовое поле, у которого на клавиатуре мобильных устройств появляется символ @.</p>
-          <pre><code class="language-html">&lt;input type="email"></code></pre> <input type="email">
-      </li>
-      <li><p>На мобильных устройствах открывается клавиатура с числами.</p>
-          <pre><code class="language-html">&lt;input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"></code></pre><input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
-      </li>
-      <li>
-          <pre><code class="language-html">&lt;input type="url"></code></pre><input type="url">
-      </li>
-      <li><p>Помимо клавиатуры с цифрами появляется возможность переключать значения поля. Атрибуты min и max определяют нижнее и верхнее возможное значение, step - шаг изменения, a value - начальное значение.</p>
-          <pre><code class="language-html">Оценка (от 1 до 5): &lt;input type="number" min=1 max=5></code></pre>Оценка (от 1 до 5): <input type="number" min=1 max=5>
-      </li>
-      <li><p>Появляются уже указанные атрибуты min, max, step и value.</p>
-          <pre><code class="language-html">Проценты (от 0 до 100): &lt;input type="range" min=0 max=100></code></pre>Проценты (от 0 до 100): <input type="range"  min=0 max=100>
-      </li>
-      <li><p>Google Chrome добавляет крестик для очистки введенной строки. На мобильных устройствах появляется кнопка поиска.</p>
-          <pre><code class="language-html">&lt;input type="search"></code></pre><input type="search">
-      </li>
-  </ol>
-  <h3>Время</h3>
-  <ol>
-      <li>
-          <pre><code class="language-html">&lt;input type="date"></code></pre><input type="date">
-      </li>
-      <li>
-          <pre><code class="language-html">&lt;input type="datetime-local"></code></pre><input type="datetime-local">
-      </li>
-      <li>
-          <pre><code class="language-html">&lt;input type="month"></code></pre><input type="month">>
-      </li>
-      <li>
-          <pre><code class="language-html">&lt;input type="time"></code></pre><input type="time">
-      </li>
-      <li>
-          <pre><code class="language-html">&lt;input type="week"></code></pre><input type="week">
-      </li>
-  </ol>
-  </ol>
-
-
-
-
-    <form>
-        <fieldset>
-            <legend>Поле входа</legend>
-            <p><label for="name"><em>Имя</em></label><input type="text" id="name"></p>
-            <p><label for="email">E-mail</label><input type="email" id="email"></p>
-            <p><label for="pass">Password</label><input type="pasword" id="pass"></p>
-        </fieldset>
-        <p><input type="submit" value="Отправить"></p>
-    </form>
-
 
 
 
@@ -501,7 +378,157 @@ head_content</div>
       width ширина изображения в пикселях;
       height высота изображения в пикселях
       href </span></div>
-  <script type="text/javascript" src="static/scripts/code_descriptor.js"></script>
+
+  <h2>Новые структурные элементы HTML5</h2>
+  <p>Для наиболее часто используемых элементов HTML, которые ранее реализовывались с помощью классов и id CSS теперь существуют собственные теги. Теперь рекомендуется использовать их:</p>
+  <ul>
+      <li><span class="code">header</span> - используется для хранения заголовков страницы и/или разделов section. Может содержать дополнительную информацию, например логотипы и навигацию.
+      </li>
+      <li><span class="code">footer</span> - содержит информацию о странице и/или разделе <span class="code">section</span>, например информацию об авторе, ссылки на использованные источники, а также сведения об авторских правах.</li>
+      <li><span class="code">nav</span> - включает основные навигационные ссылки на страницы и зачастую содержится в <span class="code">header</span></li>
+      <li><span class="code">aside</span> - хранит информацию, связанную с окружающим контентом, но существующую независимо, например на боковой панели.</li>
+      <li><span class="code">section</span> - основной из новых структурных элементов, контент которых может быть сгруппирован тематически или связан между собой</li>
+      <li><span class="code">article</span> - определяет автономный контент, который может использоваться независимо от страницы в целом, подобно записи в блоге.</li>
+  </ul>
+  <p>Использование тэга <span class="code">&lt;div></span> все еще уместно в тех случаях, когда нужен элемент строго определенного стиля, а не нечто стандартизованное. Рекомендуется избегать неуместного употребления <span class="code">&lt;div></span>.</p>
+
+<p>Ниже демонстрируется то, как следует обращаться с тэгами <span class="code">&lt;section></span> и <span class="code">&lt;article></span>, а именно, тематически группировать вторые с помощью первого</p>
+  <pre><code class="language-html">
+    &lt;section>
+        &lt;h1>Most Recent Blog Posts&lt;/h1>
+        &lt;article>
+            &lt;h2>&lt;code>nav&lt;/code> Isn't for &lt;em>All&lt;/em> Links&lt;/h2>
+            &lt;p>Though the &lt;code>nav&lt;/code> element often contains links, that doesn't
+                mean that &lt;em>all&lt;/em> links on a site need &lt;code>nav&lt;/code>.&lt;/p>
+        &lt;/article>
+        &lt;article>
+            &lt;h2>You've Got the &lt;code>DOCTYPE&lt;/code>. Now What?&lt;/h2>
+            &lt;p>HTML5 isn't an all or nothing proposition. You can pick and choose what
+                works best for you. So once you have the &lt;code>DOCTYPE&lt;/code> in place,
+                you should explore.&lt;/p>
+        &lt;/article>
+    &lt;/section></code></pre>
+  <p>Рекомендации, которых стоит придерживаться, используя тэг <span class="code">&lt;section></span></p>
+  <ul>
+      <li>Не используйте section только для задания стилей. Для этого лучше
+          подойдет div</li>
+      <li>Не применяйте section, если для содержимого лучше подходит header,
+          footer, aside или article (</li>
+      <li>Не используйте section, когда в содержимом нет естественного заголовка</li>
+  </ul>
+
+  <h3>Простое и разворачивание/сворачивание</h3>
+
+  <pre><code class="language-html">&lt;details>
+        &lt;summary>Подпись разворота&lt;/summary>
+        &lt;p>Содержание разворота. К примеру, список:&lt;/p>
+        &lt;ul>
+            &lt;li>элемент&lt;/li>
+            &lt;li>элемент&lt;/li>
+            &lt;li>элемент&lt;/li>
+        &lt;/ul>
+    &lt;/details></code></pre>
+  <details>
+      <summary>Разверни меня!</summary>
+      <p>ааааааааааааа</p>
+      <ul>
+          <li>аааа</li>
+          <li>АААААааа<code>аааааа</code></li>
+          <li>аааааа... а теперь сверни...</li>
+      </ul>
+  </details>
+  <h3>Редактируемая часть страницы</h3>
+  <pre><code class="language-html">&lt;article contenteditable>
+        &lt;h2>Stop &lt;code>section&lt;/code> Abuse!&lt;/h2>
+        &lt;p>As the most generic of the HTML5 structural elements, &lt;code>section&lt;/code>
+            is often incorrectly used as a styling container, when &lt;code>div&lt;/code> is
+            more appropriate.&lt;/p>
+    &lt;/article></code></pre>
+  <article contenteditable>
+      <h2>Редактируй меня!</h2>
+      <p>И меня!</p>
+  </article>
+
+  <h2 draggable>Блочные ссылки</h2>
+
+  <h2>Семантическая разметка</h2>
+  <p>Разработчику стоит ипользовать <i>семантическую разметку</i>, описывающую, из чего состоит содержимое, а не то, как оно должно выглядеть.</p>
+
+  <h2>Шаблон HTML5 Boilerplate</h2>
+  <p>Чтобы приступить к работе с HTML мы можем использовать шаблон сайта, который включает организованную структуру папок, популярные библиотеки JS и CSS-файлом. </p>
+  <p>Перед тем, как приступить к подробному рассмотрению шаблону, рассмотрим процедуру ее установки:</p>
+  https://github.com/h5bp/html5-boilerplate
+  https://github.com/h5bp/create-html5-boilerplate
+  <ol>
+      <li><span class="code">windows</span>+<span class="code">r cmd.exe</span></li>
+      <li>Сначала установим скрипт для создания сайта по шаблону:
+          <pre><code class="language-js">npm install -g create-html5-boilerplate</code></pre></li>
+      <li>Создадим новый проект:
+          <pre><code class="language-js">create-html5-boilerplate new-site
+cd new-site
+npm install
+npm start</code></pre></li>
+  </ol>
+  <p>После генерации шаблона мы получим следующую директорию:</p>
+  <img src="static/images/boilerplate-directory.png" alt="">
+  <p>Начнем с файла <span class="code">index.html</span>:</p>
+  <ul>
+      <li>он имеет валидную разметку</li>
+      <li>"<span class="code">no-js</span>"-класс, который позволяет прямо добавлять стили на страницу исходя из того, включен или нет JS (<span class="code">.no-js</span> или <span class="code">.js</span>)</li>
+  </ul>
+  <button id='show_hide_comments' onclick="show_hide_comments()">Показать/скрыть комментарии</button>
+  <pre><code id="index-html-boilerplate" class="language-html">&lt;!doctype html>
+    &lt;html class="no-js" lang="ru">
+      &lt;!--no-js-класс позволяет прямо добавлять на страницу стили, исходя из того, включен или нет JS у клиента-->
+    &lt;head>
+      &lt;!--обратите внимание, что далее все прописано оптимально с точки зрения верстки -->
+        &lt;meta charset="utf-8">
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1">
+      &lt;!--адаптив под мобильные устройства -->
+        &lt;title>&lt;/title>
+        &lt;link rel="stylesheet" href="css/style.css">
+        &lt;meta name="description" content="">
+      &lt;!--тэг для краткого описания сайта для сниппета поисковой выдачи -->
+      &lt;!--далее идут тэги Open Graph Protocol, которы еопределяют то, сайт будет представлен в посторонних сайтах и приложениях (Facebook, Twitter, LinkedIn)-->
+        &lt;meta property="og:title" content="">
+        &lt;meta property="og:type" content="">
+        &lt;meta property="og:url" content="">
+        &lt;meta property="og:image" content="">
+        &lt;link rel="icon" href="/favicon.ico" sizes="any">
+        &lt;link rel="icon" href="/icon.svg" type="image/svg+xml">
+        &lt;link rel="apple-touch-icon" href="icon.png">
+      &lt;!--определяет UI на мобильном устройстве -->
+        &lt;link rel="manifest" href="site.webmanifest">
+        &lt;meta name="theme-color" content="#fafafa">
+    &lt;/head>
+  
+    &lt;body>
+  
+    &lt;!-- Тут далее идет наш контент -->
+    &lt;p>Hello world! This is HTML5 Boilerplate.&lt;/p>
+    &lt;script src="js/app.js">&lt;/script>
+  
+    &lt;/body>
+  
+    &lt;/html></code></pre>
+  <script>
+      function show_hide_comments(){
+          if (jQuery('#index-html-boilerplate .hljs-comment:hidden').length==0){
+              jQuery('#show_hide_comments').innerText='Показать';
+              jQuery('#index-html-boilerplate .hljs-comment').hide();
+          }
+          else {
+              jQuery('#show_hide_comments').innerText='Скрыть';
+              jQuery('#index-html-boilerplate .hljs-comment').show();
+          }
+      }
+  </script>
+
+
+
+
+
+      <script type="text/javascript" src="static/scripts/code_descriptor.js"></script>
   </body>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -510,4 +537,5 @@ head_content</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
 
   <script>hljs.highlightAll();</script>
+  <script src="../scripts/body_scripts.js"></script>
 </html>
