@@ -508,15 +508,198 @@ vertical-align: middle;"><span>Долбануть током</span></div>
   </table>
 
 <h2>jQuery и CSS</h2>
+<h3>Отслеживание и изменение CSS-свойств</h3>
+<pre><code class="language-html">  &lt;script>
+      $('input.ex12').keyup(function(){
+          let ex12_value=$(this).val()
+          $('div.ex12').css('background-color',ex12_value)
+      })
+  &lt;/script></code></pre>
+  <p><b>Примеры:</b> <span class="backgr-col">blue</span>, <span class="backgr-col">rgb(15,99,30)</span>, <span class="backgr-col">#123456</span>, <span class="backgr-col">#f11</span></p>
+  <p><b>Значение стиля <span class="code">background-color</span></b>: <input class='ex12' type="text" value="white"></p>
+  <div class="ex12" style=" width:60px; height:60px; margin:5px; float:left; border: 1px darkblue solid"></div>
+  <script>
+      $('input.ex12').keyup(function(){
+          let ex12_value=$(this).val()
+          $('div.ex12').css('background-color',ex12_value)
+      })
+  </script>
+<br><br><br>
 
+  <h3><span class="code">Hover</span> (Эффекты наведения мыши)</h3>
+  <p>Ниже приведен квадрат, цвет которого случайно меняется при наведении курсора:</p>
+<pre><code class="language-html">  &lt;script>
+      $('div.ex13').hover(function(){
+              function getRandomColor() {
+                  var letters = '0123456789ABCDEF';
+                  var color = '#';
+                  for (var i = 0; i &lt; 6; i++) {
+                      color += letters[Math.floor(Math.random() * 16)];
+                  }
+                  return color;
+              }
 
+              $('div.ex13').css('background',getRandomColor());
+          },
+          function (){
+              $('div.ex13').css('background','white');
+          })
+  &lt;/script></code></pre>
+  <div class="ex13" style="border: 1px black solid; width:60px; height:60px;margin:5px; float:left;"></div>
+<script>
+    $('div.ex13').hover(function(){
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
 
+        $('div.ex13').css('background',getRandomColor())
+    },
+    function (){
+        $('div.ex13').css('background','white');
+    })
+</script>
+<br><br><br>
+<h3>Изменение размерности элементов</h3>
+<pre><code class="language-html">  &lt;script>
+      $('span.ex14-width').html(`&lt;b>width:&lt;/b> ${$('div.ex14').width()}`)
+      $('span.ex14-height').html(`&lt;b>height:&lt;/b> ${$('div.ex14').height()}`)
 
+      $('button.ex14').click(function(){
 
+          if ($(this).text().includes('width')){
+              let change_w=+($(this).text().slice(-2));
+              $('div.ex14').width(Math.round($('div.ex14').width()+change_w));
+              $('span.ex14-width').html(`&lt;b>width:&lt;/b> ${$('div.ex14').width()}`)
+          }
+          else {
+              let change_h=+($(this).text().slice(-2));
+              $('div.ex14').height(Math.round($('div.ex14').height()+change_h));
+              $('span.ex14-height').html(`&lt;b>height:&lt;/b> ${$('div.ex14').height()}`)
+          }
+      })
+  &lt;/script></code></pre>
+  <button class="ex14" style="background-color:darksalmon"><b>width+1</b></button>
+  <button class="ex14" style="background-color:cornflowerblue"><b>width-1</b></button>
+  <button class="ex14" style="background-color:darksalmon"><b>height+1</b></button>
+  <button class="ex14" style="background-color:cornflowerblue"><b>height-1</b></button>
+  <div class="ex14" style="width:120px; height:110px;margin:15px; padding:10px;border:1px black solid;overflow:hidden; display: flex; align-items: center; justify-content: center;">
+      {
+      <span class="ex14-width"></span>
+      <span class="ex14-height"></span>
+      }
+  </div>
+  <script>
+      $('span.ex14-width').html(`<b>width:</b> ${$('div.ex14').width()}`)
+      $('span.ex14-height').html(`<b>height:</b> ${$('div.ex14').height()}`)
+      
+      $('button.ex14').click(function(){
 
+          if ($(this).text().includes('width')){
+              let change_w=+($(this).text().slice(-2));
+              $('div.ex14').width(Math.round($('div.ex14').width()+change_w));
+              $('span.ex14-width').html(`<b>width:</b> ${$('div.ex14').width()}`)
+          }
+          else {
+              let change_h=+($(this).text().slice(-2));
+              $('div.ex14').height(Math.round($('div.ex14').height()+change_h));
+              $('span.ex14-height').html(`<b>height:</b> ${$('div.ex14').height()}`)
+          }
+      })
+  </script>
+<h3>Позиционирование элементов</h3>
+  <p>Нарисуем рамку с четырьмя квадратами внутри. При щелчке мышкой на один из них на вывод ниже будет выведены значения <span class="code">offset()</span> и <span class="code">position()</span>.</p>
+  <p>Метод <span class="code">offset()</span> возвращает значения отсупы top и left относительно документа.</p>
+  <p>Метод <span class="code">position()</span> возвращает значения top и left относительно родительского элемента.</p>
+  <pre><code class="language-html">  &lt;script>
+      $('div.ex15.inner').click(function(){
+          var o = $(this).offset();
+          $("p.ex15:first span").text("left: " + o.left + "px, top: " + o.top + "px");
+          var p = $(this).position();
+          $(this).effect('highlight')
+          $("p.ex15:last span").text("left: " + p.left + "px, top: " + p.top + "px");
+      })
+  &lt;/script></code></pre>
+  <style>
+      .ex15.main{
+          position:relative;
+          top:20px; left:40px;
+          width:200px; height:200px;
+          border:2px solid black;
+          padding:10px;
+      }
+      .ex15.inner{
+          width:60px; height:60px;
+          margin:5px; float:left;
+          border:2px solid #369;
+      }
+      br.ex15 { clear:left; }
+      p.ex15 { margin-left:40px; }
+  </style>
+  <div class="ex15 main">
+      <div class="ex15 inner"></div>
+      <div class="ex15 inner"></div>
+      <br class="ex15"/>
+      <div class="ex15 inner"></div>
+      <div class="ex15 inner"></div>
+  </div>
+<br>
+  <p class="ex15">Offset — <span class="ex15">left: ?px, top: ?px</span></p>
+  <p class="ex15">Position — <span class="ex15">left: ?px, top: ?px</span></p>
 
+  <script>
+      $('div.ex15.inner').click(function(){
+          var o = $(this).offset();
+          $("p.ex15:first span").text("left: " + o.left + "px, top: " + o.top + "px");
+          var p = $(this).position();
+          $(this).effect('highlight')
+          $("p.ex15:last span").text("left: " + p.left + "px, top: " + p.top + "px");
+      })
+  </script>
 
-
+  <h3>Прокрутка</h3>
+<pre><code class="language-html">  &lt;script>
+      $("div.ex16.demo").scrollTop(150).scrollLeft(300);
+      $("button.ex16").click(function(){
+          var d = $("div.ex16.demo");
+          $('div.ex16-output').append(`&lt;p>scrollTop()=${d.scrollTop()},  scrollLeft= ${d.scrollLeft()}&lt;/p>`);
+      });
+  &lt;/script></code></pre>
+  <style>
+      div.ex16.demo {
+          width:300px; height:200px;
+          overflow:auto;
+          border:1px solid #369;
+      }
+      p.ex16 {
+          width:1000px;
+          background-color:#ddd;
+          border-bottom:1px dotted #69c;
+      }
+  </style>
+  <div  class="ex16 demo">
+  <p class="ex16">Он поднял палец ... приближался.</p>
+  <p class="ex16">Кровь застыла ... взором зверя,</p>
+  <p class="ex16">попавшего в ... сучьями,</p>
+  <p class="ex16">и все это ... самоотверженных.</p>
+  <p class="ex16">Воздух вокруг ... поворачиваться,</p>
+  <p class="ex16">и тут свершилось ... самые глаза.</p>
+  <p class="ex16">Лавр Федотович ... осинника.</p>
+  <p class="ex16">Справа от меня... действием.</p>
+  </div>
+  <button class="ex16">Получить scrollTop и scrollLeft</button>
+  <div class="ex16-output"></div>
+  <script>
+      $("div.ex16.demo").scrollTop(150).scrollLeft(300);
+      $("button.ex16").click(function(){
+          var d = $("div.ex16.demo");
+          $('div.ex16-output').append(`<p>scrollTop()=${d.scrollTop()},  scrollLeft= ${d.scrollLeft()}</p>`);
+      });
+  </script>
 
 
   </body>

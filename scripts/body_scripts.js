@@ -16,3 +16,10 @@ jQuery(':header:not(h1)').each(function () {
     jQuery('#autonav').append(`<li><a href=${'#'+$(this).attr('id')}>${$(this).attr('id').slice(3)}. ${$(this).text()}</a></li>`);
     $(this).html($(this).attr('id').slice(3)+'. '+$(this).html())
 })
+//
+jQuery('span.backgr-col').each(function(){
+    $(this).css({
+        'background-color': $(this).text(),
+        'mix-blend-mode':'difference'
+        })
+})
