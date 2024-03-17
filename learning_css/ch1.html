@@ -55,7 +55,7 @@
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <div id="header"></div>
-<h1>Введение в CSS</h1>
+<h1>Глава 1. Введение</h1>
 <h2>Источники</h2>
 <ol>
     <li><a href="https://stepik.org/course/38218/syllabus">Stepik: Веб-разработка для начинающих: HTML и CSS</a></li>
@@ -64,7 +64,6 @@
     <li>Дэвид Макфарланд. Новая большая книга CSS</li>
     <li>Кристофер Шмитт. CSS рецепты программирования</li>
 </ol>
-<h1>Глава 1. Введение</h1>
 <h2>Размещение CSS-стилей</h2>
 <p>Код CSS можно разместить в отдельном документе, а затем подключить его к HTML-документу с помощью link-тега в head-разделе документа.</p>
 <pre><code class="language-html">&lt;link rel = "stylesheet"
@@ -193,6 +192,37 @@ background-repeat
 background-attachment
 background-position.
 
+<h2>Блочная модель</h2>
+<p>У каждого элемента блочного уровня есть 4 зоны:</p>
+<ul>
+    <li>Content - реальное информационное наполнение. Находится в середине блока. </li>
+    <li>Padding (отсуп) - пробельная зона, которая окружает область контента.</li>
+    <li>Border (рамка) - следующая наружная зона, окружающая зону отступа и формирующая рамку вокруг блока.</li>
+    <li>Margin (поле) - зона, начинающаяся от края рамки и располагающаяся снаружи от нее.</li>
+</ul>
+
+<style>
+div.ex1 {
+    height: 150px;
+    width: 150px;
+    border: 5px double #000000;
+    padding: 100px;
+    background-image: linear-gradient(to bottom, rgba(240, 255, 40, 1) 0%, rgba(240, 255, 40, 1) 100%), linear-gradient(to bottom, rgba(240, 40, 40, 1) 0%, rgba(240, 40, 40, 1) 100%);
+    background-clip: content-box, padding-box;
+    margin: 25px;
+}
+</style>
+
+<div class="ex1">
+    <li>Moby Dick</li>
+    <li>The red Badge of Courage</li>
+    <li>The Catcher in the Rye</li>
+</div>
+<div class="ex1">
+    <li>The Red Queen</li>
+    <li>Awakening</li>
+    <li>The Scarlet Letter</li>
+</div>
 
 
 </body>

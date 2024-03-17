@@ -40,7 +40,7 @@
 
         gtag('config', 'G-N43FPXHDPN');
     </script>
-    <title>Глава 6. Инструкции</title>
+    <title>Глава 6. Рецепты Javascript</title>
 
 </head>
 <body>
@@ -50,8 +50,113 @@
 <!-- End Google Tag Manager (noscript) -->
 <div id="header"></div>
 
-<h1>Инструкции JavaScript</h1>
-<p><b>Выражения</b> <i>вычисляются</i> и возвращают значение, а <b>инструкции</b> <i>выполняются</i>, чтобы что-то происходило.</p>
+<h1>Глава 6. Рецепты Javascript</h1>
+<h2>Автоогглавление</h2>
+<pre><code class="language-html">&lt;h1>Глава 6. Рецепты Javascript&lt;/h1>
+&lt;script>
+//Автоооглавление
+jQuery('h1').after('&lt;ul id="autonav">&lt;ul>')
+    h=[0,0,0,0,0];pos_memory=0;
+    jQuery(':header:not(h1)').each(function () {
+    pos=+($(this)[0].nodeName.slice(-1))-2
+    h[pos]+=1
+    if (pos_memory>pos) h[pos_memory]=0
+    pos_memory=pos
+    $(this).attr('id','ch-'+(h.filter((n)=>n!=0).join('.')));
+    jQuery('#autonav').append(`&lt;li>&lt;a href=${'#'+$(this).attr('id')}>${$(this).attr('id').slice(3)}. ${$(this).text()}&lt;/a>&lt;/li>`);
+    $(this).html($(this).attr('id').slice(3)+'. '+$(this).html())
+    })
+&lt;/script>   </code></pre>
+<h2>Поиск по фрагменту</h2>
+<pre><code class="language-html">&lt;script>
+    document.getElementById("searchSubmit").onclick = function() {
+        // Получаем шаблон для поиска
+        const pattern = document.getElementById('pattern').value;
+        const regex = new RegExp(pattern, 'g');
+
+        // Получаем текст для поиска
+        const searchText = document.getElementById('incoming').value;
+        let highlightedResult = "&lt;pre>";
+        let startPosition = 0;
+        let endPosition = 0;
+        // Находим все совпадения, формируем результат
+        const matches = searchText.matchAll(regex);
+        for (const match of matches) {
+            endPosition = match.index;
+            // Берем всю строку до этого совпадения,
+            // присоединяем к предыдущему фрагменту
+            highlightedResult += searchText.slice(startPosition, endPosition);
+            // Добавляем найденный фрагмент
+            // с CSS-классом для форматирования
+            highlightedResult += "&lt;span class='ex1 found'>" + match[0] + "&lt;/span>";
+            startPosition = endPosition + match[0].length;
+        }
+        // Завершаем результирующую строку
+        highlightedResult += searchText.slice(startPosition);
+        highlightedResult += "&lt;/pre>";
+        // Выводим текст с выделенными результатами поиска на страницу
+        document.getElementById("searchResult").innerHTML =
+            highlightedResult;
+    }
+&lt;/script></code></pre>
+
+<style>
+    .ex1.found {
+        background-color: #ffff4d;
+    }
+    textarea.ex1  {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+</style>
+<form id="textsearch">
+ <textarea class="ex1" id="incoming">
+Роман повествует об Эдипе Маас — калифорнийской домохозяйке. Она оказывается впутанной в исторические тайны, когда её бывший любовник умирает и определяет её совладелицей его имущества. Отправной точкой приключений Эдипы является набор штампов, которые могут быть использованы секретной почтовой службой Trystero (или Tristero).
+
+Согласно историческому повествованию, которое Эдипа собрала воедино во время своего путешествия по всему Сан-Франциско, Trystero был побежден Thurn und Taxis — настоящей почтовой системой — в 18-м веке. Но Trystero (или Tristero) ушла в подполье и продолжала существовать до настоящего времени (до 1960-х годов). Их почтовые ящики были замаскированны под мусорные контейнеры, на которых часто изображалась аббревиатура W.A.S.T.E., акроним к We Await Silent Tristero’s Empire (Мы Тихо Ждем Империи Tristero) и их эмблема — беззвучный почтовый рожок. Существование и планы этой тайной организации выявляются постепенно. Есть вероятность, что Tristero не существует. Главная героиня мечется между верой и не верой в их существование, не находя однозначных доказательств ни тому, ни другому. Tristero может оказаться заговором, шуткой или галлюцинациями Эдипы.
+
+Среди символов, которые находит героиня, главным является эмблема Trystero — почтовый рожок с петлёй. Первоначально он был замечен на гербе Thurn und Taxis. Эдипа находит его в туалете бара, где он украшает рекламу-граффити группы полиамористов. Позже почтовый рожок появляется среди каракулей инженера как часть детской игры со скакалкой, среди китайских иероглифов в витрине магазина и во многих других местах. Затем символ рожка (как в оригинале, так и в версии Trystero) появится на обложке многих TCL49 изданий, а также в художественных работах, созданных поклонниками романа. </textarea>
+    <p>
+        Search pattern: <input id="pattern" type="text">
+    </p>
+</form>
+<button id="searchSubmit">Search for pattern</button>
+<div id="searchResult"></div>
+<script>
+    document.getElementById("searchSubmit").onclick = function() {
+        // Получаем шаблон для поиска
+        const pattern = document.getElementById('pattern').value;
+        const regex = new RegExp(pattern, 'g');
+
+        // Получаем текст для поиска
+        const searchText = document.getElementById('incoming').value;
+        let highlightedResult = "<pre>";
+        let startPosition = 0;
+        let endPosition = 0;
+        // Находим все совпадения, формируем результат
+        const matches = searchText.matchAll(regex);
+        for (const match of matches) {
+            endPosition = match.index;
+            // Берем всю строку до этого совпадения,
+            // присоединяем к предыдущему фрагменту
+            highlightedResult += searchText.slice(startPosition, endPosition);
+            // Добавляем найденный фрагмент
+            // с CSS-классом для форматирования
+            highlightedResult += "<span class='ex1 found'>" + match[0] + "</span>";
+            startPosition = endPosition + match[0].length;
+        }
+        // Завершаем результирующую строку
+        highlightedResult += searchText.slice(startPosition);
+        highlightedResult += "</pre>";
+        // Выводим текст с выделенными результатами поиска на страницу
+        document.getElementById("searchResult").innerHTML =
+            highlightedResult;
+    }
+</script>
+
+<h2>Валидация электронной почты</h2>
+
 
 
 

@@ -198,15 +198,54 @@ s[s.length-1]        // => "d"
 let greetings = `Hello ${ name }.`; //Hello egor.
 </code> </pre>
 <p>Преобразования регистра символов</p>
-var catName = "Kitty";
+<pre><code class="language-js">var catName = "Kitty";
 catName.toLowerCase(); //kitty
 catName.toUpperCase(); //KITTY
 // для языков, правила которых противоречат Unicode
 catName.toLocaleLowerCase(); //kitty
-catName.toLocaleUpperCase(); //KITTY
+catName.toLocaleUpperCase(); //KITTY</code></pre>
 
 
 <p>В JS определены так называемые управляющие последовательности: <span class="code">\n</span>, <span class="code">\b</span>, <span class="code">\t</span>, <span class="code">\r</span> и т.д.</p>
+
+<h4>Проверка того, что строка существует и она не пустая</h4>
+<p>Убедимся, что:</p>
+<ol>
+    <li>Переменная существует</li>
+    <li>Является строкой:
+        <pre><code class="language-js">if (typeof unknownVariable === 'string') {
+                // unknownVariable — это строка
+                }</code></pre>
+
+    </li>
+    <li>Не пустая:
+        <pre><code class="language-js">if (typeof unknownVariable === 'string' && unknownVariable.length > 0) {
+                // Это именно строка, и она содержит какие-то символы либо пробелы
+                }</code></pre>
+    </li>
+    <li>Не состоит из пробелов:
+        <pre><code class="language-js">if (typeof unknownVariable === 'string' && unknownVariable.trim().length > 0) {
+                // Это именно строка, она непустая и состоит не только из пробелов
+                }</code></pre>
+
+    </li>
+</ol>
+
+<p>Вам будет попадаться следующий старомодный способ валидации строк. Он не требует, чтобы переменная действительно была строкой, а лишь
+    проверяет, что значение может трактоваться как строка и она не будет пустой:</p>
+<pre><code class="language-js">if (unknownVariable) {
+/* Мы попадем сюда, если:
+unknownVariable объявлена
+unknownVariable не равна null
+unknownVariable не является пустой строкой ('')
+*/
+}
+//Это работает, потому что:
+Boolean('')==false
+Boolean(null)==false
+Boolean(undefined)==false</code></pre>
+
+
 
 <h3>Булевые типы</h3>
 <pre><code class="language-javascript">
@@ -254,15 +293,18 @@ result = myPattern.exec(myString); //result == "te" - третьему совп�
 result = myPattern.exec(myString); //result == "te" - четвертому совпадению шаблона, lastIndex == 22</code></pre>
 <pre><code class="language-js">var myString = "This is just a test text";  // Задаем строку для поиска
 var myPattern = /te|is/g;                   // Задаем шаблон - либо "te" либо "is"
-
 result = myPattern.test(myString);
-
 // result будет равен true, поскольку будет найдено первое совпадение, свойство lastIndex примет значение 4
-
 result = myPattern.test(myString); // result == true, lastIndex == 7
 result = myPattern.test(myString); // result == true, lastIndex == 17
 result = myPattern.test(myString); // result == true, lastIndex == 22
 result = myPattern.test(myString); // result == false, lastIndex == 0</code></pre>
+
+<p>Буква <span class="code">g</span> в конце регулярного выражения — это дополнительный элемент, называемый <b>глобальным флагом</b>. Он показывает, что нужно искать совпадения с шаблоном во всей строке. Если не поставить флаг <span class="code">g</span>, то при вызове <span class="code">replaceAll()</span> получим ошибку. При вызове метода <span class="code">replace()</span> можно использовать регулярное выражение без глобального флага, но тогда будет заменен только первый фрагмент, соответствующий шаблону</p>
+<pre><code class="language-js">const originalString = 'Now is the time, this is the tame';
+const regex = /t\w{2}e/g;
+const newString = originalString.replaceAll(regex, 'place');
+// newString = 'Now is the place, this is the place'</code></pre>
 
 
 <h3>Дата и время</h3>

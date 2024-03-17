@@ -1,3 +1,14 @@
+/*
+Рекомендации по порядку стилей:
+1. Элементы (h1—h6, р, a, list, links, images).
+2. Типографика
+3. Макет страницы (заголовок, информационное содержимое, навигация, глобальная
+навигация, дополнительная навигация, боковая полоса, подвал (footer)).
+4. Теги формы (form, fieldset, label, legend).
+5. Контент (статьи, события, новости).
+*/
+/*todo: отстортировать по рекомендациям*/
+
 p {
     text-align: justify;
 }
@@ -97,4 +108,13 @@ tr:first-child td {
     text-align: center;
     font-weight: bold;
 }
-/**/
+/*TODO: адекватно оформить блок навигации по странице*/
+#autonav{
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+    border: black 1px solid;
+}
+#autonav a{
+    display: block;
+}
