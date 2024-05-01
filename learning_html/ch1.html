@@ -5,7 +5,10 @@
       <link rel="stylesheet" type="text/css" href="static/styles/styles.css">
       <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
       <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <script src='../modules/jquery-3.7.1.min.js'></script>
+      <link rel="stylesheet" href="../modules/vs2015.min.css">
+      <script src="../modules/highlight.min.js"></script>
+      <script>$(function(){hljs.highlightAll();})</script>
       <script>$(function(){$("#header").load("../common/header.html");});</script>
       <!-- Google Tag Manager -->
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -49,7 +52,6 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
                     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  <div id="header"></div>
     <h1>Глава 1. Введение в HTML</h1>
     <h2>Источники</h2>
     <ol>
@@ -530,12 +532,4 @@ npm start</code></pre></li>
 
       <script type="text/javascript" src="static/scripts/code_descriptor.js"></script>
   </body>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-  <!-- and it's easy to individually load additional languages -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
-
-  <script>hljs.highlightAll();</script>
-  <script src="../scripts/body_scripts.js"></script>
 </html>

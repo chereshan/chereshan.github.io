@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Глава 1. ....</title>
+
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <script src='../modules/jquery-3.7.1.min.js'></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <link rel="stylesheet" href="../modules/vs2015.min.css">
+    <script src="../modules/highlight.min.js"></script>
+    <script>$(function(){hljs.highlightAll();})</script>
     <script>$(function(){$("#header").load("../common/header.html");});</script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -38,12 +46,41 @@
 
         gtag('config', 'G-N43FPXHDPN');
     </script>
-    <title>Title</title>
+
+
 </head>
+
+
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<!--TODO: ADD LEFT SLIDER-->
+<h1></h1>
+<!--TODO: генератор slick slider-->
+<!--todo: генератор owl carousel-->
+<!--todo: ymaps-->
+<!--todo: fancybox-->
+<!--todo: загрузка картинок на сайт со стороны юзера-->
+<h2>Загрузка изображений на сайт со стороны клиента</h2>
+<h3>Загрузка изображений через <span class="code">localStorage</span></h3>
+<input type="file" id="image_file" />
+<button onclick="save_image()">Save</button>
+<div></div>
+<img id="image1" width="500px" height="500px" />
+<br>
+<script>
+    function save_image()  {
+        let f = image_file.files[0];
+        if (f) {
+            image1.src = URL.createObjectURL(f);
+            localStorage.setItem('myImage', image1.src);
+        }
+    }
+    image1.src = localStorage.getItem('myImage')
+</script>
+
+
 </body>
 </html>

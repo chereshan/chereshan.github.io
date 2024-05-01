@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Глава 1. Введение в REST API</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <script src='../modules/jquery-3.7.1.min.js'></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <link rel="stylesheet" href="../modules/vs2015.min.css">
+    <script src="../modules/highlight.min.js"></script>
+    <script>$(function(){hljs.highlightAll();})</script>
+    <script>$(function(){$("#header").load("../common/header.html");});</script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WD3PT3ZV');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(95750180, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N43FPXHDPN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-N43FPXHDPN');
+    </script>
+
+
+</head>
+
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!--TODO: ADD LEFT SLIDER-->
+<h1>Глава 1. Введение в REST API</h1>
+<h2>REST</h2>
+<p>REST (<i>Representational State Transfer</i>) - это техническое описание того, как работает Всемирная паутина. Более конктерно, это описание того, как она достигает своего масштаба. Если можно сказать, что Всемирная паутина имеет "операционную систему", то ее архетипичным стилем будет REST.</p>
+<p>REST API (<i>Application Programming Interface</i>) - это тип веб-сервера, который позволяет клиенту (живому или автоматизированному) получать доступ к ресурсам, которые моделируют данные и функции некоторой системы.
+<p>Leonard Richardson задал критерии зрелости REST API (статус RESTful), а именно:</p>
+<ol>
+    <li>URI</li>
+    <li>HTTP</li>
+    <li> Hypermedia</li>
+</ol>
+<p>Каждый уровень соответствует аспекту униформного интерфейса всемирной паутины, которые API должен обуздать, чтобы считаться RESTful</p>
+
+<p>Tim Berners-Lee изобрел и имплентировал:</p>
+<ul>
+    <li>URI (Uniform Resource Identifier) - синтаксис, который обозначивает каждому веб-документу уникальный адрес.</li>
+    <li>HTTP (HyperText Transfer Protocol) - язык сообщений, который компьютеры могут использовать для коммуникации через интернет.</li>
+    <li>HTML (HyperText Mark-up Language) - язык разметки веб-документов</li>
+    <li>Первый веб-сервер</li>
+    <li>Первый браузер</li>
+    <li>Первый WYSIWYG HTML-редактор</li>
+</ul>
+<p>В позднем 1993 Roy Fielding (сооснователь Apache HTTP Server Project) обеспокоился проблемой масштабирования всемирной паутины. Сеть росла в экспоненциальной прогрессии, двигаясь в сторону неминуемого коллапса мощностей. В ходе анализа он выделил ключевые ограничения масштабирования сети как архитектырнй стиль всеминой паутины:</p>
+<ol>
+    <li>Клиент-сервер. Разделение нужд в ядре данной концепции. В рамкх нее клиенты и сервера играют различные роли. Они могут быть имплементированы и запущены в действие независимо, использую любой пригодный язык или технологию до тех пор, пока они соответствуют униформному интерфейсу сети.</li>
+    <li>Единообразный интерфейс. Взаимодействия между компонентами сети (клиентами, серверами и сетевыми промежуточными узлами) зависит от единообразности их интерфейсов. Если какие-то компоненты в своих коммуникациях выходят за пределы принятого протокола, то система терпит крах. Fielding выделил 4 веб-компонента для постоянного взаимодействия:
+        <ol>
+            <li>Идентификация ресурсов. Каждый веб-концепт известен как ресурс и может быть адресован через уникальный идентифкатор такой, как например, URI. К примеру <span class="code">https://chereshan.github.io/</span></li>
+            <li>Манипуляция ресурсами через репрезентации. Клиент манипулирует репрезентациями ресурсов. Один и тот же ресурс может быть репрезентован для разных клиентов разным образом. Например, веб-страница для юзера в виде HTML, а для бота в виде JSON. Основная идея в том, что репрезентация - это то, через что можно взаимодействовать с ресусом, но это не сам ресурс. Аналогяи может быть проведена между понятиями философии языка - sign и signified</li>
+            <li>Self-descriptive сообщения. Желаемое (desired state) пользователем состояния ресурса может быть представлено в сообщении запроса (request). Текущее (current state) состояние ресурса может быть представлено внутри сообщения ответа (responce) с сервера. Например, юзер вики-контрибьютор вики-страницы может использовать сообщения реквеста для изменения представления, которая предлагает обновление страницы (update), т.е. новое состояние для страницы на сервере (ресурса). Это уже дело сервера - принять или отвергнуть этот реквест. В Self-descriptive сообщение может быть включена metadata, описывающая дополнительные характеристики состояния ресурса, формата репрезентации, размер и само сообщение. HTTP-сообщение предоставляет заголовки (headers) для организации различных типов метаданных в единообразные поля.  </li>
+            <li>Hypermedia as the engine of application state (HATEOAS). Представление состояния ресурса включает ссылки на связанные ресурсы.</li>
+        </ol></li>
+    <li>Многослойная система. Многослойная система позволяет сетевым посредникам, вроде прокси и gateways, быть прозврачно развернутыимежду клиентом и сервером. В общем сетевые посредниеи будут перехватывать клиент-сервер коммуникации для определенных целей, например, безопасности, кэширования респонсов и балансирования нагрузки. </li>
+    <li>Кэш. Данное ограничение инструктирует веб-сервер деклаироватьь кэшируемость данных респонса. Кэширование респонса повзволяет сократить наблюдаемую клиентом задржку (latency), повысить общую доступность и надежность приложения, и контролировать нагрузку сервера. Другими словами, кэширование сокращает издеркжи сети. Кэш может существовать где угодно на пути сети между клиентом и сервером. </li>
+    <li>Stateless. Веб-сервер не обязан запомнитать состояния своих клиентских приложений. Как результат, клиент должен включать контекстную информацию релевантную для кажого взаимодействия с сервером. Веб-серверы перекладывают ответтвенность за менеджмент сложности коммуникации состояний своих приложений так что большее число клиентов может иметь доступ к серверу. Трейдофф этому в большей масштабируемости сети. </li>
+    <li>Code-on-demand. Это повзовляет серверам временно отправлять исполняемые программы (скрипты и плагины) клиенту. Этот принцип перекладывает за азпускаемые приложения, котоыре клиент скачивает с ервера, на клиента. Примерами этому служат JAVA Applets, JavaScript и Flash.</li>
+</ol>
+<p>После 2000-х кризис масштабируемости сети был преодолен данный архитектурный стиль сети был назван REST/ </p>
+
+</body>
+</html>

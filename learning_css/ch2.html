@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Глава 2. Оформление таблиц</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <script src='../modules/jquery-3.7.1.min.js'></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <link rel="stylesheet" href="../modules/vs2015.min.css">
+    <script src="../modules/highlight.min.js"></script>
+    <script>$(function(){hljs.highlightAll();})</script>
+    <script>$(function(){$("#header").load("../common/header.html");});</script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WD3PT3ZV');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(95750180, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N43FPXHDPN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-N43FPXHDPN');
+    </script>
+
+
+</head>
+
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!--TODO: ADD LEFT SLIDER-->
+<h1>Глава 2. Оформление таблиц</h1>
+<h2>Получение тестовых данных</h2>
+<p>Чтобы получить тестовые данные для наших таблиц используем общедоступный API и следующий код:</p>
+<pre><code class="language-html">&lt;script>
+    let fetch_event = new Event('fetch-data');
+    let users_list
+    async function getdata(){
+        const res=await fetch('https://jsonplaceholder.typicode.com/users')
+        users_list=await res.json()
+        document.dispatchEvent(fetch_event)
+    }
+    getdata()
+&lt;/script></code></pre>
+<!--todo: замена подсветки кода на codebox-->
+<h2></h2>
+<p>Таблица ниже отфармотирована с помощью следующих стилей:</p>
+<pre><code class="language-html">&lt;style>
+    /*th { text-align: left; }*/
+    #table_css_ex1 table {
+        border-spacing: 2px;
+    }
+    #table_css_ex1 td {
+        border-radius: 5px;
+    }
+    #table_css_ex1 tr:nth-of-type(odd):not(:has(th)) { background-color: #f5d5d5; }
+    #table_css_ex1 tr:nth-of-type(even) { background-color: #e7e7ff; }
+&lt;/style></code></pre>
+<style>
+    /*th { text-align: left; }*/
+    #table_css_ex1 table {
+        border-spacing: 2px;
+    }
+    #table_css_ex1 td {
+        border-radius: 5px;
+    }
+    #table_css_ex1 tr:nth-of-type(odd):not(:has(th)) { background-color: #f5d5d5; }
+    #table_css_ex1 tr:nth-of-type(even) { background-color: #e7e7ff; }
+    #table_css_ex1 td:hover{
+        background-color: #ffff99;
+    }
+    #table_css_ex1 th:hover{
+        background-color: #ffff99;
+    }
+</style>
+<script>
+    document.addEventListener("fetch-data", function() {
+        $(document).ready(function(){
+            list_of_dicts_to_table(users_list, '#table_css_ex1')
+        })
+    });
+</script>
+<div id="table_css_ex1"></div>
+
+<h2>Всплывающая подсказка</h2>
+<pre><code class="language-html">&lt;style>
+    [data-tooltip] {
+        position: relative; /* Относительное позиционирование */
+        background: aqua;
+    }
+    [data-tooltip]::after {
+        content: attr(data-tooltip); /* Выводим текст */
+        position: absolute; /* Абсолютное позиционирование */
+        width: 300px; /* Ширина подсказки */
+        left: 0; top: 0; /* Положение подсказки */
+        background: #3989c9; /* Синий цвет фона */
+        color: #fff; /* Цвет текста */
+        padding: 0.5em; /* Поля вокруг текста */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
+        pointer-events: none; /* Подсказка */
+        opacity: 0; /* Подсказка невидима */
+        transition: 1s; /* Время появления подсказки */
+        border-radius: 10px;
+        font-style: normal;
+        font-weight: normal;
+        text-align: justify;
+    }
+    [data-tooltip]:hover::after {
+        opacity: 1; /* Показываем подсказку */
+        top: 1em; /* Положение подсказки */
+    }
+&lt;/style></code></pre>
+<li><b><span data-tooltip="в общих чертах это означает, что вместо глобальных функций для обработки значений различных типов типы сами могут определять методы для обработки значений">Подходит для ООП</span></b></li>
+
+<script>
+    let fetch_event = new Event('fetch-data');
+    let users_list
+    async function getdata(){
+        const res=await fetch('https://jsonplaceholder.typicode.com/users')
+        users_list=await res.json()
+        document.dispatchEvent(fetch_event)
+    }
+    getdata()
+</script>
+</body>
+</html>

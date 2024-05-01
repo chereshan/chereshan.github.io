@@ -9,6 +9,9 @@
 */
 /*todo: отстортировать по рекомендациям*/
 
+h1, h2, h3, h4, h5 {
+    font-family: Georgia;
+}
 p {
     text-align: justify;
 }
@@ -69,11 +72,6 @@ span.code, span span.html_tag_description_name{
     font-weight: bold;
     font-size: 30px;
 }
-
-h1, h2, h3, h4, h5 {
-    font-family: Georgia;
-}
-
 .html_example {
     border-color: black;
     background: aliceblue;
@@ -117,4 +115,61 @@ tr:first-child td {
 }
 #autonav a{
     display: block;
+}
+
+/*Добавить всплывающие подсказки
+https://webref.ru/layout/pseudo-class-hover/tooltip
+*/
+[data-tooltip] {
+    position: relative; /* Относительное позиционирование */
+    background: aqua;
+}
+[data-tooltip]::after {
+    content: attr(data-tooltip); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    width: 300px; /* Ширина подсказки */
+    left: 0; top: 0; /* Положение подсказки */
+    background: #3989c9; /* Синий цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 0.5em; /* Поля вокруг текста */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
+    pointer-events: none; /* Подсказка */
+    opacity: 0; /* Подсказка невидима */
+    transition: 1s; /* Время появления подсказки */
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: normal;
+    text-align: justify;
+}
+[data-tooltip]:hover::after {
+    opacity: 1; /* Показываем подсказку */
+    top: 1em; /* Положение подсказки */
+}
+
+.hljs {
+    border-radius: 10px;
+}
+/*h1,h2,h3, h4:after {*/
+/*    content: "";*/
+/*    border-bottom: 1px solid #4bb;*/
+/*    border-top: 1px solid #4bb;*/
+/*    width: 100%;*/
+/*    height: 0.1em;*/
+/*    !*position: absolute;*!*/
+/*    top: calc(0.45em - 1px);*/
+/*    margin-left: 10px;*/
+/*}*/
+
+/*!*Граница отделяющая разделы*!*/
+/*h2{*/
+/*    border-top: black solid 1px;*/
+/*    padding-top: 25px;*/
+/*    margin-top: 50px;*/
+/*}*/
+/*todo: возможность минимизации глав*/
+#index-hello_div {
+    display: flex;
+}
+#index-hello-text {
+    margin-left: 10px;
 }

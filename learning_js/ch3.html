@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src='../modules/jquery-3.7.1.min.js'></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <link rel="stylesheet" href="../modules/vs2015.min.css">
+    <script src="../modules/highlight.min.js"></script>
+    <script>$(function(){hljs.highlightAll();})</script>
     <script>$(function(){$("#header").load("../common/header.html");});</script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -50,7 +54,6 @@
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div id="header"></div>
 <h1>Глава 3. JavaScript в веб-браузере</h1>
 <h2>Введение</h2>
 <p>JS обладает арсеналом API-интерфейсов, которые позволят нашим web-приложениям:</p>
@@ -622,12 +625,4 @@ if (confirm("Перейти на Wikipedia?")) {
 <pre><code class="language-javascript"></code></pre>
 
 </body>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js">
-
-<!-- and it's easy to individually load additional languages -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
-
-<script>hljs.highlightAll();</script>
-<script src="../scripts/body_scripts.js"></script>
 </html>

@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
+    <script src='../modules/jquery-3.7.1.min.js'></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <link rel="stylesheet" href="../modules/vs2015.min.css">
+    <script src="../modules/highlight.min.js"></script>
+    <script>$(function(){hljs.highlightAll();})</script>
+    <script>$(function(){$("#header").load("../common/header.html");});</script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WD3PT3ZV');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(95750180, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N43FPXHDPN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-N43FPXHDPN');
+    </script>
+    <title>Глава 7. Хранение данных на стороне клиента</title>
+
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<h1>Глава 7. Хранение данных на стороне клиента</h1>
+<h2>Способы хранения данных на стороне браузера</h2>
+<p>Веб-браузеры снабжены хранилищами, в которых веб-приложения могут хранить, например, пользовательские предпочтения, или даже свое полное состояние, чтобы восстанавливаться в точности их конца последнего посещения.</p>
+<p>Хранилища разделяются по источнику и потому страницы одного сайта не могут читать данные из хранилища другого, однако страницы одного и того же сайта могут.</p>
+<p><b>Виды хранилищ на стороне клиента:</b></p>
+<ul>
+    <li>Веб-хранилище (<b>Web Storage</b>) - это объекты <span class="code">localStorage</span> и <span class="code">sessionStorage</span>. Это постоянные объекты, которые отображают строковые ключи на строковые значения. Это хранилище подходит для хранения больших объемов данных на стороне клиента.</li>
+    <li><b>Cookie</b> - подходят для хранения лишь небольших объемов данных. Считается, что API JS в отношении работы с cookie неуклюжий и устаревший. Другим негативным аспектом cookie является тот факт, что сохраненные cookie всегда передаются серверу с каждым HTTP-запросом, даже если данные интересуют только клиента. </li>
+    <li><b>IndexedDB</b> - асинхронный API к объектной базе данных, которая поддерживает индексацию.</li>
+</ul>
+<p>Важно знать простой факт. Ни одно из выше перечисленных хранилиц не предполагает шифрования. Вся информация сохраняется на стороне клиента в незашифрованном виде и потому существует риск нарушения конфеденциальности со стороны юзеров совместно использующих устройство или же вредоносного ПО. И потому <b style="background: yellow">ни одна из форм хранилищ на стороне клиента никогда не должна использоваться для хранения паролей, банковских счетов или другой конфиденциальной информации</b>.</p>
+
+<h2><span class="code">localStorage</span> и <span class="code">sessionStorage</span></h2>
+<p>Объект <span class="code">Window</span> имеет свойства <span class="code">localStorage</span> и <span class="code">sessionStorage</span>, которые ссылаются на объект <span class="code">Storage</span>, который, в сою очередь, имеет следующие отличительные черты:</p>
+<ul>
+    <li>Значения свойств объектов <span class="code">Storage</span> обязаны быть строковыми</li>
+    <li>Свойства, сохраненные в объекте <span class="code">Storage</span> постоянны. Если вы устанавливаете какое-то свойство объекта <span class="code">localStorage</span>, и после чего юзер перезагружает страницу, то сохраненное значение останется доступным.</li>
+</ul>
+<h3>Получение содержимого <span class="code">localStorage</span></h3>
+<p>Стандартный метод извлечения данных из Storage:</p>
+<pre><code class="language-html">&lt;script>
+    var user_id='Chernyshev Egor'
+    if (localStorage.getItem(user_id)){
+        user_data=JSON.parse(localStorage.getItem(user_id))
+    }
+&lt;/script></code></pre>
+<p>Получим содержимое <span class="code">localStorage</span> нашего клиента:</p>
+<pre><code class="language-html">&lt;script>
+    function loc_st_print(){
+        document.querySelector('#locst_ex1').innerHTML='&lt;ol>'
+        var lst=localStorage
+        lst_list=[]
+        for (var i = 0; i &lt; lst.length; i++){
+            lst_list.push(`&lt;li>${lst.key(i)} : ${lst.getItem(lst.key(i))}&lt;/li>`)
+        }
+        for (var i=0; i &lt; lst.length; i++){
+            document.querySelector('#locst_ex1').innerHTML=document.querySelector('#locst_ex1').innerHTML+lst_list[i]
+        }
+        document.querySelector('#locst_ex1').innerHTML=document.querySelector('#locst_ex1').innerHTML+'&lt;/ol>'
+    }
+&lt;/script>
+&lt;button onclick="loc_st_print()">Print &lt;span class="code">localStorage&lt;/span>&lt;/button>
+&lt;div id="locst_ex1">&lt;/div></code></pre>
+<script>
+    function loc_st_print(){
+        document.querySelector('#locst_ex1').innerHTML='<ol>'
+        var lst=localStorage
+        lst_list=[]
+        for (var i = 0; i < lst.length; i++){
+            lst_list.push(`<li>${lst.key(i)} : ${lst.getItem(lst.key(i))}</li>`)
+        }
+        for (var i=0; i < lst.length; i++){
+            document.querySelector('#locst_ex1').innerHTML=document.querySelector('#locst_ex1').innerHTML+lst_list[i]
+        }
+        document.querySelector('#locst_ex1').innerHTML=document.querySelector('#locst_ex1').innerHTML+'</ol>'
+    }
+</script>
+<button onclick="loc_st_print()">Print <span class="code">localStorage</span></button>
+<div id="locst_ex1" style="border: 1px black solid; overflow: overlay;"></div>
+<h3>Сохранение данных в <span class="code">localStorage</span></h3>
+<p>Стандартный метод записи данных в Stoage:</p>
+<pre><code class="language-html">&lt;script>
+    var user_id='Chernyshev Egor'
+    var user_data={
+        occupation: 'web-analyst',
+        age: 27,
+        education: 'bachelor degree'
+    }
+    localStorage.setItem(user_id, JSON.stringify(user_data))
+&lt;/script> </code></pre>
+<pre><code class="language-html">&lt;script>
+    document.addEventListener('DOMContentLoaded', function(){
+        if (localStorage.name){
+            document.querySelector('#loc_st_name').innerHTML=localStorage.name
+        }
+        else {
+            document.querySelector('#loc_st_name').innerHTML = 'Нет имени'
+        }
+    })
+    function loc_st_name_save(){
+        let lst_name=document.getElementById('name_str_to_loc_st').value
+        if (lst_name){
+            localStorage.name=lst_name
+            document.querySelector('#loc_st_name').innerHTML=localStorage.name
+        }
+        else {
+            document.querySelector('#loc_st_name').innerHTML = 'Нет имени'
+        }
+    }
+&lt;/script>
+&lt;div>Введите имя:&lt;input type="text" id="name_str_to_loc_st">&lt;/div>
+&lt;button onclick="loc_st_name_save()">Спросите меня мое имя!&lt;/button>
+&lt;div>&lt;b>Ваше имя в &lt;span class="code">localStorage&lt;/span>: &lt;/b>&lt;span id="loc_st_name">&lt;/span>&lt;/div></code></pre>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    if (localStorage.name){
+        document.querySelector('#loc_st_name').innerHTML=localStorage.name
+    }
+    else {
+        document.querySelector('#loc_st_name').innerHTML = 'Нет имени'
+    }
+})
+function loc_st_name_save(){
+    let lst_name=document.getElementById('name_str_to_loc_st').value
+    if (lst_name){
+        localStorage.name=lst_name
+        document.querySelector('#loc_st_name').innerHTML=localStorage.name
+    }
+    else {
+        document.querySelector('#loc_st_name').innerHTML = 'Нет имени'
+    }
+}
+</script>
+<div>Введите имя:<input type="text" id="name_str_to_loc_st"></div>
+<button onclick="loc_st_name_save()">Спросите меня мое имя!</button>
+<div><b>Ваше имя в <span class="code">localStorage</span>: </b><span id="loc_st_name"></span></div>
+
+<h3>Спецификация <span class="code">localStorage</span></h3>
+<ol>
+    <li><span class="code">localStorage.getItem(key: string)</span> - метод возвращает из контейнера для хранения элемент данных, соответствующий указанному ключу.</li>
+    <li><span class="code">localStorage.setItem(key: string, value: string)</span> - этот метод добавляет в контейнер элемент данных с указанным ключом и значением</li>
+    <li><span class="code">localStorage.removeItem(key: string)</span></li>
+    <li><span class="code">localStorage.clear()</span> - — метод очищает текущий контейнер, то есть удаляет из него все данные.</li>
+    <li><span class="code">localStorage.length</span> — свойство указывает, сколько элементов данных находится в контейнере</li>
+</ol>
+
+<h3>Кодирование/декодирование элементов <span class="code">localStorage</span></h3>
+<p>Т.к. объект Storage способен хранить только строковые значения, то нам необходим метод их кодирования/декодирования</p>
+<pre><code class="language-html">&lt;script>
+    //числа
+    localStorage.х = 10 //трансмутируемый в строку тип сохранится как строка
+    //даты
+    localStorage.lastRead = (new Date()).toUTCString(); //преобразуем в строку
+    let lastRead = new Date(Date.parse(localStorage.lastRead)); //преобразуем в число
+    //структуры данных (объекты)
+    //для этого используется json-код/декод
+    localStorage.data = JSON.stringify(data);
+    let data = JSON.parse(localStorage.data);
+&lt;/script></code></pre>
+
+<h3>Разница между <span class="code">localStorage</span> и <span class="code">sessionStorage</span></h3>
+<table class="">
+    <tr>
+        <th>Storage</th>
+        <th>Время жизни</th>
+        <th>Область видимости хранилища</th>
+    </tr>
+    <tr>
+        <td><span class="code">localStorage</span></td>
+        <td>Данные <span class="code">localStorage</span> хранятся вечно или до тех пор, пока веб-приложение их не отчистит или юзер сам не их не удалит.</td>
+        <td>Ограничен источником документа (политика одинакового источника), т.е. протоколом, именем хоста и портом. <br>Все одинаковые источники разделяют один <span class="code">localStorage</span> (на практике, страницы 1 и того же сайта). Они могут читать и перезаписывать данные одного <span class="code">localStorage</span>.<br>Документы разных источников никогда не смогут читать или перезаписывать данные друг друга (даже если через скрипт из одного источника).<br><span class="code">localStorage</span> также ограничен браузером юзера (нельзя сменить браузер и ожидать того же <span class="code">localStorage</span>)</td>
+    </tr>
+    <tr>
+        <td><span class="code">sessionStorage</span></td>
+        <td>Данные <span class="code">sessionStorage</span> имею время жизни окна верхнего уровня (вкладки браузера, где выполняется скрипт их сохранения).<br>При закрытии окна данные <span class="code">sessionStorage</span> удаляются навсегда. </td>
+        <td>Для <span class="code">sessionStorage</span> справедливы те же ограничения области видимости хранилища, что и для <span class="code">localStorage</span>.<br>Но <span class="code">sessionStorage</span> также ограничивается окнами. 2 окна из одного источника будут иметь 2 разных <span class="code">sessionStorage</span>:<br>у скриптов 1 вкладки нет доступа к <span class="code">localStorage</span> другой вкладки, даже когда это одни и те же вкладки и скрипты.</td>
+    </tr>
+</table>
+<h3>События хранилища</h3>
+<p>При любом изменении данных в localStorage браузер инициирует событие "storage" в любом другом объекте Window, где эти изменения видны (но не в окне, которое вносит изменение). Если открыты 2 вкладки и на одной вносится изменение в localStorage, то другая вкладка получит событие "storage".</p>
+<p>Способы регистрации обработчкика событий "storage":</p>
+<ol>
+    <li>window.addEventListener("storage")</li>
+    <li>window.onstorage()</li>
+</ol>
+<table>
+    <tbody>
+    <tr>
+        <td>Свойства объекта события storage</td>
+        <td>Описание</td>
+    </tr>
+    <tr>
+        <td><span class="code">key</span></td>
+        <td>Имя или ключ элемента, который был установлен или удален. Если вызывался метод <span class="code">.clear()</span>, то это свойство = <span class="code">null</span>.</td>
+    </tr>
+    <tr>
+        <td><span class="code">newValue</span></td>
+        <td>Новое значение элемента при его наличии. При вызове <span class="code">removeItem()</span> этого свойства не будет. </td>
+    </tr>
+    <tr>
+        <td><span class="code">oldValue</span></td>
+        <td>Старое значение измененного/удаленного элемента. Если добавляется новое значение, то этого свойства не будет в объекте.</td>
+    </tr>
+    <tr>
+        <td><span class="code">storageArea</span></td>
+        <td><span class="code">localStorage</span> или <span class="code">sessionStorage</span></td>
+    </tr>
+    <tr>
+        <td><span class="code">url</span></td>
+        <td>URL документа, чей скрипт изменил хранилище.</td>
+    </tr>
+    </tbody>
+</table>
+<h3>Практическое применение <span class="code">Storage</span></h3>
+<p>Основные кейсы применения Storage:</p>
+<ul>
+    <li>Сохранение данных заполения форм: если юзер, например, случайно закрыл браузер во время заполения формы, то его прогресс можно сохранить и восстановить</li>
+    <li>Сохранение предпочтений юзера: если, например, наш сайт имеет светлую и темную тему, то предпочтение одной из них можно сохранить и передать на все открытые юзером страницы</li>
+    <li>Аутентификация юзера: Токер аутентификации можно хранить в Storage, что позволяет юзерам оставаться аутентифицированными между сессиями.</li>
+</ul>
+<p>Теперь к вопросу о том, зачем это нужно на практике. Например, пользователь потребовал, чтобы сайт прекратил анимацию, тогда сайт может сохранить такое предпочтение в localStorage, чтобы соблюсти его при будущих посещениях. Сохраняя его он может вызвать событие, которое передаст другим окнам это предпочтение и позволит изменить сайт в соответствии с ним в реальном времени.</p>
+<p>Теперь допустим, что у сайта есть окно с палитрой инструментов. Когда пользователь настраивает инструмент с материнского окна, то в дочернее окно передает событие изменение localStorage, что также позволяет поддерживать общее состояние в текущем времени.</p>
+<!--todo: написать скрипт демонстрирующий связь между окнами и работу с событием "storage"-->
+<h4>Практическое применение <span class="code">localStorage</span>: сохранение истории просмотра интернет-магазина с истечением срока жизни записей</h4>
+<p><b>Задача:</b>  необходимо сохранить историю просмотров товаров в интернет-мазагине. Сделаем это применимым для данного сайта, сохраняя значение title-тега каждой страницы, которую посещал пользователь. </p>
+<p>Важно заметить: <b>для элементов localStorage возможно задать продолжительность жизни</b>.</p>
+<pre><code class="language-html">&lt;script>
+    var ls_history
+    $(document).ready(function(){
+        const expiration_date=60*60*24*21 //21 день
+//этот скрипт ведет историю просмотров страниц сайта
+//этот скрипт должен располагаться на выделенном сегменте страниц сайта
+//todo: расположить его на каждой странице, чтобы записывать историю
+        var current_page={
+            title: document.querySelectorAll('title')[0].innerHTML,
+            ts: new Date() //отметка времени для контроля над сроком жизни
+        }
+        var view_history = localStorage.getItem('view_history')
+        if (!view_history){
+            view_history=[]
+            view_history.push(current_page)
+            ls_history=JSON.parse(JSON.stringify(view_history))
+            localStorage.setItem('view_history', JSON.stringify([current_page]))
+
+        }
+        else {
+            view_history=JSON.parse(view_history)
+            view_history=checkLS_forUniqness(current_page, view_history)
+            view_history=checkLS_forExpires(view_history, expiration_date)
+            view_history.push(current_page)
+            ls_history=JSON.parse(JSON.stringify(view_history))
+            localStorage.setItem('view_history', JSON.stringify(view_history))
+
+        }
+
+        function checkLS_forExpires(list, expires){
+            var new_list=[]
+
+            for (let i=0; i&lt;list.length; i++){
+                d1=new Date(list[i]['ts']).getTime()
+                if (!d1&lt;(new Date()).getTime()-expires){
+                    new_list.push(list[i])
+                }
+            }
+            return new_list
+        }
+        function checkLS_forUniqness(page, list){
+            var new_list=[]
+            for (let i=0; i&lt;list.length; i++){
+                if (page.title!=list[i].title){
+                    new_list.push(list[i])
+                }
+            }
+            return new_list
+        }
+    })
+&lt;/script></code></pre>
+<p></p>
+<p>Выведем историю в виде таблицы:</p>
+<script>
+    $(document).ready(function(){
+        list_of_dicts_to_table(ls_history, "#locastorage_history_ex")
+    })
+</script>
+<div id="locastorage_history_ex"></div>
+<p>Теоретически возможно воспроизвести полный функционал стороны клиента cookie для localStorage, т.е. установление вермени и срока жизни элемента, </p>
+
+
+
+<h4>Практическое применение <span class="code">localStorage</span>: хранение заполнения форм</h4>
+<p><b>Задача</b>: сохранить данные заполнения форм, чтобы те сохранялись, даже когда пользователь покидает страницу</p>
+<pre><code class="language-html">&lt;script>
+    const elems = document.querySelectorAll('#form_ex5 input');
+    //сохраним значения полей в localStorage
+    function processField(){
+        localStorage.setItem(window.location.href, 'true');
+        localStorage.setItem(this.id, this.value);
+    }
+    // Очищаем поля по одному
+    function clearStored(){
+        elems.forEach(elem => {
+            if (elem.type === 'text') {
+                localStorage.removeItem(elem.id);
+            }
+        });
+    }
+    // Перехватываем нажатие кнопки Submit и очищаем хранилище
+    document.getElementById('submit_ex5').onsubmit = clearStored;
+    // При изменении элемента формы записываем его значение в localStorage
+    elems.forEach(elem => {
+        if (elem.type === 'text') {
+            const value = localStorage.getItem(elem.id);
+            if (value) elem.value = value;
+            // Событие change
+            elem.onchange = processField;
+        }
+    });
+    try {
+        localStorage.setItem('key', 'value');
+    } catch (domException) {
+        if (
+            ['QuotaExceededError', 'NS_ERROR_DOM_QUOTA_REACHED'].includes(
+                domException.name
+            )
+        ) {
+            // Превышен размер файла; обрабатываем ошибку
+        } else {
+            // Какая-то другая ошибка; обрабатываем ее
+        }
+    }
+&lt;/script></code></pre>
+<script>
+    const elems = document.querySelectorAll('#form_ex5 input');
+    //сохраним значения полей в localStorage
+    function processField(){
+        localStorage.setItem(window.location.href, 'true');
+        localStorage.setItem(this.id, this.value);
+    }
+    // Очищаем поля по одному
+    function clearStored(){
+        elems.forEach(elem => {
+            if (elem.type === 'text') {
+                localStorage.removeItem(elem.id);
+            }
+        });
+    }
+    // Перехватываем нажатие кнопки Submit и очищаем хранилище
+    document.getElementById('submit_ex5').onsubmit = clearStored;
+    // При изменении элемента формы записываем его значение в localStorage
+    elems.forEach(elem => {
+        if (elem.type === 'text') {
+            const value = localStorage.getItem(elem.id);
+            if (value) elem.value = value;
+            // Событие change
+            elem.onchange = processField;
+        }
+    });
+    try {
+        localStorage.setItem('key', 'value');
+    } catch (domException) {
+        if (
+            ['QuotaExceededError', 'NS_ERROR_DOM_QUOTA_REACHED'].includes(
+                domException.name
+            )
+        ) {
+            // Превышен размер файла; обрабатываем ошибку
+        } else {
+            // Какая-то другая ошибка; обрабатываем ее
+        }
+    }
+</script>
+<style>
+    #form_ex5{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+</style>
+<form id="form_ex5">
+    <div><label for="text_input_ex5">Text</label>
+        <input id="text_input_ex5" type="text">
+    </div>
+    <div>
+        <label for="number_input_ex5">Number</label>
+        <input id="number_input_ex5" type="number">
+    </div>
+    <div>
+        <label for="checkbox_input_ex5">Chckbox</label>
+        <input id="checkbox_input_ex5" type="checkbox">
+    </div>
+    <button id="submit_ex5" type="submit">Submit</button>
+</form>
+
+<h2>Cookie</h2>
+<p><span class="code">Cookie</span>-набор - это небольшой объем данных, который сохранен браузером и ассоциирован с определенным документом. Cookie проектировались для программирования на стороне сервера и на самом низком уровне реализованы как расширение протокола HTTP. Данные cookie передаются автоматически между сервером и браузером, так что скрипты стороны сервера могут читать и записывать cookie, которые хранятся на стороне клиента.</p>
+<p>API JS для взаимодействия с cookie радикально устаревший и неудобный. И потому часто приходится писать собственные методы и функции для обработки cookie. </p>
+<h3>Чтение cookies</h3>
+<pre><code class="language-html">&lt;script>
+    //функция, возвращающая cookie документа как объект Map.
+    //предполагает, что cookie закодированы через encodeURIComponent()
+    function getCookies() {
+        let cookies = new Map();
+        let all = document.cookie;
+        let list=all.split("; ")
+        for (let cookie of list){
+            if (!cookie.includes("=")) continue;
+            let p=cookie.indexOf("=")
+            let name=cookie.substring(0,p)
+
+            value=decodeURIComponent(value)
+            cookies.set(name, value)
+        }
+        return cookies;
+    }
+&lt;/script></code></pre>
+
+<p>Сookie могут использоваться для автозаполнения форм, если они однажды уже были заполнены.</p>
+<p>Cookie предназначены для сохранения данных небольшого размера скриптами стороны сервера, а эти данные передаются серверу каждый раз когда запрашивается соответствующий URL. </p>
+<p>Первым делом прочтем те cookie, которые уже хранятся на стороне клиента:</p>
+<pre><code class="language-html">&lt;script>
+    function show_cookie(){
+        document.querySelector('#cookie_ex_output').innerHTML=document.cookie
+    }
+&lt;/script></code></pre>
+<script>
+    function show_cookie(){
+        document.querySelector('#cookie_ex_output').innerHTML=document.cookie
+    }
+</script>
+<button onclick="show_cookie()">Вывести cookie</button>
+<div id="cookie_ex_output"></div>
+
+<p>Очень удобно читать cookie с помощью API cookieStore. Однако этот способ доступен только через для протокола https.</p>
+<pre><code class="language-html">&lt;script>
+    cookie_list=[]
+    cookieStore.getAll().then(cookies=>cookie_list.push(cookies))
+    console.log(cookie_list)
+    $(document).ready(function (){
+        list_of_dicts_to_table(cookie_list[0], '#table_cookie_store_ex')
+    })
+&lt;/script></code></pre>
+<script>
+    var cookie_list=[]
+    cookieStore.getAll().then(cookies=>cookie_list.push(cookies));
+    $(document).ready(function (){
+        list_of_dicts_to_table(cookie_list[0], '#table_cookie_store_ex')
+    })
+
+    function get_cookieStore(){
+        cookie_list=[]
+        cookieStore.getAll().then(cookies=>cookie_list.push(cookies));
+        console.log(cookie_list)
+        $('#table_cookie_store_ex').children().detach()
+        list_of_dicts_to_table(cookie_list[0], '#table_cookie_store_ex')
+    }
+    //todo: написать автообновление cookie-таблицы
+
+    // var refresh_interval
+    // $(document).ready(function(){
+    //     $('#checkbox_coociestore_ex').click(function(){
+    //         if ($(this).is(":checked")){
+    //             refresh_interval=setInterval(function(){get_cookieStore()}, 1000)
+    //         }
+    //     })
+    // })
+
+    // $(document).ready(function(){
+    //     $('#checkbox_coociestore_ex').click(function(){
+    //         if ($(this).is(":checked")){
+    //
+    //
+    //         }
+    //         })
+
+
+
+
+</script>
+<span>Атообноление <input type="checkbox" id="checkbox_coociestore_ex"> <input type="number" min="1" id="seconds_coociestore_ex"></span>
+<button id="button_cookie_store_ex" onclick="get_cookieStore()">Вывести таблицу cookie из cookieStore</button>
+
+<style>
+    #table_cookie_store_ex {
+        /*todo: форматировать таблицу по учебникам (новая большая книга css (гл. 11) и CSS. Рецеты программирования (гл. 9))*/
+    }
+</style>
+<div style="overflow-x:auto; font-size: 1em;" id="table_cookie_store_ex"></div>
+
+
+
+
+<h3>Запись cookie</h3>
+<p>Самый просто метод записи cookie имеет следующий вид:</p>
+<pre><code class="language-html">&lt;script>
+    document.cookie=`version=${encodeURIComponent(document.lastModified)}`
+&lt;/script></code></pre>
+<p>Функция <span class="code">encodeURIComponent(string)</span> кодирует се символы строки, за исключением цифр, латинских букв и <span class="code">- _ . ! ~ * ' ( )</span></p>
+<pre><code class="language-html">&lt;script>
+    function set_cookie_input(){
+        document.cookie=`${encodeURIComponent(document.getElementById('cookie_name_var').value)}=${encodeURIComponent(document.getElementById('cookie-input').value)}`
+    }
+&lt;/script></code></pre>
+<script>
+    function set_cookie_input(){
+        document.cookie=`${encodeURIComponent(document.getElementById('cookie_name_var').value)}=${encodeURIComponent(document.getElementById('cookie-input').value)}`
+    }
+</script>
+<div>
+    <input placeholder="name" id="cookie_name_var" type="text">
+    <input placeholder="cookie_input" id='cookie-input' type="text">
+    <button  onclick="set_cookie_input()">записать cookie</button>
+</div>
+<p>Значения cookie-наборов не могут содержать точки с запятой, запятые или пробельные символы. По этой причине и применяется URI-кодирование.</p>
+<p>Записанный таким вышеописанным образом cookie-набор теряется всякий раз при закрытии браузера, чтобы этого не происходило необходимо задать время жизни cookie-набора. Это делается с помощью свойства <span class="code">max-age=seconds</span>.</p>
+<h3>Практика: UI работы с cookie</h3>
+<ul>
+    <li><span class="code">key</span> (Ключ)</li>
+    <li><span class="code">value</span> (Значение)</li>
+    <li><span class="code">max-age</span> (Время жизни) - период в секнудах, в течение которого cookie действительно. По умолчанию время сеанса браузера</li>
+    <li><span class="code">expires</span> (Дата истечения жизни) - дата истечения жизни cookie в формате GMTString</li>
+    <li><span class="code">domain</span> (Домен) - домен, которому доступно значение данного cookie. По умолчанию это домен текущего хоста. Если задать конкретный домен, то cookie будут доступны также в поддоменах данного домена. Например, <span class="code">domain=".example.com"</span> - все поддомены</li>
+    <li><span class="code">path</span> (Путь): по умолчанию данное значение cookie доступно по текущему пути. Например, <span class="code">path="/"</span> - все страницы домена (те же границы, что и у localStorage); <span class="code">path="/catalog"</span> - все страницы данного каталога и подкаталогов</li>
+    <li><span class="code">secure</span>: {true:HTTPS, false:HTTP}</li>
+    <li><span class="code">samesite</span>: по умолчанию равен <span class="code">strict</span>. В этом случае cookie не передается между разными сайтами. Если равен lax, то cookie будет передаваться при запросах GET верхнего уровня.</li>
+    
+</ul>
+
+<script>
+
+    //Интерфейс работы с cookie
+    function onclick_set_cookie(){
+        let validity=true;
+        let cName, cValue, cMaxAge, cExpires, cPath, cDomain, cSecure, cSamesite;
+        cName=document.getElementById('cookie_name_ex3').value
+        cValue=document.getElementById('cookie_value_ex3').value
+        if (!cName) {
+            $('#cookie_name_ex3').effect('highlight', {color: "#f68171"})
+            $('#cookie_name_ex3').trigger('focus')
+            validity=false
+            // jQuery('#cookie_name_ex3').css('background','#fcc1c1')
+        }
+        if (!cValue) {
+            $('#cookie_value_ex3').effect('highlight', {color: "#f68171"})
+            $('#cookie_value_ex3').trigger('focus')
+            validity=false
+        }
+        if ($('.max-age:visible').val()){
+            if ($('#max-age_sec_ex3:visible').length>0){
+                if ($('.max-age:visible').val()!=0){
+                    cMaxAge=$('.max-age').val()
+                }
+            }
+            else {
+                let selected_time=new Date($('.max-age:visible').val()).getTime()
+                let time_now=new Date().getTime()
+                if (time_now>selected_time){
+                    $('.max-age:visible').effect('highlight', {color: "#f68171"})
+                    $('.max-age:visible').trigger('focus')
+                    validity=false
+                }
+                else {
+                    cExpires = new Date($('.max-age:visible').val()).toUTCString()
+                }
+
+            }
+        }
+        if ($('#domain_ex3').val()){
+            if ($('#domain_ex3').val().match(/^www\./) || !$('#domain_ex3').val().match(/^(\.?((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63})|localhost$/i)){
+                $('#domain_ex3').effect('highlight', {color: "#f68171"})
+                $('#domain_ex3').trigger('focus')
+                validity=false
+            }
+            else {
+                cDomain=$('#domain_ex3').val()
+            }
+
+        }
+        if ($('#path_ex3').val()){
+            if (!$('#path_ex3').val().match(/^((\/[a-zA-Z0-9-_]+)+|\/)$/)){
+                $('#path_ex3').effect('highlight', {color: "#f68171"})
+                $('#path_ex3').trigger('focus')
+                validity=false
+            }
+            else {
+                 cPath=$('#path_ex3').val()
+            }
+        }
+
+        if ($('#secure_ex3:checked').length>0){
+            cSecure=true
+        }
+
+        if ($('#samesite_lax_ex3:checked').length>0){
+            cSamesite='lax'
+        }
+
+        if (validity){
+            $(".input_ex3:visible").each(function(){
+                if ($(this).val()){
+                    $(this).effect('highlight', {color: "#aad9aa"})
+                }
+            })
+            console.log(cExpires)
+            set_cookie(name=cName, value=cValue, max_age=cMaxAge, expires=cExpires, path=cPath, domain=cDomain, secure=cSecure, samesite=cSamesite);
+        }
+    }
+
+    function set_cookie(name, value, max_age, expires, path, domain, secure, samesite){
+        let cookie=`${encodeURIComponent(name)}=${encodeURIComponent(value)}`
+        if (max_age) cookie+='; max-age='+max_age;
+        if (expires) cookie+='; expires='+expires;
+        if (path) cookie+='; path='+path;
+        if (domain) cookie+='; domain='+domain;
+        if (secure) cookie+='; secure='+secure;
+        if (samesite) cookie+='; samesite='+samesite;
+        document.cookie=cookie
+        console.log(cookie)
+
+    }
+
+
+    //выбор формата времени истечения жизни
+    $(document).ready(function(){
+            $('#max-age_date_ex3').attr('min', new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":")))
+
+
+        $('#select_ex3').change(function(){
+            if ($('#select_ex3').val()=='Секунды' ){
+                $('#max-age_date_ex3').hide()
+                $('#max-age_sec_ex3').show()
+            }
+            if ($('#select_ex3').val()=='Дата истечения жизни' ){
+                $('#max-age_date_ex3').show()
+                $('#max-age_sec_ex3').hide()
+            }
+        })
+    })
+
+
+
+</script>
+
+<style>
+    .line-radio {
+        display: inline-grid;
+    }
+    .samesite-title{
+        vertical-align: bottom;
+    }
+</style>
+
+<div style="display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;">
+    <input class="input_ex3" placeholder="cookie_name" id="cookie_name_ex3" type="text">
+    <input class="input_ex3" placeholder="cookie_value" id='cookie_value_ex3' type="text">
+    <span>
+        <input class="input_ex3 max-age" placeholder="max-age"  id='max-age_sec_ex3' type="number" min="0">
+        <input class="input_ex3 max-age" placeholder="max-age" id='max-age_date_ex3' type="datetime-local" min="" hidden>
+        <select id='select_ex3'>
+            <option class="input_ex3" value="Секунды">Секунды</option>
+            <option class="input_ex3" value="Дата истечения жизни">Дата истечения жизни</option>
+        </select></span>
+    <input class="input_ex3" placeholder="domain" id='domain_ex3' type="text">
+    <input class="input_ex3" placeholder="path" id='path_ex3' type="text">
+    <span>secure:<input placeholder="secure" id='secure_ex3' type="checkbox"></span>
+    <div><span class="samesite-title">samesite:</span>
+        <span class="line-radio"><span class="linename">strict</span><input  name="samesite" checked type="radio"></span>
+        <span class="line-radio"><span class="linename">lax</span><input id="samesite_lax_ex3" name="samesite" type="radio"></span>
+    </div>
+    <button  onclick="onclick_set_cookie()">записать cookie</button>
+</div>
+
+<div style="border: black 1px solid;">
+    <div style="display: flex;flex-wrap: nowrap;justify-content: space-evenly;">
+    <div>cookie_name</div>
+    <div>cookie_value</div>
+    <div>max-age</div>
+    <div>cookie_path</div>
+    <div>cookie_domain</div>
+    <div>secure</div>
+    </div>
+</div>
+
+<h3>Сравнение Cookie, localStorage и sessionStorage</h3>
+<table>
+    <tr>
+        <th>Критерий</th>
+        <th>Cookies</th>
+        <th>localStorage</th>
+        <th>sessionStorage</th>
+    </tr>
+    <tr>
+        <td>Максимальный размер</td>
+        <td>4 кБ</td>
+        <td>5 Мб</td>
+        <td>5 Мб</td>
+    </tr>
+    <tr>
+        <td>Блокируемы юзером</td>
+        <td>Да</td>
+        <td>Да</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td>Автоистечение срока</td>
+        <td>Да</td>
+        <td>Нет</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td>Поддерживаемый тип</td>
+        <td>string</td>
+        <td>string</td>
+        <td>string</td>
+    </tr>
+    <tr>
+        <td>Поддержка браузерами</td>
+        <td>Высокая</td>
+        <td>Высокая</td>
+        <td>Высокая</td>
+    </tr>
+    <tr>
+        <td>Доступ со стороны сервера</td>
+        <td>Да</td>
+        <td>Нет</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>Передача данных с каждым HTTP-реквестом</td>
+        <td>Да</td>
+        <td>Нет</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>Изменяемы юзером</td>
+        <td>Да</td>
+        <td>Да</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td>Поддерживаются на SSL</td>
+        <td>Да</td>
+        <td>Нет</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>Доступ есть у...</td>
+        <td>Клиента и сервера</td>
+        <td>Клиента</td>
+        <td>Клиента</td>
+    </tr>
+    <tr>
+        <td>Чистка/удаление</td>
+        <td>PHP, JS, автоматически</td>
+        <td>только JS</td>
+        <td>JS и автоматически</td>
+    </tr>
+    <tr>
+        <td>Срок жизни</td>
+        <td>Как указано</td>
+        <td>До удаления</td>
+        <td>До закрытия вкладки</td>
+    </tr>
+    <tr>
+        <td>Безопасное хранилище</td>
+        <td>Нет</td>
+        <td>Нет</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>Риск CSRF-атак</td>
+        <td>Да</td>
+        <td>Нет</td>
+        <td>Нет</td>
+    </tr>
+</table>
+<h4>Сравнение <span class="code">localStorage</span>, <span class="code">sessionStorage</span> и <span class="code">cookies</span> на практике</h4>
+
+<script>
+    //todo: заставить этот скрипт работать
+    function setCookie_ex4(cookie, value) {
+        const cookieVal = `${cookie}=${encodeURIComponent(value)}; path=/`;
+        document.cookie = cookieVal;
+    }
+
+    function getCookie_ex4(key) {
+        const keyValue = key.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
+        const cookie = document.cookie;
+        const regex = new RegExp(`(?:^|;)\\s?${keyValue}=(.*?)(?:;|$)`, 'i');
+        const match = cookie.match(regex);
+        return match && decodeURIComponent(match[1]);
+    }
+
+    function eraseCookie_ex4(key) {
+        const cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+        document.cookie = cookie;
+    }
+
+    // Сохраняем данные в сессии и cookie
+    function setData_ex4() {
+        const key = document.getElementById('st_key_ex4').value;
+        const value = document.getElementById('st_value_ex4').value;
+        // Сохраняем данные в sessionStorage
+        sessionStorage.setItem(key, value);
+        // Сохраняем данные в localStorage
+        localStorage.setItem(key, value);
+        // Сохраняем данные в cookie
+        setCookie_ex4(key, value);
+    }
+
+    function getData_ex4() {
+        try {
+            const key = document.getElementById('st_key_ex4').value;
+            const session = document.getElementById('session_str_ex4');
+            const local = document.getElementById('local_str_ex4');
+            const cookie = document.getElementById('cookies_str_ex4');
+            // Обновляем отображение
+            session.innerHTML = '';
+            local.innerHTML = '';
+            cookie.innerHTML = '';
+            // sessionStorage
+            let value = sessionStorage.getItem(key) || '';
+            if (value) session.innerHTML = `<p>${value}</p>`;
+            // localStorage
+            value = localStorage.getItem(key) || '';
+            if (value) local.innerHTML = `<p>${value}</p>`;
+            // cookie
+            value = getCookie_ex4(key) || '';
+            if (value) cookie.innerHTML = `<p>${value}</p>`;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    function removeData_ex4() {
+        const key = document.getElementById('st_key_ex4').value;
+        // sessionStorage
+        sessionStorage.removeItem(key);
+        // localStorage
+        localStorage.removeItem(key);
+        // cookie
+        eraseCookie_ex4(key);
+        // Обновляем отображение
+        getData_ex4();
+    }
+
+    document.getElementById('set_ex4').onclick = setData_ex4();
+    document.getElementById('get_ex4').onclick = getData_ex4();
+    document.getElementById('erase_ex4').onclick = removeData_ex4();
+</script>
+
+<style>
+    #form_ex4 div {
+        margin: 10px;
+    }
+    .data-ex4 {
+        width:100px;
+        background-color: #f8f8ad;
+        padding: 5px;
+    }
+</style>
+<form id="form_ex4">
+    <div>
+        <label for="st_key_ex4">Введите ключ:</label>
+        <input type="text" id="st_key_ex4">
+    </div>
+    <div>
+        <label for="st_value_ex4">Введите значение:</label>
+        <input type="text" id="st_value_ex4">
+    </div>
+</form>
+<button id="set_ex4">SET</button>
+<button id="get_ex4">GET</button>
+<button id="erase_ex4">ERASE</button>
+
+<p>Sessions:</p>
+<div id="session_str_ex4" class="data-ex4"></div>
+<p>Local:</p>
+<div id="local_str_ex4" class="data-ex4"></div>
+<p>Cookies:</p>
+<div id="cookies_str_ex4" class="data-ex4"></div>
+
+
+<h2>IndexedDB</h2>
+<p>IndexedDB - объектная база данных (т.е. не реляционная), которая мощнее ,чем localStorage, спроектированный по модели "ключ-значение". IndexedDB также как и localStorage ограничена одним источником. Каждый источник может иметь неограниченное число таких баз данных. </p>
+<p>В API-интерфейсе IndexedDB база данных — это просто коллекция
+    именованных объектных хранилищ. Объектное хранилище запоминает объекты. Объекты сериализируются в объектное хранилище с использованием алгоритма структурированного клонирования, т.е. сохраняемые
+    объекты могут иметь свойства, чьими значениями являются объекты Map, Set
+    или типизированные массивы. Каждый объект обязан иметь ключ, по которому он может сортироваться и извлекаться из хранилища. Ключи должны быть
+    уникальными — два объекта в том же самом хранилище не могут иметь одинаковые ключи — и они должны поддерживать естественное упорядочение, чтобы их можно было сортировать. Допустимыми ключами в JavaScript будут строки, числа и объекты Date. База данных IndexedDB способна автоматически генерировать уникальный ключ для каждого объекта, вставляемого в базу данных.</p>
+<p>Помимо извлечения объектов из объектного хранилища по значению их первичного ключа вас может интересовать возможность поиска на основе значений
+    других свойств в объекте. Для этого в объектном хранилище можно определить
+    любое количество индексов. (Наличие возможности индексации и объясняет
+    название IndexedDB.) </p>
+<p>IndexedDB обеспечивает гарантии атомарности: запросы и обновления базы
+    Данных группируются внутри транзакции, так что они все вместе успешны или
+    все вместе отказывают и никогда не оставляют базу данных в неопределенном,
+    частично обновленном состоянии. Транзакции в IndexedDB проще, чем во многих API-интерфейсах баз данных; позже мы снова к ним вернемся</p>
+<p>Чтобы запросить
+    Или обновить базу данных, сначала вы должны ее открыть (указав имя). Далее
+    вы создаете объект транзакции и используете его для нахождения в базе данных желаемого объектного хранилища, тоже по имени. В заключение вы ищете объект, вызывая метод <span class="code">get()</span> объектного хранилища, либо сохраняете новый объект, вызывая метод <span class="code">put()</span> (или <span class="code">add()</span>, если хотите избежать перезаписывания существующих объектов).</p>
+<p>Если вы хотите найти объекты для диапазона ключей, тогда создайте объект
+    <span class="code">IDBRange</span>, который задает верхнюю и нижнюю границы диапазона, и передайте его методу <span class="code">getAll()</span> или <span class="code">openCursor()</span> объектного хранилища.</p>
+<p>Если вы желаете сделать запрос с применением вторичного ключа, тогда
+    найДите именованный индекс объектного хранилища и затем вызовите метод
+    <span class="code">get()</span>, <span class="code">getAll()</span> или <span class="code">openCursor()</span> объекта индекса, передавая ему либо одиночный ключ, либо объект IDBRange</p>
+<p>Однако концептуальная простота API-интерфейса IndexedDB осложняется
+    тем фактом, что API-интерфейс является асинхронным (поэтому веб-приложеН0 я могут его использовать без блокирования главного потока пользовательского интерфейса браузера). API-интерфейс IndexedDB был определен до широкой поддержки объектов Prom ise, так что он основан на событиях, а не на
+    prom ise, т.е. не работает с ключевыми словами async и aw ait.</p>
+<p>Создание транзакций и поиск объектных хранилищ и индексов представляют собой синхронные операции. Но открытие базы данных, обновление объектного хранилища и запрашивание хранилища или индекса относятся к асинхронным операциям. Все эти асинхронные методы немедленно возвращают объект
+    запроса. Браузер инициирует события успеха или неудачи в объекте запроса,
+    когда запрос завершается успешно или отказывает, и вы можете определить
+    обработчики с помощью свойств o n su ccess и o n e rro r. Внутри обработчика
+    o n su ccess результат операции доступен как свойство r e s u l t объекта запроса.
+    Еще одно удобное событие, "com plete", отправляется объектам транзакций,
+    когда транзакция успешно завершена</p>
+<p>Полезная особенность такого асинхронного API-интерфейса заключается
+    в том, что он упрощает управление транзакциями. API-интерфейс IndexedDB
+    вынуждает вас создавать объект транзакции для получения объектного хранилища, в котором вы можете выполнять запросы и обновления. В синхронном
+    API-интерфейсе вы ожидали бы явной пометки конца транзакции за счет вызова метода commit (). Но в IndexedDB транзакции фиксируются автоматически
+    (если вы их явно не прекращаете), когда все обработчики событий onsuccess
+    были запущены и больше нет незаконченных асинхронных запросов, которые
+    относятся к данной транзакции.
+</p>
+<p>тносятся к данной транзакции.
+    Есть еще одно событие, которое важно для API-интерфейса IndexedDB. Когда
+    вы открываете базу данных в первый раз или инкрементируете номер версии
+    существующей базы данных, IndexedDB инициирует событие "upgradeneeded'
+    в объекте запроса, возвращенном вызовом i n d e x e d D B . open (). Задача обработчика событий "upgrade n e e d e d " — определить или обновить схему для новой
+    базы данных (или новой версии существующей базы данных). В случае баз данных IndexedDB это означает создание объектных хранилищ и определение в них
+    индексов. Фактически API-интерфейс IndexedDB позволяет вам создать объектное хранилище либо индекс только в ответ на событие "upgradeneeded".
+</p>
+<p>Ознакомившись с предложенным высокоуровневым обзором IndexedDB, ®ы
+    должны быть в состоянии понять пример 15.13, в котором IndexedDB применяется для создания и запрашивания базы данных, отображающей почтовые коды
+    США на города. В нем демонстрируются многие (но не все) основные средств*
+    IndexedDB. Код примера 15.13 длинный, но он хорошо прокомментирован.</p>
+<!--todo: переписать эту главу и обработать код (стр 585 Флэнаган)-->
+// Эта служебная функция асинхронно получает объект базы данных
+ц (при необходимости создавая и инициализируя базу данных)
+/ / и передает ее обратному вызову,
+function withDB (callback) {
+let request = indexedDB.open("zipcodes", 1); // Запросить версию 1
+// базы данных.
+request.onerror = console.error; // Сообщать о любых ошибках
+request.onsuccess =()=>{ // или вызывать это в случае успеха.
+let db = request.result; // Результатом запроса будет база данных,
+callback(db); // Вызвать обратный вызов с базой данных.
+};
+// Если версия 1 базы данных пока не существует, тогда будет запущен
+// этот обработчик событий. Он используется для создания и инициализации
+// объектных хранилищ и индексов, когда база данных впервые создается,
+// или для их модификации, когда мы переключаемся с одной версии схемы
+// базы данных на другую.
+request.onupgradeneeded = () => { initdb(request.result, callback); };
+}
+// withDB () вызывает эту функцию, если база данных пока еще
+// не инициализирована. Мы устанавливаем базу данных и наполняем ее данными,.
+// затем передаем базу данных функции обратного вызова.
+//
+// Наша база данных почтовых кодов включает одно объектное хранилище,
+// которое содержит объекты следующего вида:
+И
+И {
+И zipcode: "02134”,
+// city: "Allston",
+// state: "MA",
+U )
+//
+//Мы используем свойство zipcode в качестве ключа базы данных
+//и создаем индекс для названия города (свойства city) .
+function initdb(db, callback) {
+// Создать объектное хранилище, задав имя хранилища и объект
+// параметров, который включает "путь к ключу", указывающий
+// имя свойства поля ключа для этого хранилища,
+let store = db.createObjectStore ("zipcodes", // Имя хранилища.
+{ keyPath: "zipcode" });
+// Индексировать объектное хранилище по названию города и почтовому коду.
+/ / В этом методе строка с путем к ключу передается непосредственно как
+// обязательный аргумент, а не как часть объекта параметров,
+store.createlndex("cities", "city");
+// Получить данные, которыми мы собираемся инициализировать базу данных.
+// Файл данных zipcodes. json был сгенерирован из данных, подпадающих
+// под лицензию Creative Commons и доступных в www.geonames.org:
+// https://download.geonames.org/export/zip/US.zip.
+fetch("zipcodes.json") // Сделать HTTP-запрос GET.
+.then(response => response.j son()) // Разобрать тело как JSON.
+then(zipcodes «> { // Получить 40 Кбайт записей
+/ / с почтовыми кодами.
+// Для вставки данных почтовых кодов в базу данных нам необходим
+// объект транзакции. Чтобы создать объект транзакции, нужно
+// указать, какие объектные хранилища мы будем использовать
+// (у нас есть только одно), и сообщить ему, что мы планируем
+// выполнять запись в базу данных, а не только чтение:
+let transaction = db.transaction(["zipcodes”], "readwrite");
+transaction.onerror = console.error;
+// Получить наше объектное хранилище из транзакции,
+let store = transaction, objects tore ("zipcodes");
+// Наилучшая характеристика API-интерфейса IndexedDB заключается
+/ / в том, что объектные хранилища * действительно* просты.
+// Вот как можно добавлять (или обновлять) наши записи:
+for(let record of zipcodes) { store.put(record); }
+// После успешного завершения транзакции база данных инициализи-
+// рована и готова к использованию, так что мы можем вызвать функцию
+// обратного вызова, которая первоначально была передана withDBO .
+transaction.oncomplete = () => { callback(db); };
+});
+}
+// Для заданного почтового кода функция использует API-интерфейс IndexedDB,
+// чтобы асинхронно искать название города с таким почтовым кодом,
+// и передает его указанному обратному вызову или null, если город не найден,
+function lookupCity(zip, callback) {
+withDB(db => {
+// Создать для этого запроса объект транзакции, выполняющей только
+// чтение. Аргументом является массив объектных хранилищ,
+// которые необходимо использовать.
+let transaction = db. transaction(["zipcodes"]);
+// Получить объектное хранилище из транзакции,
+let zipcodes = transaction.objectStore("zipcodes");
+//Запросить объект,который соответствует указанному ключу почтового кода.
+// Строки кода выше были синхронными, но следующие строки асинхронные,
+let request = zipcodes.get(zip);
+request.onerror = console.error; // Сообщать о любых ошибках
+request.onsuccess =()=>{ // или вызывать это в случае успеха,
+let record = request.result; // Это результат запроса,
+if (record) { // Если совпадение найдено, тогда передать
+// его обратному вызову,
+callback(4${record.city}, ${record.state}');
+} else { // Иначе сообщить обратному вызову о том,
+// что ничего не найдено,
+callback(null);
+}
+};
+});
+}
+// Для заданного названия города функция использует API-интерфейс IndexedDB,
+// чтобы асинхронно искать все записи с почтовыми кодами для всех городов
+// (в любых штатах), которые имеют такое (чувствительное к регистру) название,
+function lookupZipcodes(city, callback) {
+withDB(db => {
+// Как и ранее, мы создаем транзакцию и получаем объектное хранилище,
+let transaction = db. transact ion (["zipcodes"]);
+let store = transaction.objectStore("zipcodes");
+//На этот раз мы также получаем индекс городов в объектном хранилище,
+let index = store.index("cities");
+// Запросить все совпадающие записи в индексе с указанным названием
+// города и после получения передать их обратному вызову.
+/ / В случае ожидание большего количества результатов
+// взамен можно использовать openCursorO .
+let request = index.getAll(city);
+request.onerror = console.error;
+request.onsuccess = () => { callback(request.result); };
+});
+}
+
+</body>
+</html>
