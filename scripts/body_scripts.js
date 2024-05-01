@@ -11,12 +11,19 @@ $(function(){
 * хедер
 * автооглавление
 * подсветка кода
+* подсветка для span.code
 * */
 $(function(){
     $('body').prepend('<div id="header"></div>')
     $("#header").load(!(location.pathname=='/') ? "../common/header.html" : "common/header.html")
     $('h1').after('<div id="autonav"></div>')
+    $('span.code').each(function(){
+        $(this).replaceWith(`<pre class="span-code"><code class="language-javascript">${$(this).html()}</code></pre>`)
+    })
     hljs.highlightAll();
+    $(".span-code").replaceWith(function(){
+        return this.outerHTML.replace("<pre class=\"span-code\"", "<span class=\"span-code\"").replace("</pre", "</span")
+    });
 })
 //Автоооглавление
 if (!location.pathname.endsWith('index.html')){
