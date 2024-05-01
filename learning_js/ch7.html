@@ -8,52 +8,16 @@
     <script src='../modules/jquery-3.7.1.min.js'></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-    <script src="../scripts/body_scripts.js"></script>
+
     <link rel="stylesheet" href="../modules/vs2015.min.css">
     <script src="../modules/highlight.min.js"></script>
-    <script>$(function(){hljs.highlightAll();})</script>
-    <script>$(function(){$("#header").load("../common/header.html");});</script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WD3PT3ZV');</script>
-    <!-- End Google Tag Manager -->
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(95750180, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-        });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N43FPXHDPN"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-N43FPXHDPN');
-    </script>
+    <script src="../scripts/body_scripts.js"></script>
+    <script src="../common/counters_head.js"></script>
     <title>Глава 7. Хранение данных на стороне клиента</title>
 
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+<script src="../common/counters_body.js"></script>
 
 <h1>Глава 7. Хранение данных на стороне клиента</h1>
 <h2>Способы хранения данных на стороне браузера</h2>
@@ -495,7 +459,7 @@ function loc_st_name_save(){
 
     // var refresh_interval
     // $(document).ready(function(){
-    //     $('#checkbox_coociestore_ex').click(function(){
+    //     $('#checkbox_coociestore_ex').on('click', function(){
     //         if ($(this).is(":checked")){
     //             refresh_interval=setInterval(function(){get_cookieStore()}, 1000)
     //         }
@@ -503,7 +467,7 @@ function loc_st_name_save(){
     // })
 
     // $(document).ready(function(){
-    //     $('#checkbox_coociestore_ex').click(function(){
+    //     $('#checkbox_coociestore_ex').on('click', function(){
     //         if ($(this).is(":checked")){
     //
     //
@@ -554,7 +518,7 @@ function loc_st_name_save(){
 <ul>
     <li><span class="code">key</span> (Ключ)</li>
     <li><span class="code">value</span> (Значение)</li>
-    <li><span class="code">max-age</span> (Время жизни) - период в секнудах, в течение которого cookie действительно. По умолчанию время сеанса браузера</li>
+    <li><span class="code">max-age</span> (Время жизни) - период в секундах, в течение которого cookie действительно. По умолчанию время сеанса браузера</li>
     <li><span class="code">expires</span> (Дата истечения жизни) - дата истечения жизни cookie в формате GMTString</li>
     <li><span class="code">domain</span> (Домен) - домен, которому доступно значение данного cookie. По умолчанию это домен текущего хоста. Если задать конкретный домен, то cookie будут доступны также в поддоменах данного домена. Например, <span class="code">domain=".example.com"</span> - все поддомены</li>
     <li><span class="code">path</span> (Путь): по умолчанию данное значение cookie доступно по текущему пути. Например, <span class="code">path="/"</span> - все страницы домена (те же границы, что и у localStorage); <span class="code">path="/catalog"</span> - все страницы данного каталога и подкаталогов</li>
@@ -658,7 +622,7 @@ function loc_st_name_save(){
 
 
     //выбор формата времени истечения жизни
-    $(document).ready(function(){
+    $(function(){
             $('#max-age_date_ex3').attr('min', new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":")))
 
 
@@ -922,7 +886,7 @@ function loc_st_name_save(){
 
 
 <h2>IndexedDB</h2>
-<p>IndexedDB - объектная база данных (т.е. не реляционная), которая мощнее ,чем localStorage, спроектированный по модели "ключ-значение". IndexedDB также как и localStorage ограничена одним источником. Каждый источник может иметь неограниченное число таких баз данных. </p>
+<p>IndexedDB - объектная база данных (т.е. не реляционная), которая мощнее ,чем localStorage, спроектированный по модели "ключ-значение". IndexedDB также, как и localStorage ограничена одним источником. Каждый источник может иметь неограниченное число таких баз данных. </p>
 <p>В API-интерфейсе IndexedDB база данных — это просто коллекция
     именованных объектных хранилищ. Объектное хранилище запоминает объекты. Объекты сериализируются в объектное хранилище с использованием алгоритма структурированного клонирования, т.е. сохраняемые
     объекты могут иметь свойства, чьими значениями являются объекты Map, Set
@@ -945,7 +909,7 @@ function loc_st_name_save(){
     найДите именованный индекс объектного хранилища и затем вызовите метод
     <span class="code">get()</span>, <span class="code">getAll()</span> или <span class="code">openCursor()</span> объекта индекса, передавая ему либо одиночный ключ, либо объект IDBRange</p>
 <p>Однако концептуальная простота API-интерфейса IndexedDB осложняется
-    тем фактом, что API-интерфейс является асинхронным (поэтому веб-приложеН0 я могут его использовать без блокирования главного потока пользовательского интерфейса браузера). API-интерфейс IndexedDB был определен до широкой поддержки объектов Prom ise, так что он основан на событиях, а не на
+    тем фактом, что API-интерфейс является асинхронным (поэтому веб-приложения могут его использовать без блокирования главного потока пользовательского интерфейса браузера). API-интерфейс IndexedDB был определен до широкой поддержки объектов Prom ise, так что он основан на событиях, а не на
     prom ise, т.е. не работает с ключевыми словами async и aw ait.</p>
 <p>Создание транзакций и поиск объектных хранилищ и индексов представляют собой синхронные операции. Но открытие базы данных, обновление объектного хранилища и запрашивание хранилища или индекса относятся к асинхронным операциям. Все эти асинхронные методы немедленно возвращают объект
     запроса. Браузер инициирует события успеха или неудачи в объекте запроса,

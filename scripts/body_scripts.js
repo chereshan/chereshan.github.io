@@ -6,11 +6,19 @@ $(function(){
 })
 
 
-//Автоооглавление
+//расположение пост-dom html-тегов
+/*
+* хедер
+* автооглавление
+* подсветка кода
+* */
 $(function(){
     $('body').prepend('<div id="header"></div>')
+    $("#header").load(!(location.pathname=='/') ? "../common/header.html" : "common/header.html")
     $('h1').after('<div id="autonav"></div>')
+    hljs.highlightAll();
 })
+//Автоооглавление
 if (!location.pathname.endsWith('index.html')){
     $(function(){
         jQuery('h1').after('<ul id="autonav"><ul>')

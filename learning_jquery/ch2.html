@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
   <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,50 +10,14 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
       <link rel="stylesheet" href="../modules/vs2015.min.css">
       <script src="../modules/highlight.min.js"></script>
-      <script>$(function(){hljs.highlightAll();})</script>
-      <script>$(function(){$("#header").load("../common/header.html");});</script>
-      <!-- Google Tag Manager -->
-      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-WD3PT3ZV');</script>
-      <!-- End Google Tag Manager -->
-      <!-- Yandex.Metrika counter -->
-      <script type="text/javascript" >
-          (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-              m[i].l=1*new Date();
-              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-          (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+      <script src="../scripts/body_scripts.js"></script>
 
-          ym(95750180, "init", {
-              clickmap:true,
-              trackLinks:true,
-              accurateTrackBounce:true,
-              webvisor:true
-          });
-      </script>
-      <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-      <!-- /Yandex.Metrika counter -->
-      <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-N43FPXHDPN"></script>
-      <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-N43FPXHDPN');
-      </script>
-      <script>$(function(){$("#header").load("../common/header.html");});</script>
+      <script src="../common/counters_head.js"></script>
 
     <title>Глава 2. Визуальные эффекты</title>
   </head>
   <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
-                    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+  <script src="../common/counters_body.js"></script>
     <h1>Глава 2. Визуальные эффекты</h1>
   <h2>Анимация jQuery</h2>
     <h3>Как показать и скрыть элементы</h3>
@@ -64,13 +28,13 @@
     &lt;button class="ex1 toggle">&lt;span class="code">toggle()&lt;/span>&lt;/button>
     &lt;div class="ex1" style="border: 1px black solid">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/div>
     &lt;script>
-        $('.ex1.hide').click(function(){
+        $('.ex1.hide').on('click', function(){
             $('div.ex1').hide()
         })
-        $('.ex1.show').click(function(){
+        $('.ex1.show').on('click', function(){
             $('div.ex1').show()
         })
-        $('.ex1.toggle').click(function(){
+        $('.ex1.toggle').on('click', function(){
             $('div.ex1').toggle()
         })
     &lt;/script></code></pre>
@@ -79,13 +43,13 @@
   <button class="ex1 toggle"><span class="code">toggle()</span></button>
   <div class="ex1" style="border: 1px black solid">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
   <script>
-      $('.ex1.hide').click(function(){
+      $('.ex1.hide').on('click', function(){
           $('div.ex1').hide()
       })
-      $('.ex1.show').click(function(){
+      $('.ex1.show').on('click', function(){
           $('div.ex1').show()
       })
-      $('.ex1.toggle').click(function(){
+      $('.ex1.toggle').on('click', function(){
           $('div.ex1').toggle()
       })
   </script>
@@ -94,17 +58,17 @@
   <h3>Как показать/скрыть элемент постепенно</h3>
   <p>Мы можем передать в методы <span class="code">hide()</span>, <span class="code">show()</span> и <span class="code">toggle()</span> аргументы - время в милисекундах и функция, которая будет вызвана после заверщения процесса. </p>
   <pre><code class="language-html">&lt;script>
-        $('.ex2.hide').click(function(){
+        $('.ex2.hide').on('click', function(){
             $('#divex2').hide($('input.ex2').val(), function(){
                 $('#divex2 p:first')
             })
         })
-        $('.ex2.show').click(function(){
+        $('.ex2.show').on('click', function(){
             $('#divex2').show($('input.ex2').val(), function(){
                 $('#divex2 p:first')
             })
         })
-        $('.ex2.toggle').click(function(){
+        $('.ex2.toggle').on('click', function(){
             $('#divex2').toggle($('input.ex2').val(), function(){
                 $('#divex2 p:first')
             })
@@ -122,17 +86,17 @@
       один. Я кричал, мне не отвечали — я был один в этом обширном, запутанном, как
       лабиринт, доме.</p><p>Ги де Мопассан</p></div>
   <script>
-      $('.ex2.hide').click(function(){
+      $('.ex2.hide').on('click', function(){
           $('#divex2').hide($('input.ex2').val(), function(){
               $('#divex2 p:first')
           })
       })
-      $('.ex2.show').click(function(){
+      $('.ex2.show').on('click', function(){
           $('#divex2').show($('input.ex2').val(), function(){
               $('#divex2 p:first')
           })
       })
-      $('.ex2.toggle').click(function(){
+      $('.ex2.toggle').on('click', function(){
           $('#divex2').toggle($('input.ex2').val(), function(){
               $('#divex2 p:first')
           })
@@ -142,17 +106,17 @@
 <h3>Эффект скольжения</h3>
   <p>Существуют методы <span class="code">slideUp()</span>, <span class="code">slideDown()</span> и <span class="code">slideToggle()</span></p>
 <pre><code class="language-html">&lt;script>
-      $('.ex3.up').click(function(){
+      $('.ex3.up').on('click', function(){
           $('#divex3').slideUp($('input.ex3').val(), function(){
               $('#divex3 p:first')
           })
       })
-      $('.ex3.down').click(function(){
+      $('.ex3.down').on('click', function(){
           $('#divex3').slideDown($('input.ex3').val(), function(){
               $('#divex3 p:first')
           })
       })
-      $('.ex3.toggle').click(function(){
+      $('.ex3.toggle').on('click', function(){
           $('#divex3').slideToggle($('input.ex3').val(), function(){
               $('#divex3 p:first')
           })
@@ -171,17 +135,17 @@
       один. Я кричал, мне не отвечали — я был один в этом обширном, запутанном, как
       лабиринт, доме.</p><p>Ги де Мопассан</p></div>
   <script>
-      $('.ex3.up').click(function(){
+      $('.ex3.up').on('click', function(){
           $('#divex3').slideUp($('input.ex3').val(), function(){
               $('#divex3 p:first')
           })
       })
-      $('.ex3.down').click(function(){
+      $('.ex3.down').on('click', function(){
           $('#divex3').slideDown($('input.ex3').val(), function(){
               $('#divex3 p:first')
           })
       })
-      $('.ex3.toggle').click(function(){
+      $('.ex3.toggle').on('click', function(){
           $('#divex3').slideToggle($('input.ex3').val(), function(){
               $('#divex3 p:first')
           })
@@ -193,17 +157,17 @@
   <p>Существуют методы <span class="code"> fadeOut()</span>, <span class="code">fadeIn()</span> и <span class="code">fadeToggle()</span></p>
 
 <pre><code class="language-html">  &lt;script>
-      $('.ex4.out').click(function(){
+      $('.ex4.out').on('click', function(){
           $('#divex4').fadeOut($('input.ex4').val(), function(){
               $('#divex4 p:first')
           })
       })
-      $('.ex4.in').click(function(){
+      $('.ex4.in').on('click', function(){
           $('#divex4').fadeIn($('input.ex4').val(), function(){
               $('#divex4 p:first')
           })
       })
-      $('.ex4.toggle').click(function(){
+      $('.ex4.toggle').on('click', function(){
           $('#divex4').fadeToggle($('input.ex4').val(), function(){
               $('#divex4 p:first')
           })
@@ -222,17 +186,17 @@
       один. Я кричал, мне не отвечали — я был один в этом обширном, запутанном, как
       лабиринт, доме.</p><p>Ги де Мопассан</p></div>
   <script>
-      $('.ex4.out').click(function(){
+      $('.ex4.out').on('click', function(){
           $('#divex4').fadeOut($('input.ex4').val(), function(){
               $('#divex4 p:first')
           })
       })
-      $('.ex4.in').click(function(){
+      $('.ex4.in').on('click', function(){
           $('#divex4').fadeIn($('input.ex4').val(), function(){
               $('#divex4 p:first')
           })
       })
-      $('.ex4.toggle').click(function(){
+      $('.ex4.toggle').on('click', function(){
           $('#divex4').fadeToggle($('input.ex4').val(), function(){
               $('#divex4 p:first')
           })
@@ -242,7 +206,7 @@
 <h3>Изменение прозрачности элемента</h3>
 <p>Мы можем управлять прозразностью некоторого элемента кликом на него с помощью метода <span class="code">fadeTo()</span>:</p>
 <pre><code class="language-html">  &lt;script>
-      $('p.ex5:first').click(function() {
+      $('p.ex5:first').on('click', function() {
           $( this ).fadeTo( "slow", 0.33 );
       });
   &lt;/script></code></pre>
@@ -253,17 +217,17 @@
 </div>
 
   <script>
-      $('p.ex5:first').click(function() {
+      $('p.ex5:first').on('click', function() {
           $( this ).fadeTo( "slow", 0.33 );
       });
   </script>
  
 <h3>Создание анимации</h3>
 <pre><code class="language-html">  &lt;script>
-      $('.ex6.left').click(function (){
+      $('.ex6.left').on('click', function (){
           $('div.ex6').animate({'left':'-=20px'}, 'slow')
       })
-      $('.ex6.right').click(function (){
+      $('.ex6.right').on('click', function (){
           $('div.ex6').animate({'left':'+=20px'}, 'slow')
       })
   &lt;/script></code></pre>
@@ -282,10 +246,10 @@ border: black 1px solid"></div>
 
   <script>
 
-      $('.ex6.left').click(function (){
+      $('.ex6.left').on('click', function (){
         $('div.ex6').animate({'left':'-=20px'}, 'slow')
       })
-      $('.ex6.right').click(function (){
+      $('.ex6.right').on('click', function (){
           $('div.ex6').animate({'left':'+=20px'}, 'slow')
       })
   </script>
@@ -293,7 +257,7 @@ border: black 1px solid"></div>
   <h3>Анимация изменения CSS-свйоств</h3>
 <pre><code class="language-html">  &lt;script>
       $(function(){
-          $(".ex7.go").click(function(){
+          $(".ex7.go").on('click', function(){
               $(".ex7.block").animate({
                   "width": "70%",
                   "opacity": 0.3,
@@ -302,7 +266,7 @@ border: black 1px solid"></div>
                   "borderWidth": "10px"
               }, 2500, function(){} );
           });
-          $(".ex7.stop").click(function(){
+          $(".ex7.stop").on('click', function(){
               $(".ex7.block").stop();
           });
       });
@@ -312,7 +276,7 @@ border: black 1px solid"></div>
   <div class="ex7 block">Hello!</div>
   <script type="text/javascript">
       $(function(){
-          $(".ex7.go").click(function(){
+          $(".ex7.go").on('click', function(){
               $(".ex7.block").animate({
                   "width": "70%",
                   "opacity": 0.3,
@@ -321,7 +285,7 @@ border: black 1px solid"></div>
                   "borderWidth": "10px"
               }, 2500, function(){} );
           });
-          $(".ex7.stop").click(function(){
+          $(".ex7.stop").on('click', function(){
               $(".ex7.block").stop();
           });
       });
@@ -329,7 +293,7 @@ border: black 1px solid"></div>
   <h3>Очередь анимаций</h3>
 <pre><code class="language-html">&lt;script>
       $(function(){
-          $(".ex8.go").click(function(){
+          $(".ex8.go").on('click', function(){
               $("div.ex8")
                 //увеличение ширины вне очереди
                   .animate({ width:"300px" },{queue:false,duration:3000})
@@ -350,7 +314,7 @@ height:90px;
  border:1px solid #369;"></div>
   <script>
       $(function(){
-          $(".ex8.go").click(function(){
+          $(".ex8.go").on('click', function(){
               $("div.ex8")
                   .animate({ width:"300px" }, { queue:false, duration:3000 })
                   .animate( { height:"400px" }, 1500 )
@@ -363,7 +327,7 @@ height:90px;
   <p>Для реализации задержки используется метод <span class="code">delay()</span></p>
   <pre><code class="language-html">&lt;script>
         $(function(){
-            $("button.ex9").click(function() {
+            $("button.ex9").on('click', function() {
                 $("div.ex9.first").slideUp(700).fadeIn(1500);
                 $("div.ex9.second").slideUp(700).delay(1000).fadeIn(1500);
             });
@@ -375,7 +339,7 @@ height:90px;
   <br><br><br>
   <script>
       $(function(){
-          $("button.ex9").click(function() {
+          $("button.ex9").on('click', function() {
               $("div.ex9.first").slideUp(700).fadeIn(1500);
               $("div.ex9.second").slideUp(700).delay(1000).fadeIn(1500);
           });
@@ -388,7 +352,7 @@ height:90px;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js">&lt;/script></code></pre>
 <pre><code class="language-html">  &lt;script>
       $(function(){
-          $("div.ex10").click(function(){
+          $("div.ex10").on('click', function(){
               $(this).hide(
                   "explode",
                   { pieces: 100 },
@@ -402,7 +366,7 @@ height:90px;
 ">проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы </div>
   <script>
       $(function(){
-          $("div.ex10").click(function(){
+          $("div.ex10").on('click', function(){
               $(this).hide(
                   "explode",
                   { pieces: 100 },
@@ -415,7 +379,7 @@ height:90px;
   <p>В следующем примере применяется эффект <span class="code">bounce</span>:</p>
 <pre><code class="language-html">  &lt;script>
       $(function(){
-          $("div.ex11").click(function(){
+          $("div.ex11").on('click', function(){
               $(this).effect(
                   "bounce",
                   { times:7, distance:50, direction:"right" },
@@ -432,7 +396,7 @@ height:90px;
 vertical-align: middle;"><span>Долбануть током</span></div>
   <script>
       $(function(){
-          $("div.ex11").click(function(){
+          $("div.ex11").on('click', function(){
               $(this).effect(
                   "bounce",
                   { times:7, distance:50, direction:"right" },
@@ -571,7 +535,7 @@ vertical-align: middle;"><span>Долбануть током</span></div>
       $('span.ex14-width').html(`&lt;b>width:&lt;/b> ${$('div.ex14').width()}`)
       $('span.ex14-height').html(`&lt;b>height:&lt;/b> ${$('div.ex14').height()}`)
 
-      $('button.ex14').click(function(){
+      $('button.ex14').on('click', function(){
 
           if ($(this).text().includes('width')){
               let change_w=+($(this).text().slice(-2));
@@ -599,7 +563,7 @@ vertical-align: middle;"><span>Долбануть током</span></div>
       $('span.ex14-width').html(`<b>width:</b> ${$('div.ex14').width()}`)
       $('span.ex14-height').html(`<b>height:</b> ${$('div.ex14').height()}`)
       
-      $('button.ex14').click(function(){
+      $('button.ex14').on('click', function(){
 
           if ($(this).text().includes('width')){
               let change_w=+($(this).text().slice(-2));
@@ -618,7 +582,7 @@ vertical-align: middle;"><span>Долбануть током</span></div>
   <p>Метод <span class="code">offset()</span> возвращает значения отсупы top и left относительно документа.</p>
   <p>Метод <span class="code">position()</span> возвращает значения top и left относительно родительского элемента.</p>
   <pre><code class="language-html">  &lt;script>
-      $('div.ex15.inner').click(function(){
+      $('div.ex15.inner').on('click', function(){
           var o = $(this).offset();
           $("p.ex15:first span").text("left: " + o.left + "px, top: " + o.top + "px");
           var p = $(this).position();
@@ -654,7 +618,7 @@ vertical-align: middle;"><span>Долбануть током</span></div>
   <p class="ex15">Position — <span class="ex15">left: ?px, top: ?px</span></p>
 
   <script>
-      $('div.ex15.inner').click(function(){
+      $('div.ex15.inner').on('click', function(){
           var o = $(this).offset();
           $("p.ex15:first span").text("left: " + o.left + "px, top: " + o.top + "px");
           var p = $(this).position();
@@ -666,7 +630,7 @@ vertical-align: middle;"><span>Долбануть током</span></div>
   <h3>Прокрутка</h3>
 <pre><code class="language-html">  &lt;script>
       $("div.ex16.demo").scrollTop(150).scrollLeft(300);
-      $("button.ex16").click(function(){
+      $("button.ex16").on('click', function(){
           var d = $("div.ex16.demo");
           $('div.ex16-output').append(`&lt;p>scrollTop()=${d.scrollTop()},  scrollLeft= ${d.scrollLeft()}&lt;/p>`);
       });
@@ -697,7 +661,7 @@ vertical-align: middle;"><span>Долбануть током</span></div>
   <div class="ex16-output"></div>
   <script>
       $("div.ex16.demo").scrollTop(150).scrollLeft(300);
-      $("button.ex16").click(function(){
+      $("button.ex16").on('click', function(){
           var d = $("div.ex16.demo");
           $('div.ex16-output').append(`<p>scrollTop()=${d.scrollTop()},  scrollLeft= ${d.scrollLeft()}</p>`);
       });

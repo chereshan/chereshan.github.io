@@ -8,54 +8,18 @@
 
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <script src='../modules/jquery-3.7.1.min.js'></script>
-    <script src="../scripts/body_scripts.js"></script>
     <link rel="stylesheet" href="../modules/vs2015.min.css">
     <script src="../modules/highlight.min.js"></script>
-    <script>$(function(){hljs.highlightAll();})</script>
-    <script>$(function(){$("#header").load("../common/header.html");});</script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WD3PT3ZV');</script>
-    <!-- End Google Tag Manager -->
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    <script src="../scripts/body_scripts.js"></script>
 
-        ym(95750180, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-        });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/95750180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N43FPXHDPN"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-N43FPXHDPN');
-    </script>
+    <script src="../common/counters_head.js"></script>
 
 
 </head>
 
 
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD3PT3ZV"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+<script src="../common/counters_body.js"></script>
 <!--TODO: ADD LEFT SLIDER-->
 <h1>Глава 1. Введение в jQuery</h1>
 <h2>Базовые правила</h2>
@@ -148,7 +112,6 @@
     ol_writer('#ex3', '#ex3 ~ *', 3)
 </script>
 
-<!--TODO: разместить библиотеку jQuery локально-->
 
 <h3>Селектор содержания :contains</h3>
 
@@ -254,7 +217,7 @@
             $("div").text("Вероятный возраст — " + years);
         }
         yearsEstimate();
-        $("#ex7").click(yearsEstimate);
+        $("#ex7").on('click', yearsEstimate);
     });
 &lt;/script></code></pre>
 <form id="ex7">
@@ -276,7 +239,7 @@
             $("#ex7 div").text("Вероятный возраст — " + years);
         }
         yearsEstimate(); //вызов
-        $("#ex7").click(yearsEstimate);
+        $("#ex7").on('click', yearsEstimate);
     });
 </script>
 
@@ -290,7 +253,7 @@
 <h3>Удаление атрибутов</h3>
 <p>Ранее в качестве примера приводилась форма с отключенными инпутами (<a href="#ex6">см. выше</a>). Напишем кноку, которая включает отключенные инпуты и отключает отключенные.</p>
 <pre><code class="language-html">&lt;script>
-    $('#ex8').click(function(){
+    $('#ex8').on('click', function(){
         $('#ex6 input').each(function(){
             $(this).is(':disabled')? $(this).removeAttr('disabled'): $(this).attr('disabled', 'true')
 
@@ -300,7 +263,7 @@
 &lt;/script></code></pre>
 <button id="ex8">Поменять <span class="code">ex6</span></button>
 <script>
-    $('#ex8').click(function(){
+    $('#ex8').on('click', function(){
         $('#ex6 input').each(function(){
             $(this).is(':disabled')? $(this).removeAttr('disabled'): $(this).attr('disabled', 'true')
 
@@ -343,25 +306,25 @@
             $('#ex9-input').focus()
             return false}
         else return true}
-    $('#ex9-add').click(function(){
+    $('#ex9-add').on('click', function(){
         if(check_if_correct()){
             let inp_val=+($('#ex9-input').val())-1
             $(`#ex9 p:eq(${inp_val})`).addClass('ex9')
             $('#ex9-output').html(`Класс был добавлен в параграф ${inp_val+1}`)
         }})
-    $('#ex9-remove').click(function(){
+    $('#ex9-remove').on('click', function(){
         if(check_if_correct()){
             let inp_val=+($('#ex9-input').val())-1
             $(`#ex9 p:eq(${inp_val})`).removeClass('ex9')
             $('#ex9-output').html(`Класс был удален из параграфа ${inp_val+1}`)
         }})
-    $('#ex9-toggle').click(function(){
+    $('#ex9-toggle').on('click', function(){
         if(check_if_correct()){
             let inp_val=+($('#ex9-input').val())-1
             $(`#ex9 p:eq(${inp_val})`).toggleClass('ex9')
             $('#ex9-output').html(`Класс был переключен в параграфе ${inp_val+1}`)
         }})
-    $('#ex9-has').click(function(){
+    $('#ex9-has').on('click', function(){
         if(check_if_correct()){
             let inp_val=+($('#ex9-input').val())-1
             if($(`#ex9 p:eq(${inp_val}).ex9`).length>0){
@@ -403,25 +366,25 @@
             $('#ex9-input').focus()
             return false}
         else return true}
-    $('#ex9-add').click(function(){
+    $('#ex9-add').on('click', function(){
         if(check_if_correct()){
             let inp_val=+($('#ex9-input').val())-1
             $(`#ex9 p:eq(${inp_val})`).addClass('ex9')
             $('#ex9-output').html(`Класс был добавлен в параграф ${inp_val+1}`)
         }})
-    $('#ex9-remove').click(function(){
+    $('#ex9-remove').on('click', function(){
         if(check_if_correct()){
             let inp_val=+($('#ex9-input').val())-1
             $(`#ex9 p:eq(${inp_val})`).removeClass('ex9')
             $('#ex9-output').html(`Класс был удален из параграфа ${inp_val+1}`)
         }})
-    $('#ex9-toggle').click(function(){
+    $('#ex9-toggle').on('click', function(){
         if(check_if_correct()){
             let inp_val=+($('#ex9-input').val())-1
             $(`#ex9 p:eq(${inp_val})`).toggleClass('ex9')
             $('#ex9-output').html(`Класс был переключен в параграфе ${inp_val+1}`)
         }})
-    $('#ex9-has').click(function(){
+    $('#ex9-has').on('click', function(){
         if(check_if_correct()){
             let inp_val=+($('#ex9-input').val())-1
             if($(`#ex9 p:eq(${inp_val}).ex9`).length>0){
@@ -446,11 +409,11 @@
         $('span.ex10').html($(this).val())
     })
     //вывод по клику
-    jQuery('.ex10.html').click(function(){
+    jQuery('.ex10.html').on('click', function(){
         let ex10= jQuery('input.ex10[type="range"]')
         jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).html())
     })
-    jQuery('.ex10.text').click(function(){
+    jQuery('.ex10.text').on('click', function(){
         let ex10= jQuery('input.ex10[type="range"]')
         jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).text())
     })
@@ -467,11 +430,11 @@
         $('span.ex10').html($(this).val())
     })
     //вывод по клику
-    jQuery('.ex10.html').click(function(){
+    jQuery('.ex10.html').on('click', function(){
         let ex10= jQuery('input.ex10[type="range"]')
         jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).html())
     })
-    jQuery('.ex10.text').click(function(){
+    jQuery('.ex10.text').on('click', function(){
         let ex10= jQuery('input.ex10[type="range"]')
         jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).text())
     })
@@ -560,16 +523,16 @@
         $('span.ex12').html(full_receipt())
     })
 
-    $('#ex12-getSingle').click(function(){
+    $('#ex12-getSingle').on('click', function(){
         $('span.ex12').html(full_receipt())
     })
-    $('#ex12-getMultiple').click(function(){
+    $('#ex12-getMultiple').on('click', function(){
         $('span.ex12').html(full_receipt())
     })
-    $('#ex12-getCheckbox').click(function(){
+    $('#ex12-getCheckbox').on('click', function(){
         $('span.ex12').html(full_receipt())
     })
-    $('#ex12-getRadio').click(function(){
+    $('#ex12-getRadio').on('click', function(){
         $('span.ex12').html(full_receipt())
     })
 &lt;/script></code></pre>
@@ -631,16 +594,16 @@
         $('span.ex12').html(full_receipt())
     })
 
-    $('#ex12-getSingle').click(function(){
+    $('#ex12-getSingle').on('click', function(){
         $('span.ex12').html(full_receipt())
     })
-    $('#ex12-getMultiple').click(function(){
+    $('#ex12-getMultiple').on('click', function(){
         $('span.ex12').html(full_receipt())
     })
-    $('#ex12-getCheckbox').click(function(){
+    $('#ex12-getCheckbox').on('click', function(){
         $('span.ex12').html(full_receipt())
     })
-    $('#ex12-getRadio').click(function(){
+    $('#ex12-getRadio').on('click', function(){
         $('span.ex12').html(full_receipt())
     })
 </script>
