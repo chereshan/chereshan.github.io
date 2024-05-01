@@ -15,8 +15,12 @@ $(function(){
 * */
 $(function(){
     $('body').prepend('<div id="header"></div>')
-    $("#header").load(!(location.pathname=='/') ? "../common/header.html" : "common/header.html")
-    $('h1').after('<div id="autonav"></div>')
+    $("#header").load(!(
+        location.pathname=='/' ||
+        location.pathname=='/chereshan.github.io/index.html') ? "../common/header.html" : "common/header.html")
+    if (!(location.pathname=='/' ||
+        location.pathname=='/chereshan.github.io/index.html')){$('h1').after('<div id="autonav"></div>')}
+
     $('span.code').each(function(){
         $(this).replaceWith(`<pre class="span-code"><code class="language-javascript">${$(this).html()}</code></pre>`)
     })
