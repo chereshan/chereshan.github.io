@@ -38,8 +38,15 @@ $(function(){
     $('.uncomment-button').on('click', function(){
         $(this).parent().find('.hljs-comment').toggle()
     })
-
-
+    //=================================================
+    //добавление кнопки копирования в окна кода
+    const copy_button = document.createElement("img");
+    copy_button.src = "../common/copy-button.svg";
+    copy_button.classList=['copy-button'];
+    jQuery('pre code.hljs').prepend(copy_button)
+    $('.copy-button').on('click', function(){
+        navigator.clipboard.writeText($(this).parent().text().replace(/\x3C/,'<'));
+    })
 })
 //=================================================
 
@@ -201,3 +208,11 @@ $(function(){
 //     i++;
 // }
 
+//=================================================
+//футер
+$(function(){
+    $('body').append('<footer></footer>')
+    $("footer").load(!(
+        location.pathname=='/' ||
+        location.pathname=='/chereshan.github.io/index.html') ? "../common/footer.html" : "common/footer.html")
+})
