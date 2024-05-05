@@ -195,18 +195,60 @@ $(function(){
 
 //=================================================
 //АВТООГЛАВЛЕНИЕ УЧЕБНИКА
-// i=0
-// while (i<20){
-//     $.ajax({
-//         url:`https://chereshan.github.io/learning_js/ch${i}.html`,
-//         type:'get',
-//         success: function(data){
-//             x=$(data)
-//         }
-//     });
-//     x.each(function(){ if (this.localName=='title') {console.log(this.innerHTML); return false}})
-//     i++;
-// }
+async function getChapterTitle(num, url){
+    let x;
+    let y={};
+    await $.ajax({
+        url:`${url}ch${num}.html`,
+        type:'get',
+        success: function(data){
+            x=$(data)
+            x.each(function(){
+                if (this.localName=='title') {
+                    // console.log(this.innerHTML);
+                    y[this.innerHTML]=`${url}ch${num}.html`
+                    return false;
+                }
+            })
+        },
+        error: function (jqXHR, exception, errorThrown){
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+        }
+    });
+    return y;
+}
+
+//определяем, что находимся в оглавлении учебника
+if (!['/', '/index.html', '/chereshan.github.io/index.html'].includes(window.location.pathname) && window.location.pathname.endsWith('index.html')) {
+    let index_root = window.location.href.search('index.html')
+    index_root = window.location.href.slice(0, index_root)
+    let textbookIndex;
+    Promise.allSettled(Array.from(Array(20).keys()).map((num) => getChapterTitle(num, index_root))).then(ch => {
+        textbookIndex = ch.filter((i) => i.status == "fulfilled").map(j => j.value)
+    }).then($(function () {
+        $('body ul').not('header ul').empty()
+        setTimeout(function () {
+            for (let i = 0; i < textbookIndex.length; i++) {
+                $('body ul').not('header ul').append(`<li><a href="${Object.values(textbookIndex[i])}">${Object.keys(textbookIndex[i])}</a></li>`)
+            }
+        }, 500)
+    }))
+}
 
 //=================================================
 //футер
@@ -216,3 +258,4 @@ $(function(){
         location.pathname=='/' ||
         location.pathname=='/chereshan.github.io/index.html') ? "../common/footer.html" : "common/footer.html")
 })
+
