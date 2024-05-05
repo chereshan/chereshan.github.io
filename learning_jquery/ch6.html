@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Глава 6. jQuery и AJAX</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="stylesheet" href="../modules/vs2015.min.css">
+    <script src='../modules/jquery-3.7.1.min.js'></script>
+    <script src="../modules/highlight.min.js"></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <script src="../common/counters_head.js"></script>
+
+
+</head>
+
+
+<body>
+<script src="../common/counters_body.js"></script>
+
+<h1>Глава 6. jQuery и AJAX</h1>
+<h2>Методы AJAX в jQuery</h2>
+<ul>
+    <li><span class="code">$(selector).load('file.html')</span></li>
+    <li><span class="code">$.get()</span></li>
+    <li><span class="code">$.getJSON()</span></li>
+    <li><span class="code">$.getScript()</span></li>
+    <li><span class="code">$.post()</span></li>
+</ul>
+<h3>Метод <span class="code">.load()</span></h3>
+<pre><code class="language-html">&lt;script>
+    $(function(){
+        $('#load_ex1').on('click', function(){
+            $('#div_ex1').load('test.html')
+        })
+        $('#empty_ex1').on('click', function(){
+            $('#div_ex1').empty()
+        })
+    })
+&lt;/script>
+
+&lt;button id="load_ex1">Вывести документ&lt;/button>
+&lt;button id="empty_ex1">Очистить&lt;/button>
+&lt;div id="div_ex1" style="border: black 1px solid">&lt;/div></code></pre>
+<script>
+    $(function(){
+        $('#load_ex1').on('click', function(){
+            $('#div_ex1').load('test.html')
+        })
+        $('#empty_ex1').on('click', function(){
+            $('#div_ex1').empty()
+        })
+    })
+</script>
+
+<button id="load_ex1">Вывести документ</button>
+<button id="empty_ex1">Очистить</button>
+<div id="div_ex1" style="border: black 1px solid"></div>
+
+<p>Мы можем также загрузить отдельный элемент документа:</p>
+<pre><code class="language-html">&lt;script>
+    $(function(){
+        $('#load_ex2').on('click', function(){
+    //мы используем файл как селектор
+            $('#div_ex2').load('index.html ul:not(#header ul)')
+        })
+        $('#empty_ex2').on('click', function(){
+            $('#div_ex2').empty()
+        })
+    })
+&lt;/script>
+
+&lt;button id="load_ex2">Вывести оглавление раздела&lt;/button>
+&lt;button id="empty_ex2">Очистить&lt;/button>
+&lt;div id="div_ex2" style="border: black 1px solid">&lt;/div></code></pre>
+
+<script>
+    $(function(){
+        $('#load_ex2').on('click', function(){
+
+            $('#div_ex2').load('index.html ul:not(#header ul)')
+        })
+        $('#empty_ex2').on('click', function(){
+            $('#div_ex2').empty()
+        })
+    })
+</script>
+
+<button id="load_ex2">Вывести оглавление раздела</button>
+<button id="empty_ex2">Очистить</button>
+<div id="div_ex2" style="border: black 1px solid"></div>
+
+<!--todo:  Самков. jQuery. Книга рецептов (стр 168-172)-->
+
+<h3>Метод <span class="code">$.getScript()</span></h3>
+<p>С помощью GET-запроса мы можем загружать и выполнять и загружать Javascript-файлы, в том числе с другого домена.</p>
+<p>В примере ниже мы загрузим библиотеку <span class="code">fancybox.js</span>:</p>
+
+<pre><code class="language-html">&lt;script>
+    $(function(){
+        $.getScript('https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js')
+        $('head').append('&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">')
+    })
+&lt;/script></code></pre>
+
+<script>
+        $.getScript('https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js')
+        $('head').append('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">')
+</script>
+
+<p>Нижу реализован простой скрипт для загрзуки изображений с использованием API <span class="code">random.imagecdn</span>. Отметим, что в скрипте используется некрасивый трюк с таймером, который желательно выписать из кода в будущем. </p>
+<pre><code class="language-html">&lt;script>
+    $(function(){
+        i=0
+        while (i&lt;10){
+            random_link=`https://random.imagecdn.app/1920/1080/?qw${Math.round(Math.random()*100)}`
+
+            $('#gallery_ex4').append(`&lt;a data-src="${random_link}" data-caption="Image #${i}" data-fancybox>&lt;img src="${random_link}" width="200" height="150"">&lt;/a>`)
+            i++;
+        }
+        //todo: переписать на основе события, а не таймера
+        $(function(){
+            setTimeout(function(){Fancybox.bind();}, 500)
+        })
+    })
+&lt;/script>
+&lt;div id="gallery_ex4" style="display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;">
+&lt;/div></code></pre>
+<script>
+    $(function(){
+        i=0
+        while (i<10){
+            random_link=`https://random.imagecdn.app/1920/1080/?qw${Math.round(Math.random()*100)}`
+
+            $('#gallery_ex4').append(`<a data-src="${random_link}" data-caption="Random image #${i}" data-fancybox><img src="${random_link}" width="200" height="150""></a>`)
+            i++;
+        }
+        //todo: переписать на основе события, а не таймера
+        $(function(){
+            setTimeout(function(){Fancybox.bind();}, 500)
+        })
+    })
+</script>
+<div id="gallery_ex4" style="display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;">
+</div>
+
+<h3>Метод <span class="code">$.getJSON()</span></h3>
+<pre><code class="language-html">&lt;script>
+    fake_data_ex5=[]
+    $(function(){
+        $('#fake_data_ex5').on('click', function(){
+            $.getJSON('https://softwium.com/api/books?limit=20', function(data){
+                fake_data_ex5=data
+                list_of_dicts_to_table(fake_data_ex5, '#fake_data_output_ex5')
+            })
+        })
+    })
+&lt;/script></code></pre>
+<script>
+    fake_data_ex5=[]
+    $(function(){
+        $('#fake_data_ex5').on('click', function(){
+            $.getJSON(`https://softwium.com/api/books?limit=${Math.round(10*(Math.random()+1)-5)}`, function(data){
+                fake_data_ex5=data
+                if ($('#fake_data_output_ex5').is(':empty')) list_of_dicts_to_table(fake_data_ex5, '#fake_data_output_ex5')
+                else {
+                    $('#fake_data_output_ex5').empty()
+                    list_of_dicts_to_table(fake_data_ex5, '#fake_data_output_ex5')
+                }
+
+            })
+        })
+    })
+</script>
+
+
+<button id="fake_data_ex5">Получить фейковые данные и собрать их в таблицу</button>
+<div id="fake_data_output_ex5"></div>
+
+<!--todo: самков 175-178-->
+
+
+
+
+
+
+
+
+</body>
+</html>

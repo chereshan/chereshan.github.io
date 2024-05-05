@@ -116,6 +116,11 @@ tr:first-child td {
 #autonav a{
     display: block;
 }
+/*отступ для всех дочерних певого уровня*/
+#autonav .ch0 {font-size: 150%;}
+#autonav .ch1 {margin-left: 15px;}
+#autonav .ch2 {margin-left: 30px;}
+#autonav .ch3 {margin-left: 45px;}
 
 /*Добавить всплывающие подсказки
 https://webref.ru/layout/pseudo-class-hover/tooltip
@@ -146,9 +151,23 @@ https://webref.ru/layout/pseudo-class-hover/tooltip
     top: 1em; /* Положение подсказки */
 }
 
-.hljs {
-    border-radius: 10px;
+/*Разметка для кода*/
+.hljs {border-radius: 10px;}
+.span-code code.hljs {padding: 0px 3px}
+/*Разметка для кнопки раскоменчивания кода*/
+pre:has(code.hljs) img.uncomment-button:not(#site_logo) {
+    margin-left: 0px;
+    margin-right: 0px;
+    position: absolute;
+    z-index: 99;
+    right: 20px;
+    opacity: 0.5;
+    visibility: hidden;
 }
+pre:has(code.hljs) img.uncomment-button:not(#site_logo):hover{opacity: 1;}
+pre code.hljs:hover img.uncomment-button:not(#site_logo){visibility: visible;}
+
+
 /*h1,h2,h3, h4:after {*/
 /*    content: "";*/
 /*    border-bottom: 1px solid #4bb;*/

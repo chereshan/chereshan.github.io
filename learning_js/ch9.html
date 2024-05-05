@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Глава 9. Асинхронный Javascript</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <script src='../modules/jquery-3.7.1.min.js'></script>
+    <link rel="stylesheet" href="../modules/vs2015.min.css">
+    <script src="../modules/highlight.min.js"></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <script src="../common/counters_head.js"></script>
+</head>
+
+
+<body>
+<script src="../common/counters_body.js"></script>
+
+<h1>Глава 9. Асинхронный Javascript</h1>
+<h2>Введение в асинхронное программирование</h2>
+<p>Программам часто приходится останавливать вычисления в ожидании поступления даннх или при возникновении некоторого события.</p>
+<p>Базовыми средствами асинхронного программирования JS являются:</p>
+<ol>
+    <li>Объекты <span class="code">Promise</span> - пока недоступный результат асинхронной операции.</li>
+    <li>Ключевые слова <span class="code">async</span> и <span class="code">await</span> упрощают асинхронное программирование, позволяя структурировать основанный на <span class="code">Promise</span> код, как если бы он был синхронным.</li>
+    <li>Асинхронные операторы и цикл <span class="code">for</span>/<span class="code">await</span> дают возможность работать с потоками асинхронных события, используя простые циклы, которые выглядят синхронными.</li>
+</ol>
+<h2>Асинхронное программирование с использованием обратных вызовов</h2>
+<p>Обратный вызов - это функция, которую вы пишите, а затем передаете какой-то другой функции. Затем другая функция вызывает вашу функцию (<i>"делает обратный вызов"</i>), когда удовлетворяется определенное условие или происходит некоторое асинхронное событие. Вызов предоставленной вами функции обратного вызова уведомляет вас об условии или событии, а иногда вызов будет включать аргументы функции, которые обеспечивают дополнительные детали.</p>
+
+<h3>Таймеры</h3>
+<p>В JS существует 2 вида таймеров:</p>
+<ul>
+    <li><span class="code">setTimeout(function , timer:ms)</span></li>
+    <li><span class="code">setInterval(function, timer:ms)</span></li>
+</ul>
+<p>Функция в аргументе таймер-функции также является функцией обратного вызова. Сама же функция-таймер вызывается для регистрации функции обратного вызова и указания, при каких асинхронных условиях она должна вызываться.</p>
+
+<h3>События</h3>
+<h3>События со стороны клиента</h3>
+<p>Программа JS стороны клиента почти всегда управляется событиями: т.е. программы ожидают некоторого действия пользователя перед своим выполнением. Программа JS, управляемая событиями, регистрирует функции обратного вызова для указания типов события в заданных контекстах, а веб-браузер вызывает такие функции всякий раз, когда происходит указанные события. Эти функции обратного вызова называются <b>обработчиками (прослушивателями) событий</b> и регистрируются с помощью <span class="code">addEventListener()</span>:</p>
+<pre><code class="language-html">&lt;div style="display: flex; flex-direction: column;" id="event-ex1">
+    &lt;span>Мин:&lt;input id="min_ex1" type="number" value="0">&lt;/span>
+    &lt;span>Макс:&lt;input id="max_ex1" type="number" value="10">&lt;/span>
+    &lt;button id="event_button_ex1">Сгенерировать случайное число&lt;/button>
+    &lt;div style="background-color: #ffff99" id="random_number_ex1">&lt;/div>
+&lt;/div>
+&lt;script>
+    let rnum_generator=document.getElementById('event_button_ex1')
+    //регистрируем функцию обратного вызова, при клике на кнопку
+    rnum_generator.addEventListener('click', generateRandom)
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateRandom(){
+        let minN=document.getElementById('min_ex1').value
+        let maxN=document.getElementById('max_ex1').value
+        if (minN&lt;maxN){
+            document.getElementById('random_number_ex1').innerHTML=getRandomInt(minN, maxN)
+        }
+    }
+&lt;/script></code></pre>
+
+
+<div style="display: flex; flex-direction: column;" id="event-ex1">
+<span>Мин:<input id="min_ex1" type="number" value="0"></span>
+<span>Макс:<input id="max_ex1" type="number" value="10"></span>
+<button id="event_button_ex1">Сгенерировать случайное число</button>
+<div style="background-color: #ffff99" id="random_number_ex1"></div>
+</div>
+<script>
+    let rnum_generator=document.getElementById('event_button_ex1')
+    //регистрируем функцию обратного вызова, при клике на кнопку
+    rnum_generator.addEventListener('click', generateRandom)
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateRandom(){
+        let minN=document.getElementById('min_ex1').value
+        let maxN=document.getElementById('max_ex1').value
+        if (minN<maxN){
+            document.getElementById('random_number_ex1').innerHTML=getRandomInt(minN, maxN)
+        }
+    }
+</script>
+
+<h3>События сети</h3>
+<p>Распространенным источником асинхронности являются сетевые запросы.</p>
+<pre><code class="language-html">&lt;script>
+    //http-запрос версии сервера api
+    function getCurrentVersionNumber(versionCallback){
+        let request= new XMLHttpRequest();
+        request.open("GET", "https://www.example.com/api/version");
+        request.send();
+        //регистрация обратного вызова, который будет вызыватьсяя при получении ответа
+        request.onload=function(){
+            if (request.status === 200) {
+                //если статус http нормально, то получить номер версии и вызвать коллбэк
+                let currentVersion=parseFloat(request.responseText);
+                versionCallback(null, currentVersion);
+            }
+            else {
+                versionCallback(request.statusText, null)
+            }
+        }
+        //регистрация коллбэка для ошибок
+        request.onerror=request.ontimeout=function(e){
+            versionCallback(e.type, null)
+        }
+    }
+&lt;/script></code></pre>
+<p>В коде сервера стороны клиента можно использовать класс <span class="code">XMPHttpRequest</span> и коллбэк, чтобы делать HTTP-запросы и асинхронным образом обрабатывать ответы сервера, когда они поступают.</p>
+<p>В примере выше не используется способ регистрации прослушивателя событий на объекте генерирующем события через метод <span class="code">addEventListener()</span>. Вместо этого, свойству объекта присваивается колббэк. Эта своства <span class="code">onload</span>, <span class="code">onerror</span>, <span class="code">ontimeout</span>. Способ с <span class="code">addEventListener()</span> более гибкий, т.к. он позволяет добавлять множество обработчиков событий. </p>
+
+<h3>События в Node</h3>
+<!--todo: вернуться к событиям в Node после начала изучения Node-->
+<p>См. Флэнаган (стр. 379)</p>
+
+<h2>Объекты <span class="code">Promise</span></h2>
+<p>Объект Promise - результат асихронного вычисления. Не существует способа синхронно получить значение объекта Promise, мы можем только предложить Promise вызвать какую-то колюэк-функцию, когда значение готово. </p>
+<p>Одна настоящая проблема с асинхронным программированием на основе обратных вызовов заключается в том, что нередко приходится сталкиваться с обратными вызовами внутри обратных вызовов внутри обратных вызовов, когда строки кода имеют настолько широкие отступы, что их трудно читать. Объекты Promise позволяют выражать вложенные обратные вызовы подобного рода в виде более линейной цепочки объектов Promise которая легче для чтения и понимания</p>
+
+
+
+
+
+</body>
+</html>

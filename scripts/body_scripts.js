@@ -1,3 +1,4 @@
+//=================================================
 //Окружает тэгами класса кода для первого столбца со второй строки в таблицы
 $(function(){
     jQuery('.first_column_code td:nth-child(1):not(tr:first-child td)').each(function () {
@@ -5,7 +6,7 @@ $(function(){
     })
 })
 
-
+//=================================================
 //расположение пост-dom html-тегов
 /*
 * хедер
@@ -28,19 +29,45 @@ $(function(){
     $(".span-code").replaceWith(function(){
         return this.outerHTML.replace("<pre class=\"span-code\"", "<span class=\"span-code\"").replace("</pre", "</span")
     });
+    //=================================================
+    //добавление кнопки раскоменчивания в окна кода
+    const uncomment_button = document.createElement("img");
+    uncomment_button.src = "../common/comment-button.svg";
+    uncomment_button.classList=['uncomment-button']
+    jQuery('pre code.hljs').prepend(uncomment_button)
+    $('.uncomment-button').on('click', function(){
+        $(this).parent().find('.hljs-comment').toggle()
+    })
+
+
 })
+//=================================================
+
 //Автоооглавление
+//todo: сделать автооглавление независимым от числа уровней
+//todo: починить автооглавление (оно нормально не работает и ломается после некоторого уровня)
 if (!location.pathname.endsWith('index.html')){
     $(function(){
-        jQuery('h1').after('<ul id="autonav"><ul>')
-        h=[0,0,0,0,0];pos_memory=0;
+        jQuery('h1').after('<ul id="autonav"></ul>')
+
+        h=[0,0,0,0]; pos_memory=0;
         jQuery(':header:not(h1)').each(function () {
-            pos=+($(this)[0].nodeName.slice(-1))-2
+            let pos=+($(this)[0].nodeName.slice(-1))-2
+//            console.log($(this)[0].nodeName)
+//             console.log(h)
             h[pos]+=1
-            if (pos_memory>pos) h[pos_memory]=0
+            // console.log(h)
+            if (pos_memory>pos) {
+                h=h.slice(0,pos+1).concat(h.slice(pos+1).map((num)=>0));
+            }
+            // console.log(h)
+            // h[pos]+=1
             pos_memory=pos
             $(this).attr('id','ch-'+(h.filter((n)=>n!=0).join('.')));
-            jQuery('#autonav').append(`<li><a href=${'#'+$(this).attr('id')}>${$(this).attr('id').slice(3)}. ${$(this).text()}</a></li>`);
+            //создание класса уровней списка
+            let list_level=autonav_listLevel(h)
+            jQuery('#autonav').append(`<li class="${list_level}"><a href=${'#'+$(this).attr('id')}>${$(this).attr('id').slice(3)}. ${$(this).text()}</a></li>`);
+            // console.log($(this).attr('id'))
             $(this).html($(this).attr('id').slice(3)+'. '+$(this).html())
         })
 //
@@ -53,9 +80,26 @@ if (!location.pathname.endsWith('index.html')){
     })
 }
 
+//Проект более эффективного алгоритма
+//Скорее всего надо написать РиВ-алгоритм
+// $(function (){
+//     // jQuery('h1').after('<ul id="autonav"></ul>')
+//
+//     function autonav(hi){
+//
+//     }
+//
+// })
 
 
 
+function autonav_listLevel(list){
+    if (list.slice(1).every((num)=>num==0)) return 'ch0'
+    else if (list.slice(2).every((num)=>num==0)) return 'ch1'
+    else if (list.slice(3).every((num)=>num==0)) return 'ch2'
+    else if (list.slice(4).every((num)=>num==0)) return 'ch3'
+}
+//=================================================
 
 //Функция для быстрой генерации таблиц на основе списка словарей
 function list_of_dicts_to_table(list, selector){
@@ -141,3 +185,19 @@ $(function(){
         return new_list
     }
 })
+
+//=================================================
+//АВТООГЛАВЛЕНИЕ УЧЕБНИКА
+// i=0
+// while (i<20){
+//     $.ajax({
+//         url:`https://chereshan.github.io/learning_js/ch${i}.html`,
+//         type:'get',
+//         success: function(data){
+//             x=$(data)
+//         }
+//     });
+//     x.each(function(){ if (this.localName=='title') {console.log(this.innerHTML); return false}})
+//     i++;
+// }
+
