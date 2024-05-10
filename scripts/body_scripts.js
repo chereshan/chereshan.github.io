@@ -23,7 +23,7 @@ $(function(){
         location.pathname=='/chereshan.github.io/index.html')){$('h1').after('<div id="autonav"></div>')}
 
     $('span.code').each(function(){
-        $(this).replaceWith(`<pre class="span-code"><code class="language-javascript">${$(this).html()}</code></pre>`)
+        $(this).replaceWith(`<pre class="span-code"><code>${$(this).html()}</code></pre>`)
     })
     hljs.highlightAll();
     $(".span-code").replaceWith(function(){
@@ -45,14 +45,119 @@ $(function(){
     copy_button.classList=['copy-button'];
     jQuery('pre code.hljs').prepend(copy_button)
     $('.copy-button').on('click', function(){
-        navigator.clipboard.writeText($(this).parent().text().replace(/\x3C/,'<'));
+        // надо также убрать все селект-инпуты
+        copytxt=$(this).parent().clone()
+        copytxt.find(".dropdown-content").detach()
+        navigator.clipboard.writeText(copytxt.text().replace(/\x3C/,'<'));
     })
+
+    //=================================================
+    //добавление в код выбора опций
+    if ($('.code-selection').length>0){
+        loadDropdown()
+    }
+
+    //=================================================
 })
 //=================================================
+//служебные функции для выбора в коде
+function loadDropdown(){
+    $('.code-selection').each(function(){
+        $(this).attr('id', `codeselect-${new Date().getTime()}`)
+        $(this).find('.hljs-string:contains("codeDropDownTag-")').each(function(){
+            let input_id=$(this).html().trim().replace(/codeDropDownTag|-|'|"/g, '')
+            // console.log(input_id)
+            let element_dict=codeElements_to_Options($(this))
+            // console.log(`codeDropDownTag-${input_id}`)
+            element_dict[`\'codeDropDownTag-${input_id}\'`]['jq'].detach()
+            element_dict['\'stop\'']['jq'].detach()
+            delete element_dict[`\'codeDropDownTag-${input_id}\'`]
+            delete element_dict['\'stop\'']
+
+            button_element=element_dict[Object.keys(element_dict)[0]]
+            button_element['jq'].addClass('dropbtn')
+            button_element['jq'].attr('id', `codeinput-${input_id}`)
+            button_element['jq'][0].outerHTML=`<div class='dropdown'>${button_element['jq'][0].outerHTML}</div>`
+            $('#codeinput-'+input_id).parent().append('<div class="dropdown-content">')
+            $('#codeinput-'+input_id).parent().find('.dropdown-content').append(button_element['jq'].removeAttr('id').removeClass('dropbtn'))
+            // console.log('1 '+input_id)
+            // $('#codeinput-'+input_id).parent().find('.dropdown-content')
+            delete element_dict[Object.keys(element_dict)[0]]
+            // console.log(element_dict)
+
+            for (let key of Object.keys(element_dict)){
+                // console.log('Мы в итерации')
+                // console.log(element_dict[key]['jq'])
+                // console.log(element_dict[key]['text'])
+                element_dict[key]['jq'].detach()
+                $('#codeinput-'+input_id).parent().find('.dropdown-content').append(element_dict[key]['text'])
+            }
+            //клик по элементу выпадающего меню ставит этот элемент выбранный
+            // console.log($('#'+input_id+'~.dropdown-content'))
+            //чистка пробелов перед запятой
+            checkForSpacesBeforeComma($('#codeinput-'+input_id).parent()[0])
+
+
+        })})
+    $('.dropdown-content *').each(function(){
+        $(this).on('click', function(){
+            $(this).parent().parent().find('.dropbtn').html($(this)[0].innerHTML)
+        })
+    })
+
+    //клик по выбранному элементу меню открывает меню
+    $('.dropbtn').each(function(){
+        $(this).on('click', function(){
+            if ($(this).parent().find(".dropdown-content").hasClass('show')) $(this).parent().find(".dropdown-content").removeClass('show');
+            else $(this).parent().find(".dropdown-content").addClass('show');
+        })
+    })
+    //клик по любому месту кроме элемента сворачивает меню
+    $(document).on('click', function(e){
+        if (!$(e.target).is('.dropbtn, .dropbtn *'))
+            $(".dropdown-content").removeClass('show')
+    })
+}
+function codeElements_to_Options(jq_object){
+    element_dict=new Map()
+    element_dict[jq_object.html().trim().replace(/|'|"/g, '')]= {
+        'text':jq_object[0].outerHTML,
+        'jq':jq_object}
+    parseCodeElements(jq_object)
+    return element_dict
+}
+function parseCodeElements(jq_object){
+    // console.log(jq_object.html())
+    if (jq_object.html()=='\'stop\''){element_dict[jq_object.html()]={
+        'text':jq_object[0].outerHTML,
+        'jq':jq_object
+    };
+        return;}
+    else {
+        element_dict[jq_object.html()]={
+            'text':jq_object[0].outerHTML,
+            'jq': jq_object}
+        parseCodeElements(jq_object.next())
+    }
+}
+function checkForSpacesBeforeComma(node){
+    // console.log(node)
+    node=node.nextSibling
+    // console.log(node)
+    if (node.nodeType!=3 || (node.nodeValue.startsWith(','))){
+        // console.log('exit')
+        return;
+    }
+    else{
+        // console.log('enter')
+        node.nodeValue=''
+        checkForSpacesBeforeComma(node)
+    }
+}
+//
 
 //Автоооглавление
 //todo: сделать автооглавление независимым от числа уровней
-//todo: починить автооглавление (оно нормально не работает и ломается после некоторого уровня)
 if (!location.pathname.endsWith('index.html')){
     $(function(){
         jQuery('h1').after('<ul id="autonav"></ul>')

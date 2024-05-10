@@ -163,6 +163,8 @@ pre:has(code.hljs) img.uncomment-button:not(#site_logo) {
     right: 20px;
     opacity: 0.5;
     visibility: hidden;
+    /*надо сделать рескейл вручную*/
+    width: 30px;
 }
 pre:has(code.hljs) img.uncomment-button:not(#site_logo):hover{opacity: 1;}
 pre code.hljs:hover img.uncomment-button:not(#site_logo){visibility: visible;}
@@ -172,9 +174,11 @@ pre:has(code.hljs) img.copy-button:not(#site_logo) {
     margin-right: 0px;
     position: absolute;
     z-index: 99;
-    right: 70px;
+    right: 60px;
     opacity: 0.5;
     visibility: hidden;
+    /*надо сделать рескейл вручную*/
+    width: 30px;
 }
 pre:has(code.hljs) img.copy-button:not(#site_logo):hover{opacity: 1;}
 pre code.hljs:hover img.copy-button:not(#site_logo){visibility: visible;}
@@ -197,10 +201,72 @@ pre code.hljs:hover img.copy-button:not(#site_logo){visibility: visible;}
 /*    padding-top: 25px;*/
 /*    margin-top: 50px;*/
 /*}*/
-/*todo: возможность минимизации глав*/
+/*todo: возможность минимизации глав в оглавлении*/
 #index-hello_div {
     display: flex;
 }
 #index-hello-text {
     margin-left: 10px;
 }
+/*==================================================*/
+/*dropdown-меню в коде*/
+/* Dropdown Button */
+.code-selection .dropbtn {
+    background-color: transparent;
+    /*color: white;*/
+    /*font-size: 16px;*/
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.code-selection .dropbtn:hover,
+.code-selection .dropbtn:focus {
+    /*background-color: #2980B9;*/
+}
+
+/* The container <div> - needed to position the dropdown content */
+.code-selection .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.code-selection .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: currentColor;
+    border-radius: 10px;
+    border: solid 1px #5c5c5c;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.code-selection .dropdown-content *{
+    background-color: #1e1e1e;
+    /*color: black;*/
+    /*padding: 12px 16px;*/
+    /*text-decoration: none;*/
+    /*display: block;*/
+}
+
+/* Change color of dropdown links on hover */
+.code-selection .dropdown-content *:hover {
+    background-color: #000000;
+}
+
+.code-selection .dropdown {
+    display: inline-block;
+    box-shadow: 3px 2px 5px 0px black;
+    border-radius: 3px;
+    font-size: 110%;
+    border: solid 1px #5c5c5c;
+}
+
+.code-selection .dropdown:hover{
+    box-shadow: 3px 2px 5px 0px #8a8a8a;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.code-selection .show {display:grid;}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Глава 1. ....</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <script src='../modules/jquery-3.7.1.min.js'></script>
+    <link rel="stylesheet" href="../modules/vs2015.min.css">
+    <script src="../modules/highlight.min.js"></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <script src="../common/counters_head.js"></script>
+
+
+</head>
+
+
+<body>
+<script src="../common/counters_body.js"></script>
+<!--TODO: ADD LEFT SLIDER-->
+<h1></h1>
+<!--TODO: генератор slick slider-->
+<!--todo: генератор owl carousel-->
+<!--todo: ymaps-->
+<!--todo: генератор fancybox-->
+<!--todo: загрузка картинок на сайт со стороны юзера-->
+<!--todo: online smtp-->
+<!--<h2>Загрузка изображений на сайт со стороны клиента</h2>-->
+<!--<h3>Загрузка изображений через <span class="code">localStorage</span></h3>-->
+<!--<input type="file" id="image_file" />-->
+<!--<button onclick="save_image()">Save</button>-->
+<!--<div></div>-->
+<!--<img id="image1" width="500px" height="500px" />-->
+<!--<br>-->
+<!--<script>-->
+<!--    function save_image()  {-->
+<!--        let f = image_file.files[0];-->
+<!--        if (f) {-->
+<!--            image1.src = URL.createObjectURL(f);-->
+<!--            localStorage.setItem('myImage', image1.src);-->
+<!--        }-->
+<!--    }-->
+<!--    image1.src = localStorage.getItem('myImage')-->
+<!--</script>-->
+
+<style>
+
+</style>
+
+
+
+
+<h2><span class="code">fancybox</span></h2>
+Для работы библиотеки fancybox нам понадобится ее скрипт и стили. </p>
+<pre><code class="language-html">&lt;script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js">&lt;/script>
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"></code></pre>
+<p>Теперь загрузим картинки, с которыми будем работать. Для этого используем <span class="code">lipsum.app</span>. Разметка, которой стоит придерживаться выглядит следующим образом: </p>
+
+<pre><code class="language-html">&lt;a href="image-a.jpeg" data-fancybox="gallery" data-caption="Caption #1">
+    &lt;img src="thumbnail-a.jpeg" />
+&lt;/a>
+&lt;a href="image-b.jpeg" data-fancybox="gallery" data-caption="Caption #2">
+    &lt;img src="thumbnail-b.jpeg" />
+&lt;/a></code></pre>
+<ul>
+    <li><span class="code">data-fancybox</span> - атрибут, на который по умолчанию происходит бинд fancybox. Если у него есть значение, то для всех картинок с одинаковым значеним будет создана общая галерея.</li>
+    <li>Внешний тег <span class="code">&lt;a data-fancybox></span> определяет полноразмерную картинку, которая будет открываться по клику.</li>
+    <li>Внутренний тег <span class="code">&lt;img></span> определяет минимизированную картинку на странице. Им необходимо прописать свой размер в наших стилях страницы. </li>
+</ul>
+
+<p>Допустим, нами уже создана галерея картинок по выше описанной разметке. Теперь нужно произвести </p>
+<pre><code class="language-html">&lt;script>
+//по умолчанию бинд происходит по атрибуту [data-fancybox]
+Fancybox.bind('[data-fancybox]', {
+    // кастомные опции
+});
+&lt;/script></code></pre>
+<p>Мы также можем произвести бинд только к определенному контейнеру. Например, вот так:</p>
+<pre><code class="language-js">Fancybox.bind(document.getElementById("gallery-wrap"), "[data-fancybox]", {
+// кастомные опции
+});</code></pre>
+
+<script>
+    $.getScript('https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js')
+    $('head').append('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">')
+</script>
+<script>
+    $(function(){
+        i=0
+        while (i<10){
+            random_link=`https://lipsum.app/id/${Math.round(Math.random()*100)}/1600x900`
+
+            $('#gallery_ex1').append(`<a data-src="${random_link}" id=random_image-${i} data-caption="Random image #${i}" data-fancybox="gallery"><img src="${random_link}" width="200" height="150""></a>`)
+            i++;
+        }
+        //todo: переписать на основе события, а не таймера
+       /* $(function(){
+            setTimeout(function(){Fancybox.bind();}, 500)
+        })*/
+    })
+</script>
+<p>Ниже приведен UI для экспериментирования с кастомными параметрами <span class="code">fancybox</span>. Чтобы посмотреть все дефолтные парметры объекта Fancybox можно вызвать свойство <span class="code">Fancybox.defaults</span>.</p>
+<!--'codeDropDownTag-compact' false true null 'stop'-->
+<pre><code class="language-html code-selection">&lt;script>
+    //в этом скрипте можно выбирать параметры
+    Fancybox.bind('[data-fancybox]', {
+        animated: 'codeDropDownTag-animated' true false 'stop', //анимация fadein/fadeout при открытии/закрытии
+        autoFocus: 'codeDropDownTag-autoFocus' true false 'stop',
+        backdropClick: "close",
+        closeButton: 'codeDropDownTag-closeButton' "auto" true false 'stop', //если true то создаст кнопку закрытия над содержимым
+        closeExisting: 'codeDropDownTag-closeExisting' false true 'stop', //если true, то закрое все существующие экземпляры
+        caption: 'codeDropDownTag-caption' false 'string' '????' 'stop', //подпись на каждом слайде
+        commonCaption: 'codeDropDownTag-commonCaption' false true 'stop', //если истина, то только 1 подпись будет использована для всего контента
+        contentClick: 'codeDropDownTag-contentClick' "toggleZoom" "toggleCover" "toggleMax" "zoomToFit" "zoomToMax" "iterateZoom" false "close" "next" "prev" 'stop',
+        contentDblClick: 'codeDropDownTag-contentDblClick' false "toggleZoom" "toggleCover" "toggleMax" "zoomToFit" "zoomToMax" "iterateZoom" "close" "next" "prev" 'stop',,
+        defaultDisplay: 'codeDropDownTag-defaultDisplay' "flex" "block" 'string' 'stop',
+        defaultType: 'codeDropDownTag-defaultType' "image" "iframe" "youtube" "vimeo" "inline" "html" "ajax" 'stop',
+        dragToClose: 'codeDropDownTag-dragToClose' true false 'stop',
+        groupAll: 'codeDropDownTag-groupAll' false true 'stop', //все элементы под биндом будут сгруппированы
+        groupAttr: 'codeDropDownTag-groupAttr' "data-fancybox" 'string' 'stop', //имя атрибута для группировки
+        height: 'codeDropDownTag-height' "auto" Number 'stop',
+        hideClass: 'codeDropDownTag-hideClass' "f-fadeOut" false 'stop',
+        hideScrollbar: 'codeDropDownTag-hideScrollbar' true false 'stop',
+        id: 'codeDropDownTag-id' Number 'string' 'stop', //кстомное id для экземпляра
+        idle: 'codeDropDownTag-idle' 3500 Number false 'stop', //время ожидания в мс, после которого режим бездействия
+        mainClass: 'codeDropDownTag-mainClass' '' 'string' 'stop', //кастомное имя класса для контейнера
+        showClass: 'codeDropDownTag-showClass' "f-zoomInUp" false 'stop',
+        parentEl: null,
+        placeFocusBack: true,
+        showClass: "f-zoomInUp",
+        startIndex: 0,
+        trapFocus: true,
+        wheel: 'codeDropDownTag-wheel' "zoom" "pan" "close" "slide" false 'stop', //действия колесика мыши
+        width: 'codeDropDownTag-width' "auto" Number 'stop',
+    });
+&lt;/script>  </code></pre>
+
+<!--todo: написать инпуты для селект-кода-->
+<!--todo: убрать съедение пробелов в селект-коде -->
+
+
+<div id="gallery_ex1" style="display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;">
+</div>
+
+<!--todo: fancybox ui внутри блока кода-->
+<!--todo: fancybox для всплыающих окон-->
+
+<!--        Images: {-->
+<!--            // Disable animation from/to thumbnail on start/close-->
+<!--            zoom: false,-->
+<!--        },-->
+<!--        Toolbar: {-->
+<!--            display: {-->
+<!--                left: [],-->
+<!--                middle: [],-->
+<!--                right: ['close'],-->
+<!--            },-->
+<!--        },-->
+<!--        Thumbs: {-->
+<!--            type: 'classic',-->
+<!--            Carousel: {-->
+<!--                center: function () {-->
+<!--                    return this.contentDim > this.viewportDim;-->
+<!--                },-->
+<!--            },-->
+<!--        },-->
+<!--        Carousel: {-->
+<!--            // Remove the navigation arrows-->
+<!--            Navigation: false,-->
+<!--        },-->
+
+
+
+
+</body>
+</html>
