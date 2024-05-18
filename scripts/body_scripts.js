@@ -54,14 +54,25 @@ $(function(){
     //=================================================
     //добавление в код выбора опций
     if ($('.code-selection').length>0){
-        loadDropdown()
+        loadCodeDropdown()
     }
-
+    //=================================================
+    // if ($('.code-tips').length>0){
+    //     loadTips()
+    // }
     //=================================================
 })
+//todo: tippy для фрагментов кода
+//todo: пострендерер для фрагментов кода, который вносит в код кастомный функционал (инпуты, селекты, всплывающие подсказки)
+//todo: заменить все инстансы кастомных подсказок на tippy.js
 //=================================================
-//служебные функции для выбора в коде
-function loadDropdown(){
+// function loadTips(){
+//     $('head').append(`<script src="https://unpkg.com/@popperjs/core@2"></script>`)
+//     $('head').append(`<script src="https://unpkg.com/tippy.js@6"></script>`)
+// }
+//=================================================
+//служебные функции для выбора опций в коде
+function loadCodeDropdown(){
     $('.code-selection').each(function(){
         $(this).attr('id', `codeselect-${new Date().getTime()}`)
         $(this).find('.hljs-string:contains("codeDropDownTag-")').each(function(){
