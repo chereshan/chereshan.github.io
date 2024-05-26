@@ -17,15 +17,25 @@ $(function(){
 $(function(){
     $('body').prepend('<div id="header"></div>')
     $("#header").load(!(
-        location.pathname=='/' ||
-        location.pathname=='/chereshan.github.io/index.html') ? "../common/header.html" : "common/header.html")
-    if (!(location.pathname=='/' ||
-        location.pathname=='/chereshan.github.io/index.html')){$('h1').after('<div id="autonav"></div>')}
+        location.pathname==='/' ||
+        location.pathname==='/chereshan.github.io/index.html') ? "../common/header.html" : "common/header.html")
+    if (!(location.pathname==='/' ||
+        location.pathname==='/chereshan.github.io/index.html')){$('h1').after('<div id="autonav"></div>')}
 
     $('span.code').each(function(){
         $(this).replaceWith(`<pre class="span-code"><code>${$(this).html()}</code></pre>`)
     })
+    //=================================================
+    if ($('.code-tips').length>0){
+        loadCodeTips_beforeHighlight()
+    }
+    //=================================================
     hljs.highlightAll();
+    //=================================================
+    if ($('.code-tips').length>0){
+        loadCodeTips_afterHighlight()
+    }
+    //=================================================
     $(".span-code").replaceWith(function(){
         return this.outerHTML.replace("<pre class=\"span-code\"", "<span class=\"span-code\"").replace("</pre", "</span")
     });
@@ -56,15 +66,129 @@ $(function(){
     if ($('.code-selection').length>0){
         loadCodeDropdown()
     }
-    //=================================================
-    // if ($('.code-tips').length>0){
-    //     loadTips()
-    // }
-    //=================================================
+
 })
 //todo: tippy для фрагментов кода
 //todo: пострендерер для фрагментов кода, который вносит в код кастомный функционал (инпуты, селекты, всплывающие подсказки)
 //todo: заменить все инстансы кастомных подсказок на tippy.js
+
+test_var=[]
+function loadCodeTips_beforeHighlight(){
+    codeTipContainer=[]
+    $('.code-tips').each(function(){
+        var code_tips_tag=$(this)
+        codeTipContainer.push({
+            'address':$(this),
+            // 'raw-text':$(this).text(),
+            // 'raw-html':$(this).html(),
+            // 'test':$(this).html().match(/<span class="code-tip" data-tip=".*?">(.*?)<\/span>/g),
+            // 'test2':$(this).find('.code-tip'),
+            'tips':[]
+        })
+        let iter_code_tip_id=0
+        $(this).find('.code-tip').each(function(){
+            //Присваиваем каждому тегу айдишник, чтобы избежать проблемы не-уникальности тегов. В jQ-объекте будет храниться id.
+            $(this).attr('data-tip-id', iter_code_tip_id)
+            iter_code_tip_id++;
+        })
+        $(this).find('.code-tip').each(function(){
+            //парсинг данных
+            var data_tip_text=$(this).attr('data-tip')
+            var inner_tip_text=$(this)[0].innerHTML
+            var outer_tip_html=$(this)[0].outerHTML
+            var start_pos=code_tips_tag.html().indexOf(outer_tip_html)
+            var end_pos=start_pos+inner_tip_text.length
+            // console.log(code_tips_tag.html())
+            code_tips_tag.html(code_tips_tag.html().replace(outer_tip_html, inner_tip_text))
+
+            codeTipContainer[codeTipContainer.length-1]['tips'].push({
+                'tip-text':data_tip_text,
+                'start':start_pos,
+                'end':end_pos,
+                'outer_tip_html':outer_tip_html,
+                'inner_tip_text':inner_tip_text
+            })
+        })
+    })
+}
+
+//todo: весь хайлайтинг должен быть вынесен отдельный скрипт, который будет подключаться из осноного скрипта
+
+var test_container= {}
+//test: совпадение слайса и текста
+function loadCodeTips_afterHighlight(){
+    for (let i=0; i<codeTipContainer.length; i++){
+        test_container[i]={'address':codeTipContainer[i].address}
+        let code_text=codeTipContainer[i].address.text()
+        let code_html=codeTipContainer[i].address.html()
+        test_container[i]['code-html']=code_html
+
+        let tag_posed=tagTextSeparator(code_html)
+        test_container[i]['tag-posed']=tag_posed
+        test_container[i]['tips']=codeTipContainer[i].tips
+
+        let relevant_pos=[]
+        let relevant_pos1=[]
+        for (let j=0; j<codeTipContainer[i].tips.length; j++){
+
+            relevant_pos.push(tag_posed.filter(function(l){
+                return l[2]>=codeTipContainer[i].tips[j].start && l[2]<=codeTipContainer[i].tips[j].end
+            }))
+
+            relevant_pos1.push(tag_posed.filter(function(l){
+                return l[2]>=codeTipContainer[i].tips[j].start && l[2]<=codeTipContainer[i].tips[j].end && !l[0]
+                    && !l[3]
+            }))
+
+            // test_container[i]['tips'][j]['posed']=tag_posed.filter(function(l){
+            //     return l[2]>=codeTipContainer[i].tips[j].start && l[2]<=codeTipContainer[i].tips[j].end
+            // })
+
+            test_container[i]['tips'][j]['test0']=relevant_pos[j]
+            test_container[i]['tips'][j]['test1']=code_html.slice(relevant_pos[j][0][1], relevant_pos[j][relevant_pos[j].length-1][1])
+            test_container[i]['tips'][j]['test2']=codeTipContainer[i].tips[j].inner_tip_text
+
+            test_container[i]['tips'][j]['test3']=relevant_pos[j][0][1]
+            test_container[i]['tips'][j]['test4']=relevant_pos[j][relevant_pos[j].length-1][1]
+
+            // console.log(relevant_pos1)
+            test_container[i]['tips'][j]['test5']=code_html.slice(relevant_pos1[j][0][1], relevant_pos1[j][relevant_pos1[j].length-1][1])
+
+            test_container[i]['tips'][j]['test6']=relevant_pos1[j]
+
+        }
+        console.log(relevant_pos)
+        for (let k=0; k<relevant_pos.length;k++){
+
+            // console.log('test1:', code_text.slice(relevant_pos[k][0][1], relevant_pos[k][0][relevant_pos[k].length-1])==codeTipContainer[i].tips[k].inner_tip_text)
+
+            // console.log(code_html.slice(relevant_pos[k][0][1], relevant_pos[k][0][relevant_pos[k].length-1]))
+            // console.log(codeTipContainer[i].tips[k]['inner_tip_text'])
+        }
+
+        // console.log('КОНЕЦ')
+
+    }
+}
+
+
+function tagTextSeparator(str){
+    var html_map=str.split('')
+    var result_list=[]
+    var intagflag=false
+    var istagopen=false
+    // var intagflag_1=false
+    var text_count=0
+    for (let i=0; i<html_map.length; i++){
+        if (html_map[i]=='<'){intagflag=true}
+        if (!istagopen && intagflag){istagopen=true}
+        result_list.push([intagflag, i, text_count, istagopen])
+        if (!intagflag){text_count++}
+        if (intagflag && html_map[i]=='>'){intagflag=false}
+        if (istagopen && !intagflag){istagopen=false}
+    }
+    return result_list
+}
 //=================================================
 // function loadTips(){
 //     $('head').append(`<script src="https://unpkg.com/@popperjs/core@2"></script>`)
@@ -374,4 +498,3 @@ $(function(){
         location.pathname=='/' ||
         location.pathname=='/chereshan.github.io/index.html') ? "../common/footer.html" : "common/footer.html")
 })
-
