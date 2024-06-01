@@ -1,35 +1,672 @@
-<html>
+<!DOCTYPE html>
   <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" type="text/css" href="static/styles/styles.css">
       <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
       <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-      <script src='../modules/jquery-3.7.1.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../modules/jquery-3.7.1.min.js"><'+'/script>')</script>
       <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
       <link rel="stylesheet" href="../modules/vs2015.min.css">
       <script src="../modules/highlight.min.js"></script>
       <script src="../scripts/body_scripts.js"></script>
+
       <script src="../common/counters_head.js"></script>
 
-    <title>Глава 3. Манипуляции над элементами DOM и данными</title>
+    <title>Глава 3. Визуальные эффекты</title>
   </head>
   <body>
   <script src="../common/counters_body.js"></script>
-    <h1>Глава 3. Манипуляции над элементами DOM и данными</h1>
-<p>Для решения такой задачи подойдут методы <span class="code">data(key,value)</span>, <span class="code">data(key)</span> и <span class="code">removeData([name])</span></p>
-  <div class="ex1"></div>
-  <p  class="ex1">Сотрудник: <span></span>, возраст <span></span> лет, телефон:
-      <span></span></p>
-  <button  class="ex1">Получить данные</button><button  class="ex1">Удалить данные</button>
+    <h1>Глава 3. Визуальные эффекты</h1>
+  <h2>Анимация jQuery</h2>
+    <h3>Как показать и скрыть элементы</h3>
+  <p>Допустим, что мы хотим иметь возможноть переклють состояние видимости некоторого элемента. Для этого в jQuery есть методы <span class="code">hide()</span>, <span class="code">show()</span> и <span class="code">toggle()</span>.</p>
+  <pre><code class="language-html">
+    &lt;button class="ex1 hide">&lt;span class="code">hide()&lt;/span>&lt;/button>
+    &lt;button class="ex1 show">&lt;span class="code">show()&lt;/span>&lt;/button>
+    &lt;button class="ex1 toggle">&lt;span class="code">toggle()&lt;/span>&lt;/button>
+    &lt;div class="ex1" style="border: 1px black solid">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/div>
+    &lt;script>
+        $('.ex1.hide').on('click', function(){
+            $('div.ex1').hide()
+        })
+        $('.ex1.show').on('click', function(){
+            $('div.ex1').show()
+        })
+        $('.ex1.toggle').on('click', function(){
+            $('div.ex1').toggle()
+        })
+    &lt;/script></code></pre>
+  <button class="ex1 hide"><span class="code">hide()</span></button>
+  <button class="ex1 show"><span class="code">show()</span></button>
+  <button class="ex1 toggle"><span class="code">toggle()</span></button>
+  <div class="ex1" style="border: 1px black solid">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+  <script>
+      $('.ex1.hide').on('click', function(){
+          $('div.ex1').hide()
+      })
+      $('.ex1.show').on('click', function(){
+          $('div.ex1').show()
+      })
+      $('.ex1.toggle').on('click', function(){
+          $('div.ex1').toggle()
+      })
+  </script>
+
+
+  <h3>Как показать/скрыть элемент постепенно</h3>
+  <p>Мы можем передать в методы <span class="code">hide()</span>, <span class="code">show()</span> и <span class="code">toggle()</span> аргументы - время в милисекундах и функция, которая будет вызвана после заверщения процесса. </p>
+  <pre><code class="language-html">&lt;script>
+        $('.ex2.hide').on('click', function(){
+            $('#divex2').hide($('input.ex2').val(), function(){
+                $('#divex2 p:first')
+            })
+        })
+        $('.ex2.show').on('click', function(){
+            $('#divex2').show($('input.ex2').val(), function(){
+                $('#divex2 p:first')
+            })
+        })
+        $('.ex2.toggle').on('click', function(){
+            $('#divex2').toggle($('input.ex2').val(), function(){
+                $('#divex2 p:first')
+            })
+        })
+&lt;/script></code></pre>
+  <p><b>Время в млсек</b>:<input class="ex2" type="number" value="1000">
+      <button class="ex2 hide"><span class="code">hide()</span></button>
+      <button class="ex2 show"><span class="code">show()</span></button>
+      <button class="ex2 toggle"><span class="code">toggle()</span></button>
+      </p>
 
 
 
+  <div class="ex2" id="divex2" style="border: 1px black solid"><p>Я шел, спускаясь в темные коридоры, и потом опять поднимаясь наверх. Я был
+      один. Я кричал, мне не отвечали — я был один в этом обширном, запутанном, как
+      лабиринт, доме.</p><p>Ги де Мопассан</p></div>
+  <script>
+      $('.ex2.hide').on('click', function(){
+          $('#divex2').hide($('input.ex2').val(), function(){
+              $('#divex2 p:first')
+          })
+      })
+      $('.ex2.show').on('click', function(){
+          $('#divex2').show($('input.ex2').val(), function(){
+              $('#divex2 p:first')
+          })
+      })
+      $('.ex2.toggle').on('click', function(){
+          $('#divex2').toggle($('input.ex2').val(), function(){
+              $('#divex2 p:first')
+          })
+      })
+  </script>
+
+<h3>Эффект скольжения</h3>
+  <p>Существуют методы <span class="code">slideUp()</span>, <span class="code">slideDown()</span> и <span class="code">slideToggle()</span></p>
+<pre><code class="language-html">&lt;script>
+      $('.ex3.up').on('click', function(){
+          $('#divex3').slideUp($('input.ex3').val(), function(){
+              $('#divex3 p:first')
+          })
+      })
+      $('.ex3.down').on('click', function(){
+          $('#divex3').slideDown($('input.ex3').val(), function(){
+              $('#divex3 p:first')
+          })
+      })
+      $('.ex3.toggle').on('click', function(){
+          $('#divex3').slideToggle($('input.ex3').val(), function(){
+              $('#divex3 p:first')
+          })
+      })
+&lt;/script></code></pre>
+
+  <p><b>Время в млсек</b>:<input class="ex3" type="number" value="1000">
+      <button class="ex3 up"><span class="code">slideUp()</span></button>
+      <button class="ex3 down"><span class="code">slideDown()</span></button>
+      <button class="ex3 toggle"><span class="code">slideToggle()</span></button>
+  </p>
 
 
 
+  <div class="ex3" id="divex3" style="border: 1px black solid"><p>Я шел, спускаясь в темные коридоры, и потом опять поднимаясь наверх. Я был
+      один. Я кричал, мне не отвечали — я был один в этом обширном, запутанном, как
+      лабиринт, доме.</p><p>Ги де Мопассан</p></div>
+  <script>
+      $('.ex3.up').on('click', function(){
+          $('#divex3').slideUp($('input.ex3').val(), function(){
+              $('#divex3 p:first')
+          })
+      })
+      $('.ex3.down').on('click', function(){
+          $('#divex3').slideDown($('input.ex3').val(), function(){
+              $('#divex3 p:first')
+          })
+      })
+      $('.ex3.toggle').on('click', function(){
+          $('#divex3').slideToggle($('input.ex3').val(), function(){
+              $('#divex3 p:first')
+          })
+      })
+  </script>
 
+  <h3>Эффект затухания</h3>
+
+  <p>Существуют методы <span class="code"> fadeOut()</span>, <span class="code">fadeIn()</span> и <span class="code">fadeToggle()</span></p>
+
+<pre><code class="language-html">  &lt;script>
+      $('.ex4.out').on('click', function(){
+          $('#divex4').fadeOut($('input.ex4').val(), function(){
+              $('#divex4 p:first')
+          })
+      })
+      $('.ex4.in').on('click', function(){
+          $('#divex4').fadeIn($('input.ex4').val(), function(){
+              $('#divex4 p:first')
+          })
+      })
+      $('.ex4.toggle').on('click', function(){
+          $('#divex4').fadeToggle($('input.ex4').val(), function(){
+              $('#divex4 p:first')
+          })
+      })
+  &lt;/script></code></pre>
+  
+  <p><b>Время в млсек</b>:<input class="ex3" type="number" value="1000">
+      <button class="ex4 out"><span class="code">fadeOut()</span></button>
+      <button class="ex4 in"><span class="code">fadeIn()</span></button>
+      <button class="ex4 toggle"><span class="code">fadeToggle()</span></button>
+  </p>
+
+
+
+  <div class="ex3" id="divex4" style="border: 1px black solid"><p>Я шел, спускаясь в темные коридоры, и потом опять поднимаясь наверх. Я был
+      один. Я кричал, мне не отвечали — я был один в этом обширном, запутанном, как
+      лабиринт, доме.</p><p>Ги де Мопассан</p></div>
+  <script>
+      $('.ex4.out').on('click', function(){
+          $('#divex4').fadeOut($('input.ex4').val(), function(){
+              $('#divex4 p:first')
+          })
+      })
+      $('.ex4.in').on('click', function(){
+          $('#divex4').fadeIn($('input.ex4').val(), function(){
+              $('#divex4 p:first')
+          })
+      })
+      $('.ex4.toggle').on('click', function(){
+          $('#divex4').fadeToggle($('input.ex4').val(), function(){
+              $('#divex4 p:first')
+          })
+      })
+  </script>
+
+<h3>Изменение прозрачности элемента</h3>
+<p>Мы можем управлять прозразностью некоторого элемента кликом на него с помощью метода <span class="code">fadeTo()</span>:</p>
+<pre><code class="language-html">  &lt;script>
+      $('p.ex5:first').on('click', function() {
+          $( this ).fadeTo( "slow", 0.33 );
+      });
+  &lt;/script></code></pre>
+<buttton class="ex5"></buttton>
+<div class="ex5" style="border:1px dotted #369; padding:5px; color:#00f;">
+    <p style="border: black 1px dotted; font-size: larger" class="ex5">Первый параграф — щелкните левой кнопкой мыши здесь.</p>
+    <p style="border: black 1px dotted; font-size: larger" class="ex5">Второй параграф — для сравнения.</p>
+</div>
+
+  <script>
+      $('p.ex5:first').on('click', function() {
+          $( this ).fadeTo( "slow", 0.33 );
+      });
+  </script>
+ 
+<h3>Создание анимации</h3>
+<pre><code class="language-html">  &lt;script>
+      $('.ex6.left').on('click', function (){
+          $('div.ex6').animate({'left':'-=20px'}, 'slow')
+      })
+      $('.ex6.right').on('click', function (){
+          $('div.ex6').animate({'left':'+=20px'}, 'slow')
+      })
+  &lt;/script></code></pre>
+  <div style="text-align: center">
+  <button style="font-size: 40px" class="ex6 left">🢠</button>
+  <button style="font-size: 40px" class="ex6 right">🢡</button>
+  </div>
+  <div class="ex6" style="
+ position:relative;
+ background-color:#369;
+ left:100px;
+ width:90px;
+ height:90px;
+ margin:30px;
+border: black 1px solid"></div>
+
+  <script>
+
+      $('.ex6.left').on('click', function (){
+        $('div.ex6').animate({'left':'-=20px'}, 'slow')
+      })
+      $('.ex6.right').on('click', function (){
+          $('div.ex6').animate({'left':'+=20px'}, 'slow')
+      })
+  </script>
+
+  <h3>Анимация изменения CSS-свйоств</h3>
+<pre><code class="language-html">  &lt;script>
+      $(function(){
+          $(".ex7.go").on('click', function(){
+              $(".ex7.block").animate({
+                  "width": "70%",
+                  "opacity": 0.3,
+                  "marginLeft": "5em",
+                  "fontSize": "3em",
+                  "borderWidth": "10px"
+              }, 2500, function(){} );
+          });
+          $(".ex7.stop").on('click', function(){
+              $(".ex7.block").stop();
+          });
+      });
+  &lt;/script></code></pre>
+  <button class="ex7 go">Выполнить</button>
+  <button class="ex7 stop">Остановить</button>
+  <div class="ex7 block">Hello!</div>
+  <script type="text/javascript">
+      $(function(){
+          $(".ex7.go").on('click', function(){
+              $(".ex7.block").animate({
+                  "width": "70%",
+                  "opacity": 0.3,
+                  "marginLeft": "5em",
+                  "fontSize": "3em",
+                  "borderWidth": "10px"
+              }, 2500, function(){} );
+          });
+          $(".ex7.stop").on('click', function(){
+              $(".ex7.block").stop();
+          });
+      });
+  </script>
+  <h3>Очередь анимаций</h3>
+<pre><code class="language-html">&lt;script>
+      $(function(){
+          $(".ex8.go").on('click', function(){
+              $("div.ex8")
+                //увеличение ширины вне очереди
+                  .animate({ width:"300px" },{queue:false,duration:3000})
+                //увеличение высоты
+                  .animate( { height:"400px" }, 1500 )
+                //увеличение ширины границы
+                  .animate( { borderWidth:"30px" }, 1500);
+          });
+      });
+&lt;/script>  </code></pre>
+  <button class="ex8 go">Выполнить</button>
+<div class='ex8' style="position:relative;
+ background-color:#69c;
+ left:100px;
+ width:90px;
+height:90px;
+ margin:5px;
+ border:1px solid #369;"></div>
+  <script>
+      $(function(){
+          $(".ex8.go").on('click', function(){
+              $("div.ex8")
+                  .animate({ width:"300px" }, { queue:false, duration:3000 })
+                  .animate( { height:"400px" }, 1500 )
+                  .animate( { borderWidth:"30px" }, 1500);
+          });
+      });
+  </script>
+
+<h3>Задержка между анимациями</h3>
+  <p>Для реализации задержки используется метод <span class="code">delay()</span></p>
+  <pre><code class="language-html">&lt;script>
+        $(function(){
+            $("button.ex9").on('click', function() {
+                $("div.ex9.first").slideUp(700).fadeIn(1500);
+                $("div.ex9.second").slideUp(700).delay(1000).fadeIn(1500);
+            });
+        });
+&lt;/script></code></pre>
+  <p><button class="ex9"><span class="code">Запустить</span></button></p>
+  <div class="ex9 first" style="width: 60px; height: 60px; float: left;background-color: #3f3"></div>
+  <div class="ex9 second" style="width: 60px; height: 60px; float: left;background-color: #33f"></div>
+  <br><br><br>
+  <script>
+      $(function(){
+          $("button.ex9").on('click', function() {
+              $("div.ex9.first").slideUp(700).fadeIn(1500);
+              $("div.ex9.second").slideUp(700).delay(1000).fadeIn(1500);
+          });
+      });
+  </script>
+
+<h3>Эффекты jQuery UI</h3>
+  <p>Для использования более продвинутых эффектов анимации jQuery нам следует подгрузить библиотеку jQuery UI:</p>
+  <pre><code class="language-html">&lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js">&lt;/script></code></pre>
+<pre><code class="language-html">  &lt;script>
+      $(function(){
+          $("div.ex10").on('click', function(){
+              $(this).hide(
+                  "explode",
+                  { pieces: 100 },
+                  1200,
+                  function(){}
+              );
+          });
+      });
+  &lt;/script></code></pre>
+  <div class="ex10" style="position:relative;width:200px; height:200px;border:1px solid #369; background-color:#69c; margin: 20px; padding: 10px;
+">проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы проблемы </div>
+  <script>
+      $(function(){
+          $("div.ex10").on('click', function(){
+              $(this).hide(
+                  "explode",
+                  { pieces: 100 },
+                  1200,
+                  function(){}
+              );
+          });
+      });
+  </script>
+  <p>В следующем примере применяется эффект <span class="code">bounce</span>:</p>
+<pre><code class="language-html">  &lt;script>
+      $(function(){
+          $("div.ex11").on('click', function(){
+              $(this).effect(
+                  "bounce",
+                  { times:7, distance:50, direction:"right" },
+                  300,
+                  function(){}
+              );
+          });
+      });
+  &lt;/script></code></pre>
+  <div class="ex11" style=" position:relative;
+ top:0px; left:200px;
+ width:200px; height:200px;
+ border:1px solid #369; background-color:#69c; text-align: center;
+vertical-align: middle;"><span>Долбануть током</span></div>
+  <script>
+      $(function(){
+          $("div.ex11").on('click', function(){
+              $(this).effect(
+                  "bounce",
+                  { times:7, distance:50, direction:"right" },
+                  300,
+                  function(){}
+              );
+          });
+      });
+  </script>
+
+
+  <table class="first_column_code">
+      <tbody>
+      <tr>
+          <th>Эффект</th>
+          <th>Свойства эффекта</th>
+      </tr>
+      <tr>
+          <td>blind</td>
+          <td>Имеет свойства <span class="code">direction</span> и <span class="code">mode</span>. <br>Значения свойства <span class="code">direction</span> — <span class="code">vertical</span>(по умолчанию) или <span class="code">horizontal</span>.<br>Значения свойства <span class="code">mode</span> — <span class="code">show</span> или <span class="code">hide</span> (по умолчанию)</td>
+      </tr>
+      <tr>
+          <td>bounce</td>
+          <td>Имеет свойства <span class="code">direction</span>, <span class="code">distance</span>, <span class="code">mode</span> и <span class="code">times</span>. <br>Значения свойства <span class="code">direction</span> — <span class="code">left</span>, <span class="code">right</span>, <span class="code">up</span> (по умолчанию) и <span class="code">down</span>.<br>Значение свойства <span class="code">distance</span> — число (по умолчанию — 20).<br>Значения свойства <span class="code">mode</span> — <span class="code">show</span>, <span class="code">hide</span> и <span class="code">effect</span> (по умолчанию). <br>Свойство <span class="code">times</span> — число (по умолчанию — 5)</td>
+      </tr>
+      <tr>
+          <td>clip</td>
+          <td>То же, что и <span class="code">blind</span></td>
+      </tr>
+      <tr>
+          <td>drop</td>
+          <td>Имеет свойства <span class="code">direction</span> и <span class="code">mode</span>.<br>Значения свойства <span class="code">direction</span> — <span class="code">left</span> (по умолчанию), <span class="code">right</span>, <span class="code">up</span>, <span class="code">down</span>.<br>Значения свойства <span class="code">mode</span> — <span class="code">show</span> или <span class="code">hide</span> (по умолчанию)</td>
+      </tr>
+      <tr>
+          <td>explode</td>
+          <td>Имеет свойства <span class="code">direction</span> и <span class="code">mode</span>.<br>Значения свойства <span class="code">direction</span> — <span class="code">left</span> (по умолчанию), <span class="code">right</span>, <span class="code">up</span>, <span class="code">down</span>. <br>Значения свойства <span class="code">mode</span> — <span class="code">show</span> или <span class="code">hide</span> (по умолчанию)</td>
+      </tr>
+      <tr>
+          <td>fold</td>
+          <td>Имеет свойства <span class="code">horizFirst</span>, <span class="code">mode</span> и <span class="code">size</span>.<br>Значения свойства <span class="code">horizFirst</span> — <span class="code">true</span> и <span class="code">false</span> (по умолчанию). <br>Значения свойства <span class="code">mode</span> — <span class="code">show</span> или <span class="code">hide</span> (по умолчанию). <br>Значение свойства <span class="code">size</span> — число (по умолчанию — 15)</td>
+      </tr>
+      <tr>
+          <td>highlight</td>
+          <td>Имеет свойства <span class="code">color</span> и <span class="code">mode</span>. <br>Свойство <span class="code">color</span> может принимать значения цвета подсветки (по умолчанию <span style="background: #ffff99">#ffff99</span>). <br>Значения свойства <span class="code">mode</span> — <span class="code">show</span> (по умолчанию) или <span class="code">hide</span></td>
+      </tr>
+      <tr>
+          <td>puff</td>
+          <td>Имеет свойства <span class="code">percent</span> и <span class="code">mode</span>. <br>Значение свойства <span class="code">percent</span> — число (по умолчанию — 150). <br>Значения свойства mode — <span class="code">show</span> или <span class="code">hide</span> (по умолчанию)</td>
+      </tr>
+      <tr>
+          <td>pulsate</td>
+          <td>Имеет свойства <span class="code">times</span> и <span class="code">mode</span>. <br>Значение свойства times — число (по умолчанию — 5). <br>Значения свойства <span class="code">mode</span> — <span class="code">show</span> (по умолчанию) или <span class="code">hide</span></td>
+      </tr>
+      <tr>
+          <td>scale</td>
+          <td>Имеет свойства <span class="code">direction</span>, <span class="code">from</span>, <span class="code">origin</span>, <span class="code">percent</span> и <span class="code">scale</span>. <br>Значения свойства <span class="code">direction</span> — <span class="code">both</span> (по умолчанию), <span class="code">vertical</span> и <span class="code">horizontal</span>. <br>Свойство from — объект <span class="code">{height:., width:.}</span>, характеризующий начальные размеры. <br>Обычно не требуется. <br>Свойство <span class="code">origin</span> — массив, описывающий точку исчезновения. <br>По умолчанию — <span class="code">[middle, center]</span>. <br>Свойство <span class="code">percent</span> — число (по умолчанию 0/100). <br>Значения свойства <span class="code">scale</span> — <span class="code">both</span> (по умолчанию), <span class="code">box</span> и <span class="code">content</span></td>
+      </tr>
+      <tr>
+          <td>shake</td>
+          <td>Имеет свойства <span class="code">direction</span>, <span class="code">distance</span> и <span class="code">times</span>. <br>Значения свойства <span class="code">direction</span> — <span class="code">left</span> (по умолчанию), <span class="code">right</span>, <span class="code">up</span> и <span class="code">down</span>. <br>Значение свойства <span class="code">distance</span> — число (по умолчанию — 20). <br>Свойство <span class="code">times</span> — число (по умолчанию — 3)</td>
+      </tr>
+      <tr>
+          <td>size</td>
+          <td>Имеет свойства <span class="code">from</span>, <span class="code">to</span>, <span class="code">origin</span> и <span class="code">scale</span>. <br>Свойство <span class="code">from</span> — объект <span class="code">{height:., width:.}</span>, характеризующий начальные размеры. <br>Обычно не требуется. <br>Свойство <span class="code">to</span> — объект <span class="code">{height:., width:.}</span>, характеризующий конечные размеры. <br>Свойство <span class="code">origin</span> — массив, описывающий точку исчезновения. <br>По умолчанию — <span class="code">[middle, center]</span>. <br>Значения свойства <span class="code">scale</span> — <span class="code">both</span> (по умолчанию), <span class="code">box</span> и <span class="code">content</span></td>
+      </tr>
+      <tr>
+          <td>slide</td>
+          <td>Имеет свойства <span class="code">direction</span>, <span class="code">distance</span> и <span class="code">mode</span>. <br>Значения свойства <span class="code">direction</span> — <span class="code">left</span> (по умолчанию), <span class="code">right</span>, <span class="code">up</span> и <span class="code">down</span>. <br>Значение свойства <span class="code">distance</span> — число (по умолчанию — внешняя ширина элемента). <br>Значения свойства <span class="code">mode</span> — show<br>или <span class="code">hidehide</span> (по умолчанию)</td>
+      </tr>
+      <tr>
+          <td>transfer</td>
+          <td>Имеет свойства <span class="code">className</span> и <span class="code">to</span>. <br>Свойство <span class="code">className</span> — строка с именем класса.<br>Свойство <span class="code">to</span> — строка, содержащая jQuery-селектор</td>
+      </tr>
+      </tbody>
+  </table>
+
+<h2>jQuery и CSS</h2>
+<h3>Отслеживание и изменение CSS-свойств</h3>
+<pre><code class="language-html">  &lt;script>
+      $('input.ex12').keyup(function(){
+          let ex12_value=$(this).val()
+          $('div.ex12').css('background-color',ex12_value)
+      })
+  &lt;/script></code></pre>
+  <p><b>Примеры:</b> <span class="backgr-col">blue</span>, <span class="backgr-col">rgb(15,99,30)</span>, <span class="backgr-col">#123456</span>, <span class="backgr-col">#f11</span></p>
+  <p><b>Значение стиля <span class="code">background-color</span></b>: <input class='ex12' type="text" value="white"></p>
+  <div class="ex12" style=" width:60px; height:60px; margin:5px; float:left; border: 1px darkblue solid"></div>
+  <script>
+      $('input.ex12').keyup(function(){
+          let ex12_value=$(this).val()
+          $('div.ex12').css('background-color',ex12_value)
+      })
+  </script>
+<br><br><br>
+
+  <h3><span class="code">Hover</span> (Эффекты наведения мыши)</h3>
+  <p>Ниже приведен квадрат, цвет которого случайно меняется при наведении курсора:</p>
+<pre><code class="language-html">  &lt;script>
+      $('div.ex13').hover(function(){
+              function getRandomColor() {
+                  var letters = '0123456789ABCDEF';
+                  var color = '#';
+                  for (var i = 0; i &lt; 6; i++) {
+                      color += letters[Math.floor(Math.random() * 16)];
+                  }
+                  return color;
+              }
+
+              $('div.ex13').css('background',getRandomColor());
+          },
+          function (){
+              $('div.ex13').css('background','white');
+          })
+  &lt;/script></code></pre>
+  <div class="ex13" style="border: 1px black solid; width:60px; height:60px;margin:5px; float:left;"></div>
+<script>
+    $('div.ex13').hover(function(){
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+        $('div.ex13').css('background',getRandomColor())
+    },
+    function (){
+        $('div.ex13').css('background','white');
+    })
+</script>
+<br><br><br>
+<h3>Изменение размерности элементов</h3>
+<pre><code class="language-html">  &lt;script>
+      $('span.ex14-width').html(`&lt;b>width:&lt;/b> ${$('div.ex14').width()}`)
+      $('span.ex14-height').html(`&lt;b>height:&lt;/b> ${$('div.ex14').height()}`)
+
+      $('button.ex14').on('click', function(){
+
+          if ($(this).text().includes('width')){
+              let change_w=+($(this).text().slice(-2));
+              $('div.ex14').width(Math.round($('div.ex14').width()+change_w));
+              $('span.ex14-width').html(`&lt;b>width:&lt;/b> ${$('div.ex14').width()}`)
+          }
+          else {
+              let change_h=+($(this).text().slice(-2));
+              $('div.ex14').height(Math.round($('div.ex14').height()+change_h));
+              $('span.ex14-height').html(`&lt;b>height:&lt;/b> ${$('div.ex14').height()}`)
+          }
+      })
+  &lt;/script></code></pre>
+  <button class="ex14" style="background-color:darksalmon"><b>width+1</b></button>
+  <button class="ex14" style="background-color:cornflowerblue"><b>width-1</b></button>
+  <button class="ex14" style="background-color:darksalmon"><b>height+1</b></button>
+  <button class="ex14" style="background-color:cornflowerblue"><b>height-1</b></button>
+  <div class="ex14" style="width:120px; height:110px;margin:15px; padding:10px;border:1px black solid;overflow:hidden; display: flex; align-items: center; justify-content: center;">
+      {
+      <span class="ex14-width"></span>
+      <span class="ex14-height"></span>
+      }
+  </div>
+  <script>
+      $('span.ex14-width').html(`<b>width:</b> ${$('div.ex14').width()}`)
+      $('span.ex14-height').html(`<b>height:</b> ${$('div.ex14').height()}`)
+      
+      $('button.ex14').on('click', function(){
+
+          if ($(this).text().includes('width')){
+              let change_w=+($(this).text().slice(-2));
+              $('div.ex14').width(Math.round($('div.ex14').width()+change_w));
+              $('span.ex14-width').html(`<b>width:</b> ${$('div.ex14').width()}`)
+          }
+          else {
+              let change_h=+($(this).text().slice(-2));
+              $('div.ex14').height(Math.round($('div.ex14').height()+change_h));
+              $('span.ex14-height').html(`<b>height:</b> ${$('div.ex14').height()}`)
+          }
+      })
+  </script>
+<h3>Позиционирование элементов</h3>
+  <p>Нарисуем рамку с четырьмя квадратами внутри. При щелчке мышкой на один из них на вывод ниже будет выведены значения <span class="code">offset()</span> и <span class="code">position()</span>.</p>
+  <p>Метод <span class="code">offset()</span> возвращает значения отсупы top и left относительно документа.</p>
+  <p>Метод <span class="code">position()</span> возвращает значения top и left относительно родительского элемента.</p>
+  <pre><code class="language-html">  &lt;script>
+      $('div.ex15.inner').on('click', function(){
+          var o = $(this).offset();
+          $("p.ex15:first span").text("left: " + o.left + "px, top: " + o.top + "px");
+          var p = $(this).position();
+          $(this).effect('highlight')
+          $("p.ex15:last span").text("left: " + p.left + "px, top: " + p.top + "px");
+      })
+  &lt;/script></code></pre>
+  <style>
+      .ex15.main{
+          position:relative;
+          top:20px; left:40px;
+          width:200px; height:200px;
+          border:2px solid black;
+          padding:10px;
+      }
+      .ex15.inner{
+          width:60px; height:60px;
+          margin:5px; float:left;
+          border:2px solid #369;
+      }
+      br.ex15 { clear:left; }
+      p.ex15 { margin-left:40px; }
+  </style>
+  <div class="ex15 main">
+      <div class="ex15 inner"></div>
+      <div class="ex15 inner"></div>
+      <br class="ex15"/>
+      <div class="ex15 inner"></div>
+      <div class="ex15 inner"></div>
+  </div>
+<br>
+  <p class="ex15">Offset — <span class="ex15">left: ?px, top: ?px</span></p>
+  <p class="ex15">Position — <span class="ex15">left: ?px, top: ?px</span></p>
+
+  <script>
+      $('div.ex15.inner').on('click', function(){
+          var o = $(this).offset();
+          $("p.ex15:first span").text("left: " + o.left + "px, top: " + o.top + "px");
+          var p = $(this).position();
+          $(this).effect('highlight')
+          $("p.ex15:last span").text("left: " + p.left + "px, top: " + p.top + "px");
+      })
+  </script>
+
+  <h3>Прокрутка</h3>
+<pre><code class="language-html">  &lt;script>
+      $("div.ex16.demo").scrollTop(150).scrollLeft(300);
+      $("button.ex16").on('click', function(){
+          var d = $("div.ex16.demo");
+          $('div.ex16-output').append(`&lt;p>scrollTop()=${d.scrollTop()},  scrollLeft= ${d.scrollLeft()}&lt;/p>`);
+      });
+  &lt;/script></code></pre>
+  <style>
+      div.ex16.demo {
+          width:300px; height:200px;
+          overflow:auto;
+          border:1px solid #369;
+      }
+      p.ex16 {
+          width:1000px;
+          background-color:#ddd;
+          border-bottom:1px dotted #69c;
+      }
+  </style>
+  <div  class="ex16 demo">
+  <p class="ex16">Он поднял палец ... приближался.</p>
+  <p class="ex16">Кровь застыла ... взором зверя,</p>
+  <p class="ex16">попавшего в ... сучьями,</p>
+  <p class="ex16">и все это ... самоотверженных.</p>
+  <p class="ex16">Воздух вокруг ... поворачиваться,</p>
+  <p class="ex16">и тут свершилось ... самые глаза.</p>
+  <p class="ex16">Лавр Федотович ... осинника.</p>
+  <p class="ex16">Справа от меня... действием.</p>
+  </div>
+  <button class="ex16">Получить scrollTop и scrollLeft</button>
+  <div class="ex16-output"></div>
+  <script>
+      $("div.ex16.demo").scrollTop(150).scrollLeft(300);
+      $("button.ex16").on('click', function(){
+          var d = $("div.ex16.demo");
+          $('div.ex16-output').append(`<p>scrollTop()=${d.scrollTop()},  scrollLeft= ${d.scrollLeft()}</p>`);
+      });
+  </script>
 
 
   </body>

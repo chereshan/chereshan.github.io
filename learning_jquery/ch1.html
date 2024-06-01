@@ -7,10 +7,9 @@
     <title>Глава 1. Введение в jQuery</title>
 
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-    <script src='../modules/jquery-3.7.1.min.js'></script>
     <link rel="stylesheet" href="../modules/vs2015.min.css">
-    <script src="../modules/highlight.min.js"></script>
-    <script src="../scripts/body_scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../modules/jquery-3.7.1.min.js"><'+'/script>')</script>
 
     <script src="../common/counters_head.js"></script>
 
@@ -22,593 +21,110 @@
 <script src="../common/counters_body.js"></script>
 <!--TODO: ADD LEFT SLIDER-->
 <h1>Глава 1. Введение в jQuery</h1>
-<h2>Базовые правила</h2>
-<h3>Селекторы элементов</h3>
-<p>Отыщем и разместим в таблице первые 5 элементов <span class="code">head</span>:</p>
-<pre><code class="language-html">&lt;script>
-    let body_tags=jQuery('head *');
-    let ex1=jQuery('#ex1 ol');
-    for (let i=0; i&lt;5; i++){
-        ex1.append("&lt;li>"+"&lt;span class=\"code\">"+body_tags[i].outerHTML.replace('&lt;','&lt;')+"&lt;/span>"+"&lt;/li>")
-    }
-&lt;/script></code></pre>
-<div id="ex1">
-    <ol></ol>
-</div>
-<script>
-    let body_tags=jQuery('head *');
-    let ex1=jQuery('#ex1 ol');
-    for (let i=0; i<5; i++){
-        ex1.append("<li>"+"<span class=\"code\">"+body_tags[i].outerHTML.replace('<','&lt;')+"</span>"+"</li>")
-    }
-</script>
 
-<h3>Применение к элементам CSS</h3>
-<p>Применим к <a href="#ex1">таблице выше</a> CSS-стили:</p>
-<pre><code class="language-js">jQuery('#ex1 ol').css('border','2px dotted black')</code></pre>
-<script>
-    ex1.css('border','2px dotted black')
-</script>
+<h2>Что такое jQuery?</h2>
+<p><b>jQuery</b> — бесплатная (под лицензией MIT) популярная библиотека JavaScript, созданная Джоном Резигом в 2006 году, разработанная для упрощения написания HTML-кода для клиентской стороны. Как заявлено на сайте jQuery, это быстрая небольшая библиотека JavaScript с богатыми возможностями. Она значительно быстрее делает такие вещи, как обход и обработка HTML-документа, обработка событий, анимации и Ajax, благодаря простому в использовании API, работающему с множеством браузеров. Сочетая универсальность и расширяемость, jQuery изменила способ, которым миллионы разработчиков и дизайнеров пишут JavaScript.</p>
+<p>Это не самореклама. По данным BuiltWith (на <a href="https://trends.builtwith.com/javascript">16.05.2024</a>) jQuery-библиотека использовалась 64% верхнего миллиона сайтов интернета. На втором месте был Intersection Observer c 39%.</p>
 
-<h3>Следование элементов</h3>
-<p>Найдем первые 5 первых параграфов, следующих непосредственно после заголовков:</p>
-<pre><code class="language-html">&lt;script>
-    let ex2=jQuery('#ex2')
-    let p_after_header=jQuery(':header + p')
-    for (let i=0; i&lt;5; i++){
-        ex2.append("&lt;li>"+p_after_header[i].innerText+"&lt;/li>")
-    }
-&lt;/script></code></pre>
-<ol id="ex2"></ol>
-<script>
-    let ex2=jQuery('#ex2')
-    let p_after_header=jQuery(':header + p')
-    for (let i=0; i<5; i++){
-        ex2.append("<li>"+p_after_header[i].innerText+"</li>")
-    }
-</script>
-
-<p>К селекторам, прямо указывающих на порядок элемента, такэе относятся:</p>
-<ul>
-    <li><span class="code">:first</span></li>
-    <li><span class="code">:last</span></li>
-    <li><span class="code">:eq(index)</span></li>
-    <li><span class="code">:odd</span></li>
-    <li><span class="code">:even</span></li>
-    <li><span class="code">:gt(index)</span> - все элементы с индексом >=index. Например, все элементы после 5-го задаются селектором <span class="code">:gt(5)</span></li>
-    <li><span class="code">:lt(index)</span> - все элементы с индексом <=index. </li>
-    <li><span class="code">:nth-child(index/even/odd/equation)</span></li>
-</ul>
-
-<h3>Поиск всех сестринских элементов</h3>
-<p>Мы можем искать элементы, указав элементом уровень поиска, т.е., другими словами, искать сестринские элементы:</p>
-<pre><code class="language-html">&lt;script>
-    // для начала облегчим себе жизнь, написав функцию, которая
-    //принимает в качестве аргумента id списка на странице, а
-    //затем размещает в нем первые n элементов массива из
-    //jquery-запроса
-    function ol_writer(ol_id, query, n=5){
-        ol_id=jQuery(ol_id)
-        query=jQuery(query)
-        for (let i=0; i&lt;n; i++){
-            ol_id.append('&lt;li>'+query.eq(i).html().replace('<','&lt;')+"&lt;/li>")
-        }
-    }
-    ol_writer('#ex3', '#ex3 ~ *', 3)
-&lt;/script></code></pre>
-<ol id="ex3"></ol>
-<script>
-    // для начала облегчим себе жизнь, написав функцию, которая
-    //принимает в качестве аргумента id списка на странице, а
-    //затем размещает в нем первые n элементов массива из
-    //jquery-запроса
-    function ol_writer(ol_id, query, n=5){
-        ol_id=jQuery(ol_id)
-        query=jQuery(query)
-        for (let i=0; i<n; i++){
-            ol_id.append('<li>'+query.eq(i).html().replace('<','&lt;')+"</li>")
-        }
-    }
-    ol_writer('#ex3', '#ex3 ~ *', 3)
-</script>
-
-
-<h3>Селектор содержания :contains</h3>
-
-<h3>Практика: оформление таблицы с кодом</h3>
-<p></p>
-
-<h3>Другие важные селекторы</h3>
-<ul>
-    <li><span class="code">:header</span> - все заголовочные элементы</li>
-    <li><span class="code">:animated</span> - все элементы, которые находятся в процессе анимации на момент селекции</li>
-    <li><span class="code">:empty</span> - элементы, которые не содержат текста или других элементов</li>
-    <li><span class="code">:has(descendant)</span> - элемент, у которого есть дочерний элемент descendant</li>
-    <li><span class="code">:parent</span> - элементы, имеющие потомков</li>
-    <li><span class="code">:visible</span></li>
-    <li><span class="code">:hidden</span></li>
-</ul>
-
-<h2>Селекторы атрибутов</h2>
-
-<h3>Элементы, имеющие атрибут</h3>
-<p>Найдем и запишем в список только элементы имеющие id:</p>
-<pre><code class="language-html">&lt;script>
-    jQuery('[id]').each(function(){
-        jQuery('#ex4').append("&lt;li>"+$(this).attr('id')+"&lt;/li>")
-    })
-&lt;/script></code></pre>
-<ol id="ex4"></ol>
-<script>
-    jQuery('[id]').each(function(){
-        jQuery('#ex4').append("<li>"+$(this).attr('id')+"</li>")
-    })
-</script>
-
-<h3>Элементы, имеющие атрибут равный некоторому значению</h3>
-<p>Найдем все ссылки с якорем места в тексте. Для этого используем равенство типа "начинается с...":</p>
-<ol id="ex5"></ol>
-<script>
-    jQuery('a[href^="#"]').each(function(){
-        jQuery('#ex5').append("<li>"+$(this).attr('href')+"</li>")
-    })
-</script>
-
-<h2>Селекторы форм</h2>
+<h3>Отделение поведения от структуры</h3>
+<p>У страницы есть 3 фундаментальных аспекта - <b>стиль</b>, <b>структура</b> и <b>поведение</b>. jQuery позволяет более эффективно разделять структуру и поведение. Ниже приведен идеал организации HTML-страницы.</p>
+<pre><code >&lt;html>
+    &lt;head>
+        СТИЛЬ
+        &lt;!--Элементы текущего стиля
+            и импортированные CSS-таблицы-->
+    &lt;/head>
+    &lt;body>
+        СТРУКТУРА
+        &lt;!--Структурные HTML-элементы-->
+        ПОВЕДЕНИЕ
+        &lt;!-- Элементы текущего скрипта
+            и импортированные файлы скриптов-->
+    &lt;/body>
+&lt;/html></code></pre>
+<p>Важно заметить, что скрипты поведения размещаются перед закрытием тега <span class="code">&lt;body></span>. Зачем это делается? <b>Элементы сценариев всегда должны размещаться в нижней части документы, чтобы:</b></p>
 <ol>
-    <li><span class="code">:input</span></li>
-    <li><span class="code">:text</span> - инпут-строка типа text</li>
-    <li><span class="code">:password</span> - инпут-строка типа password</li>
-    <li><span class="code">:radio</span></li>
-    <li><span class="code">:checkbox</span></li>
-    <li><span class="code">:submit</span></li>
-    <li><span class="code">:image</span></li>
-    <li><span class="code">:reset</span></li>
-    <li><span class="code">:button</span></li>
-    <li><span class="code">:file</span></li>
+    <li>Позволять прогрессивный рендеринг - рендеринг блокируется для всего контента ниже элемента <span class="code">&lt;script></span></li>
+    <li>Иметь большее распараллеливание - браузер не будет начинать другие загрузки, даже по другому имени хоста, во время загрузки элемента <span class="code">&lt;script></span></li>
 </ol>
+<!--todo: переместить все скрипты в конец страницы, чтобы избегать навешивания обработчиков-->
+<h2>Установка jQuery</h2>
+<h3>Различия между версиями jQuery</h3>
+<p>Выбор между версиями jQuery зависит исключительно от того, для каких браузеров вы разрабатываете приложение. Так jQuery 1.x фокусировалась на совместимости с устаревшими браузерами, тогда как jQquery 2.x и выше отказалась от этой идеи. Большинство современных браузеров однако поддерживают jQuery новейших версий.</p>
+<p>Другим различием между версиями jQuery выступает выбор между сжатой (<i>minified</i>) и несжатой версиями. Сжатая версия библиотеки отличается от несжатой по следующим пунктам:</p>
+<ul>
+    <li>Удаление необязательные отступов</li>
+    <li>Удаление комментариев в коде</li>
+    <li>Сокращение имен (<i>obfuscation</i>)</li>
+</ul>
+<p>Эти изменения образуют код, который тяжело читать и отлаживать, но имеет меньший размер. При разработке проекта полезно использовать несжатую версию, однако при запуске всегда следует предпочитать минимизированную. </p>
+<h3>Улучшение производительности с помощью CDN</h3>
+<p>На сегодняшний день существует обзая практика обслуживать библиотеки и изображения с помощью <span data-tip="CDN - это распределенная система серверов. созданная для предоставления контента с высокой доступностью и производительностью. "><b>CDN</b></span>. CDN - это распределенная система серверов. созданная для предоставления контента с высокой доступностью и производительностью. Браузеры могут загружать фиксированный набор контента от хоста, обычно до 4 до 8 файлов одновременно. Т.к. файлы, которые обслуживаются с помощью CDN, предоставляются с другого хоста можно ускорить процесс загрузки, увеличив количество загружаемых файлов в период времению Кроме того, многие современные браузеры задействуют CDN, поэтому очень высока вероятность, что нужная библиотека уже есть в кэше браузера юзера. Применение CDN для загрузки jQuery не гарантирует лучшую производительность в каждой ситуации, и потому нужна подбирать оптимальную конфигурацию для конкретно вашего веб-приложения.</p>
+<!--todo: написать про cdn и закинуть сюда ссылку-->
+<p>В настоящее время существуют 3 CDN, на которые можно полагаться для включения jQuery:</p>
+<ul>
+    <li><a href="https://releases.jquery.com/">jQuery CDN</a></li>
+    <li><a href="https://developers.google.com/speed/libraries?hl=ru">Google CDN</a></li>
+    <li><a href="https://learn.microsoft.com/en-us/aspnet/ajax/cdn/overview">Microsoft CDN</a></li>
+</ul>
+<p>Например, чтобы подключить сжатую версию jQuery с jQuery CDN, то нужно вставить на странице следующий код:</p>
+<pre><code >&lt;script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">&lt;/script></code></pre>
+<p>Использование с CDN имеет свою цену. Сервер CDN может упасть и, если в кэше браузера юзера не сохранена библиотека, то jQuery на данной странице прекратит свою работу. На такой случай полезно использовать локальную версию, загруженную на случай неполадки с CDN. Эта предосторожность реализуется следующим образом:</p>
+<pre><code >&lt;script src="//code.jquery.com/jquery-1.11.3.min.js">&lt;/script>
+&lt;script>window.jQuery || document.write('&lt;script src="javascript/jquery-
+1.11.3.min.js">&lt;\/script>');&lt;/script></code></pre>
 
-<h3>Доступность форм</h3>
-<p>Запишем во все доступные для ввода элементы плейсхолдеры "Доступно" (наоборот для недоступных):</p>
-<pre><code class="language-html">&lt;form>
-    &lt;input type="text" />&lt;label>Имя&lt;/label>&lt;br />
-    &lt;input type="text" />&lt;label>Фамилия&lt;/label>&lt;br />
-    &lt;input type="text" disabled/>&lt;label>Серия паспорта&lt;/label>&lt;br />
-    &lt;input type="text" disabled/>&lt;label>Номер паспорта&lt;/label>&lt;br />
-    &lt;input type="text" />&lt;label>E-mail адрес&lt;/label>&lt;br />
-&lt;/form>
-&lt;script>
-    $(function(){
-        $("#ex6 input:disabled").attr('placeholder',"Не доступно");
-        $("#ex6 input:enabled").attr('placeholder',"Доступно");
-    });
-&lt;/script></code></pre>
-<form id="ex6">
-    <input type="text" /><label>Имя</label><br />
-    <input type="text" /><label>Фамилия</label><br />
-    <input type="text" disabled/><label>Серия паспорта</label><br />
-    <input type="text" disabled/><label>Номер паспорта</label><br />
-    <input type="text" /><label>E-mail адрес</label><br />
-</form>
-<script>
-    $(function(){
-        $("#ex6 input:disabled").attr('placeholder',"Не доступно");
-        $("#ex6 input:enabled").attr('placeholder',"Доступно");
-    });
-</script>
+<h2>Структура библиотеки jQuery</h2>
+<p>Исходный код jQuery следует формату <i>Asynchronous module definition</i>, AMD (асинхронное определение модуля). Формат AMD представляет собой предложение для определения модулей, где и модуль, и его зависимости могут быть загружены асинхронно. На практике это означает, что, хотя вы используете jQuery как уникальный и единственный блок, ее исходный код разбит на несколько файлов (модулей), как показано на схеме ниже:</p>
+<img src="images/jquery-amd.png" alt="">
+<p>Опишем наполнение некоторых из этих модулей:</p>
+<ul>
+    <li><b>ajax</b> содержит все функции Ajax, такие как <span class="code">ajax()</span>, <span class="code">get()</span> и <span class="code">post()</span>.</li>
+    <li><b>deprecated</b> содержит все устаревшие на данные момент методы, которые еще не удалены. Что внутри этого модуля — зависит от версии jQuery</li>
+    <li><b>effects</b> содержит методы, позволяющие анимацию, такие как <span class="code">animate()</span> и <span class="code">slideUp()</span></li>
+    <li><b>event</b> содержит методы для добавления обработчиков событий к событиям браузера, такие как <span class="code">on()</span> и <span class="code">off()</span>.</li>
+</ul>
+<p>Такая архитектура позволяет создавать кастомные сборки библиотеки, соращая ее размер исходя из того, какой ее фунционал реально используется на сайте. Для этого можно использовать Grunt:</p>
+<pre><code >git clone git://github.com/jquery/jquery.git
+npm install
+grunt custom:-deprecated,-effects</code></pre>
 
-<h3>Отслеживание состояния элементов checkbox</h3>
-<pre><code class="language-html">&lt;form id="ex7">
-    &lt;div>&lt;/div>&lt;br/>
-    &lt;input type="checkbox" checked data-years="7"/>&lt;label>Детский сад&lt;/label>&lt;br />
-    &lt;input type="checkbox" data-years="4"/>&lt;label>Начальная школа&lt;/label>&lt;br />
-    &lt;input type="checkbox" data-years="5"/>&lt;label>Средняя школа&lt;/label>&lt;br />
-    &lt;input type="checkbox" data-years="2"/>&lt;label>Старшая школа&lt;/label>&lt;br />
-    &lt;input type="checkbox" data-years="4"/>&lt;label>Бакалавриат&lt;/label>&lt;br />
-    &lt;input type="checkbox" data-years="2"/>&lt;label>Магистратура&lt;/label>&lt;br/>
-&lt;/form>
-&lt;script>
-    $(function(){
-        function yearsEstimate() {
-            let years=0;
-            $("#ex7 input:checked").each(function(){
-                years+=$(this).data('years')
-            });
-            $("div").text("Вероятный возраст — " + years);
-        }
-        yearsEstimate();
-        $("#ex7").on('click', yearsEstimate);
-    });
-&lt;/script></code></pre>
-<form id="ex7">
-    <div></div><br/>
-    <input type="checkbox" checked data-years="7"/><label>Детский сад</label><br />
-    <input type="checkbox" data-years="4"/><label>Начальная школа</label><br />
-    <input type="checkbox" data-years="5"/><label>Средняя школа</label><br />
-    <input type="checkbox" data-years="2"/><label>Старшая школа</label><br />
-    <input type="checkbox" data-years="4"/><label>Бакалавриат</label><br />
-    <input type="checkbox" data-years="2"/><label>Магистратура</label><br/>
-</form>
-<script>
-    $(function(){
-        function yearsEstimate() {
-            let years=0;
-            $("#ex7 input:checked").each(function(){
-                years+=$(this).data('years')
-            });
-            $("#ex7 div").text("Вероятный возраст — " + years);
-        }
-        yearsEstimate(); //вызов
-        $("#ex7").on('click', yearsEstimate);
-    });
-</script>
+<h2>Объект jQuery</h2>
+<p>Когда библиотека включена, то объект <span class="code">window</span> браузера приобретает свойство <span class="code">.jQuety</span>. Таким образом можно проверять установлен ли jQuery. Но это не единственный способ:</p>
+<pre><code >window.jQuery = window.$ = jQuery;</code></pre>
+<p>jQuery позволяет вызов методов цепочкой:</p>
+<pre><code >//вместо этого:
+var obj = new Obj();
+obj.method();
+obj.anotherMethod();
+obj.yetAnotherMethod();
+//применяем цепочку методов:
+var obj = new Obj();
+obj.method().anotherMethod().yetAnotherMethod();</code></pre>
+<p>Самым распространенным использованием функции <span class="code">jQuery()</span> является выбор элементов DOM для их дальнейшего использования. В этом случае она принимает один обязательный параметр - селектор, и один необяазтельный - контекст. Фунция возвращает коллекцию элементов DOM, которые соответствуют заданным криетриям.</p>
+<p>jQuery использует те же селекторы что и CSS, в том числе более эффективные селекторы CSS3.</p>
+<p>Когда мы выолняем, например такую команду <span class="code">var paragraphs = jQuery('p');</span>, то библиотека ищет совпадающие элементы, начиная с корня документа, это может быть медленным процессом, поэтому часто полезно использовать контекст, т.е. <span class="code">var paragraphsInDiv = jQuery('p', 'div');</span>. Таким образом, jQuery сначала пройдется по всем элементам <span class="code">&lt;div></span>, а потом отыщет в каждом из них потомков <span class="code">&lt;p></span>.</p>
+<p>Примененная таким образом функция jQuery(...) возвращает "объект jQuery", "коллекцию jQuery" или "набор jQuery". Для большей формальности, объект jQuery - возвращаемый объект JS, который содержит набор соответствующих элементов, способных работать с методами, определенными jQuery.</p>
 
-
-<h3>Логические селекторы</h3>
-<h4>Оператор :not</h4>
+<h2>Обработчик готовности документа jQuery</h2>
+<p>Теперь нам необходим механизм, позволяющий дождаться загрузки элементов страницы DOM страницы, прежде чем взаимодействовать с ее элементами. Традиционно для этой цели использовался встроенный в JS обработчик <span class="code">onload</span>:</p>
+<pre><code >window.onload = function() {
+// здесь что-то делается
+};</code></pre>
+<p>Это позволяло начинать выполнения кода уже после полной загрузки страницы. К сожалению, браузер не только задерживает выполнение кода <span class="code">onload</span> до момента создания полного дерева DOM, но также ждет пока полностью загрузятся все внешние ресурсы и страница отобразится в оне браузера. Сюда также входят изображения и встроенные веб-страницы. В результате мы получаем серьезную задержку между моментом, когда они увидят страницу впервые и временм, когда будет выполнен сценарий <span class="code">onload</span>. Хуже того, изображение или другой ресурс могут загружаться достаточно долго и юзерам придется ждать окончания загрузки, прежде чем станет доступным поведение элементов.</p>
+<p>Куда лучшим подходом будет такой: ждать только того, чтобы структура документа была полностью проверена и браузер преобразовал HTML в результирующее дерево DOM перед выполнением сценария, отвечающего за поведение. jQuery позволяет дожидаться лишь загрузки дерева DOM, не дожидаясь загрузки внешних ресурсов:</p>
+<pre><code >jQuery(document).ready(function() {
+// Ваш код здесь...
+});</code></pre>
+<p>Теперь разберем как это работает. Сначала мы оборачиваем объект <span class="code">document</span> в функцию <span class="code">jQuery()</span> и вызываем метод <span class="code">.ready()</span>, которому функция передастся после того, как документ станет доступным для дальнейших манипуляций. Это значит, что внутри функции, переданной <span class="code">ready()</span>, можно безопасно получить доступ к элементам нашей страницы.</p>
+<p>Это техника может использоваться многократно в пределах страницы, и всякий раз браузер будет выполнять указанные функции в порядке их объявления.</p>
+<p>В то же время, обработчик <span class="code">onload</span> позволяет указать лишь одну функцию.</p>
+<!--todo: код всех примеров нужно перенести за пределы документов для разделения структуры и поведения-->
 
 
-<h2>Атрибуты элементов</h2>
-
-<h3>Удаление атрибутов</h3>
-<p>Ранее в качестве примера приводилась форма с отключенными инпутами (<a href="#ex6">см. выше</a>). Напишем кноку, которая включает отключенные инпуты и отключает отключенные.</p>
-<pre><code class="language-html">&lt;script>
-    $('#ex8').on('click', function(){
-        $('#ex6 input').each(function(){
-            $(this).is(':disabled')? $(this).removeAttr('disabled'): $(this).attr('disabled', 'true')
-
-        })
-        $('#ex6 input:enabled:eq(0)').focus()
-    })
-&lt;/script></code></pre>
-<button id="ex8">Поменять <span class="code">ex6</span></button>
-<script>
-    $('#ex8').on('click', function(){
-        $('#ex6 input').each(function(){
-            $(this).is(':disabled')? $(this).removeAttr('disabled'): $(this).attr('disabled', 'true')
-
-        })
-        $('#ex6 input:enabled:eq(0)').focus()
-    })
-</script>
-<p>Как мы видим, плейсхолдеры при этом не меняются.</p>
-
-<h3>Работа с классами</h3>
-<p>Ниже приведен очень замороченный пример использования методов <span class="code">.addClass()</span>, <span class="code">.remoceClass()</span>, <span class="code">.toggleClass()</span>:</p>
-<pre><code class="language-html">&lt;style>
-    .ex9 {
-        background-color:#369;
-        color:#fff;
-        border:1px dotted #ccc;
-    }
-&lt;/style>
-&lt;div id="ex9">
-    &lt;p>Параграф №1&lt;/p>
-    &lt;p>Параграф №2&lt;/p>
-    &lt;p>Параграф №3&lt;/p>
-&lt;/div>
-&lt;div id="ex9-output">Строка, выводящая совершенные дейсвтия&lt;/div>
-&lt;input id="ex9-input" type="text" placeholder="Введите номер параграфа">
-&lt;button id="ex9-add">Добавить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
-&lt;button id="ex9-remove">Удалить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
-&lt;button id="ex9-toggle">Переключить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
-&lt;button id="ex9-has">Проверить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
-&lt;script>
-    function check_if_correct(){
-        ex9_value=$('#ex9-input')
-        if(ex9_value.val()==''){
-            $('#ex9-output').html(`Введите номер параграфа в инпут`)
-            $('#ex9-input').focus()
-            return false
-        }
-        else if (ex9_value.val()!=1 && ex9_value.val()!=2 && ex9_value.val()!=3){
-            $('#ex9-output').html(`Некорректное значение инпута`)
-            $('#ex9-input').focus()
-            return false}
-        else return true}
-    $('#ex9-add').on('click', function(){
-        if(check_if_correct()){
-            let inp_val=+($('#ex9-input').val())-1
-            $(`#ex9 p:eq(${inp_val})`).addClass('ex9')
-            $('#ex9-output').html(`Класс был добавлен в параграф ${inp_val+1}`)
-        }})
-    $('#ex9-remove').on('click', function(){
-        if(check_if_correct()){
-            let inp_val=+($('#ex9-input').val())-1
-            $(`#ex9 p:eq(${inp_val})`).removeClass('ex9')
-            $('#ex9-output').html(`Класс был удален из параграфа ${inp_val+1}`)
-        }})
-    $('#ex9-toggle').on('click', function(){
-        if(check_if_correct()){
-            let inp_val=+($('#ex9-input').val())-1
-            $(`#ex9 p:eq(${inp_val})`).toggleClass('ex9')
-            $('#ex9-output').html(`Класс был переключен в параграфе ${inp_val+1}`)
-        }})
-    $('#ex9-has').on('click', function(){
-        if(check_if_correct()){
-            let inp_val=+($('#ex9-input').val())-1
-            if($(`#ex9 p:eq(${inp_val}).ex9`).length>0){
-                $('#ex9-output').html(`Класс есть в параграфе ${inp_val+1}`)
-            }
-            else{
-                $('#ex9-output').html(`Класса нет в параграфе ${inp_val+1}`)
-            }}})
-
-&lt;style></code></pre>
-<style>
-    .ex9 {
-        background-color:#369; 
-        color:#fff;
-        border:1px dotted #ccc;
-    }
-</style>
-<div id="ex9">
-<p>Параграф №1</p>
-<p>Параграф №2</p>
-<p>Параграф №3</p>
-</div>
-<div id="ex9-output" style="color: #ddddff; background: black">Строка, выводящая совершенные действия</div>
-<input id="ex9-input" type="text" placeholder="Введите номер параграфа">
-<button id="ex9-add">Добавить класс <span class="code">ex9</span></button>
-<button id="ex9-remove">Удалить класс <span class="code">ex9</span></button>
-<button id="ex9-toggle">Переключить класс <span class="code">ex9</span></button>
-<button id="ex9-has">Проверить класс <span class="code">ex9</span></button>
-<script>
-    function check_if_correct(){
-        ex9_value=$('#ex9-input')
-        if(ex9_value.val()==''){
-            $('#ex9-output').html(`Введите номер параграфа в инпут`)
-            $('#ex9-input').focus()
-            return false
-        }
-        else if (ex9_value.val()!=1 && ex9_value.val()!=2 && ex9_value.val()!=3){
-            $('#ex9-output').html(`Некорректное значение инпута`)
-            $('#ex9-input').focus()
-            return false}
-        else return true}
-    $('#ex9-add').on('click', function(){
-        if(check_if_correct()){
-            let inp_val=+($('#ex9-input').val())-1
-            $(`#ex9 p:eq(${inp_val})`).addClass('ex9')
-            $('#ex9-output').html(`Класс был добавлен в параграф ${inp_val+1}`)
-        }})
-    $('#ex9-remove').on('click', function(){
-        if(check_if_correct()){
-            let inp_val=+($('#ex9-input').val())-1
-            $(`#ex9 p:eq(${inp_val})`).removeClass('ex9')
-            $('#ex9-output').html(`Класс был удален из параграфа ${inp_val+1}`)
-        }})
-    $('#ex9-toggle').on('click', function(){
-        if(check_if_correct()){
-            let inp_val=+($('#ex9-input').val())-1
-            $(`#ex9 p:eq(${inp_val})`).toggleClass('ex9')
-            $('#ex9-output').html(`Класс был переключен в параграфе ${inp_val+1}`)
-        }})
-    $('#ex9-has').on('click', function(){
-        if(check_if_correct()){
-            let inp_val=+($('#ex9-input').val())-1
-            if($(`#ex9 p:eq(${inp_val}).ex9`).length>0){
-                $('#ex9-output').html(`Класс есть в параграфе ${inp_val+1}`)
-            }
-            else{
-                $('#ex9-output').html(`Класса нет в параграфе ${inp_val+1}`)
-            }}})
-</script>
-
-<h3>Работа с текстом и HTML</h3>
-<p>Напишем скрипт, который выводит параграф html-документа с указанным индексом:</p>
-<pre><code class="language-html">&lt;p>Введите индекс параграфа: &lt;input class="ex10" type="range" min=0 max=100 value="0"> &lt;span class="ex10">Пока ничего&lt;/span>&lt;/p>
-&lt;p>&lt;b>Выберите метод вывода:&lt;/b>
-    &lt;button class="ex10 html">&lt;span class="code">html()&lt;/span>&lt;/button>
-    &lt;button class="ex10 text">&lt;span class="code">text()&lt;/span>&lt;/button>&lt;/p>
-&lt;div class="ex10 output">&lt;span>&lt;b>Вывод:&lt;/b> &lt;/span>&lt;span>&lt;/span>&lt;/div>
-&lt;script>
-    //инпут ренджа
-    jQuery('input.ex10[type="range"]').attr('max',jQuery('p').length-1)
-    $(document).on('input', 'input.ex10[type="range"]', function(){
-        $('span.ex10').html($(this).val())
-    })
-    //вывод по клику
-    jQuery('.ex10.html').on('click', function(){
-        let ex10= jQuery('input.ex10[type="range"]')
-        jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).html())
-    })
-    jQuery('.ex10.text').on('click', function(){
-        let ex10= jQuery('input.ex10[type="range"]')
-        jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).text())
-    })
-&lt;/script></code></pre>
-<p>Введите индекс параграфа: <input class="ex10" type="range" min=0 max=100 value="0"> <span class="ex10">Пока ничего</span></p>
-<p><b>Выберите метод вывода:</b>
-<button class="ex10 html"><span class="code">html()</span></button>
-<button class="ex10 text"><span class="code">text()</span></button></p>
-<div class="ex10 output"><span><b>Вывод:</b> </span><span></span></div>
-<script>
-    //инпут ренджа
-    jQuery('input.ex10[type="range"]').attr('max',jQuery('p').length-1)
-    $(document).on('input', 'input.ex10[type="range"]', function(){
-        $('span.ex10').html($(this).val())
-    })
-    //вывод по клику
-    jQuery('.ex10.html').on('click', function(){
-        let ex10= jQuery('input.ex10[type="range"]')
-        jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).html())
-    })
-    jQuery('.ex10.text').on('click', function(){
-        let ex10= jQuery('input.ex10[type="range"]')
-        jQuery('.ex10.output span:eq(1)').html($(`p:eq(${ex10.val()})`).text())
-    })
-</script>
-
-
-<h3>Получение набора в инпут в текущем времени</h3>
-<p>Для этих целей можно воспользоваться методом <span class="code">keyup()</span>. Это событие ввода, которое наступает всякий раз, когда в форму вводится текст:</p>
-<pre><code class="language-html">&lt;p>&lt;input class="ex11" type="text" value="какой-то текст"/> &lt;span class="ex11" style="background: aqua; color: blueviolet">какой-то текст&lt;/span>&lt;/p>
-&lt;script>
-    $(function(){
-        $('input.ex11').keyup(function(){
-                let ex11_value=$(this).val()
-                $('span.ex11').text(ex11_value)
-            }
-        )
-    })
-&lt;/script></code></pre>
-<p><input class="ex11" type="text" value="какой-то текст"/> <span class="ex11" style="background: aqua; color: blueviolet">какой-то текст</span></p>
-<script>
-    $(function(){
-        $('input.ex11').keyup(function(){
-            let ex11_value=$(this).val()
-            $('span.ex11').text(ex11_value)
-            }
-        )
-    })
-</script>
-
-<h3>Получение значения элементов <span class="code">radio</span>, <span class="code">checkbox</span> и <span class="code">select</span></h3>
-<pre><code class="language-html">&lt;select class="ex12 single-option">
-    &lt;option value="Сварить">Сварить&lt;/option>
-    &lt;option value="Запечь">Запечь&lt;/option>
-    &lt;option value="Отпарить">Отпарить&lt;/option>
-    &lt;option value="Пожарить">Пожарить&lt;/option>
-    &lt;option value="Закоптить">Закоптить&lt;/option>
-&lt;/select>
-&lt;select class="ex12 multiple-option" multiple="multiple">
-    &lt;option value="Мясо" selected="selected">Мясо&lt;/option>
-    &lt;option value="Овощи">Овощи&lt;/option>
-    &lt;option value="Фрукты" selected="selected">Фрукты&lt;/option>
-    &lt;option value="Зелень">Зелень&lt;/option>
-&lt;/select>
-&lt;br/>
-&lt;input class="ex12 checkbox" type="checkbox" name="c" value="На скорую руку" checked="checked"
-/>&lt;label>На скорую руку&lt;/label>&lt;br />
-&lt;input class="ex12 radio" type="radio" name="r" value="По рецепту" />&lt;label>По рецепту&lt;/label>
-&lt;input class="ex12 radio" type="radio" name="r" value="По памяти" />&lt;label>По памяти&lt;/label>
-&lt;input class="ex12 radio" type="radio" name="r" value="Импровизируя" checked="checked"
-/>&lt;label>Импровизируя&lt;/label>&lt;hr />
-&lt;button id="ex12-getSingle">Выбрать &lt;b>метод готовки&lt;/b>&lt;/button>
-&lt;button id="ex12-getMultiple">Выбрать &lt;b>ингридиенты&lt;/b>&lt;/button>
-&lt;button id="ex12-getCheckbox">Аккуратно?&lt;/button>
-&lt;button id="ex12-getRadio">Радио&lt;/button>
-&lt;p>&lt;span class="ex12">&lt;/span>&lt;/p>
-&lt;script>
-    function cooking_method(){
-        return $('.ex12.single-option').val().toLowerCase()
-    }
-    function cooking_ingridients() {
-        let cooking_ingridients=$('.ex12.multiple-option').val();
-        (cooking_ingridients.length==2)?cooking_ingridients=cooking_ingridients.join(' и '):cooking_ingridients=cooking_ingridients.join(', ');
-        cooking_ingridients=cooking_ingridients.toLowerCase();
-        return cooking_ingridients
-    }
-    function cooking_carefulness() {
-        let cooking_carefulness=$('.ex12.checkbox:checked').val()
-        if (cooking_carefulness==undefined){
-            cooking_carefulness=''
-        }
-        else {
-            cooking_carefulness=cooking_carefulness.toLowerCase()
-        }
-        return cooking_carefulness
-    }
-    function cooking_receipt(){
-        return $('.ex12.radio:checked').val().toLowerCase()
-    }
-    function full_receipt() {
-        return ["&lt;span style='background: antiquewhite'>"+cooking_method()+"&lt;/span>",
-            "&lt;span style='background: gold'>"+cooking_ingridients()+"&lt;/span>",
-            "&lt;span style='background: violet'>"+cooking_carefulness()+"&lt;/span>",
-            "&lt;span style='background: lightskyblue'>"+cooking_receipt()+"&lt;/span>"].join(' ')
-    }
-    $(function(){
-        $('span.ex12').html(full_receipt())
-    })
-
-    $('#ex12-getSingle').on('click', function(){
-        $('span.ex12').html(full_receipt())
-    })
-    $('#ex12-getMultiple').on('click', function(){
-        $('span.ex12').html(full_receipt())
-    })
-    $('#ex12-getCheckbox').on('click', function(){
-        $('span.ex12').html(full_receipt())
-    })
-    $('#ex12-getRadio').on('click', function(){
-        $('span.ex12').html(full_receipt())
-    })
-&lt;/script></code></pre>
-<select class="ex12 single-option">
-    <option value="Сварить">Сварить</option>
-    <option value="Запечь">Запечь</option>
-    <option value="Отпарить">Отпарить</option>
-    <option value="Пожарить">Пожарить</option>
-    <option value="Закоптить">Закоптить</option>
-</select>
-<select class="ex12 multiple-option" multiple="multiple">
-    <option value="Мясо" selected="selected">Мясо</option>
-    <option value="Овощи">Овощи</option>
-    <option value="Фрукты" selected="selected">Фрукты</option>
-    <option value="Зелень">Зелень</option>
-</select>
-<br/>
-<input class="ex12 checkbox" type="checkbox" name="c" value="На скорую руку" checked="checked"
-/><label>На скорую руку</label><br />
-<input class="ex12 radio" type="radio" name="r" value="По рецепту" /><label>По рецепту</label>
-<input class="ex12 radio" type="radio" name="r" value="По памяти" /><label>По памяти</label>
-<input class="ex12 radio" type="radio" name="r" value="Импровизируя" checked="checked"
-/><label>Импровизируя</label><hr />
-<button id="ex12-getSingle">Выбрать <b>метод готовки</b></button>
-<button id="ex12-getMultiple">Выбрать <b>ингридиенты</b></button>
-<button id="ex12-getCheckbox">Аккуратно?</button>
-<button id="ex12-getRadio">Радио</button>
-<p><span class="ex12"></span></p>
-<script>
-    function cooking_method(){
-        return $('.ex12.single-option').val().toLowerCase()
-    }
-    function cooking_ingridients() {
-        let cooking_ingridients=$('.ex12.multiple-option').val();
-        (cooking_ingridients.length==2)?cooking_ingridients=cooking_ingridients.join(' и '):cooking_ingridients=cooking_ingridients.join(', ');
-        cooking_ingridients=cooking_ingridients.toLowerCase();
-        return cooking_ingridients
-    }
-    function cooking_carefulness() {
-        let cooking_carefulness=$('.ex12.checkbox:checked').val()
-        if (cooking_carefulness==undefined){
-            cooking_carefulness=''
-        }
-        else {
-            cooking_carefulness=cooking_carefulness.toLowerCase()
-        }
-        return cooking_carefulness
-    }
-    function cooking_receipt(){
-        return $('.ex12.radio:checked').val().toLowerCase()
-    }
-    function full_receipt() {
-        return ["<span style='background: antiquewhite'>"+cooking_method()+"</span>",
-            "<span style='background: gold'>"+cooking_ingridients()+"</span>",
-            "<span style='background: violet'>"+cooking_carefulness()+"</span>",
-            "<span style='background: lightskyblue'>"+cooking_receipt()+"</span>"].join(' ')
-    }
-    $(function(){
-        $('span.ex12').html(full_receipt())
-    })
-
-    $('#ex12-getSingle').on('click', function(){
-        $('span.ex12').html(full_receipt())
-    })
-    $('#ex12-getMultiple').on('click', function(){
-        $('span.ex12').html(full_receipt())
-    })
-    $('#ex12-getCheckbox').on('click', function(){
-        $('span.ex12').html(full_receipt())
-    })
-    $('#ex12-getRadio').on('click', function(){
-        $('span.ex12').html(full_receipt())
-    })
-</script>
-
-
-
+<script src="../modules/highlight.min.js"></script>
+<script src="../scripts/body_scripts.js"></script>
 </body>
 </html>

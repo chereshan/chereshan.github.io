@@ -270,3 +270,16 @@ pre code.hljs:hover img.copy-button:not(#site_logo){visibility: visible;}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .code-selection .show {display:grid;}
+
+/*todo: подобрать хорошее оформление для div.code-example-output*/
+.code-example-output {
+    border: 1px black solid;
+    border-radius: 10px;
+    transition: background-color 150ms ease-out 150ms;
+    /*margin: 10px;*/
+    /*padding: 10px;*/
+}
+.code-example-output:hover{
+    background-color: #ffff84;
+}
+/*todo: поставить .code-example-output на все элементы выода примеров*/
