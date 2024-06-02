@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../modules/vs2015.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../modules/jquery-3.7.1.min.js"><'+'/script>')</script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 
     <script src="../common/counters_head.js"></script>
 
@@ -40,7 +42,7 @@
     </tr>
     <tr>
         <th><span class="code">#special-id</span></th>
-        <td>Элемент со значением ID special-id</td>
+        <td><span data-tippy-content="Настоятельно не рекомендуется предворять селектор ID селектором типа, т.к. jQuery будет, как правило, искать элемент, опираясь на свои менее эффективные методы, разыскивая сначала все элементы с данным типом.">Элемент со значением ID</span> special-id</td>
         <td><span class="code">getElementsById("special-id")</span></td>
         <td>Да</td>
     </tr>
@@ -70,14 +72,13 @@
     </tr>
     <tr>
         <th><span class="code">type1, class2</span></th>
-        <td>Все элементы селектированные type1 и все элементы селектированные и class2</td>
+        <td><span data-tippy-content="Коллекция jQuery - это множество без повторов, так что все совпадающие элементы будут объединены в один.">Все элементы</span> селектированные type1 и все элементы селектированные и class2</td>
         <td></td>
         <td>Да</td>
     </tr>
 </table>
-<!--todo: вписать текст в tip-->
-<p>Настоятельно не рекомендуется предворять селектор ID селектором типа, т.к. jQuery будет, как правило, искать элемент, опираясь на свои менее эффективные методы, разыскивая сначала все элементы с данным типом. </p>
-<p>Коллекция jQuery - это множество без повторов, так что все совпадающие элементы будут объединены в один. </p>
+
+
 
 <h3>Пример: селекторы элементов</h3>
 <p>Отыщем и разместим в таблице первые 5 элементов <span class="code">head</span>:</p>
@@ -163,12 +164,12 @@
     </tr>
     <tr>
         <th><span class="code">E[A^=&#39;V&#39;]</span></th>
-        <td>Все элементы E, у которых есть атрибут A начинающийся на V</td>
+        <td><span data-tippy-content='Пример использования: <span class="code">a[href^="http://"]</span> находит все URL-ссылки на странице.'>Все элементы</span> E, у которых есть атрибут A начинающийся на V</td>
         <td>Да</td>
     </tr>
     <tr>
         <th><span class="code">E[A$=&#39;V&#39;]</span></th>
-        <td>Все элементы E, у которых есть атрибут A заканчивающийся на V</td>
+        <td><span data-tippy-content='Пример использования: <span class="code">a[href$=".pdf"]</span> - ссылки с определенным форматом файла'>Все элементы</span> E, у которых есть атрибут A заканчивающийся на V</td>
         <td>Да</td>
     </tr>
     <tr>
@@ -183,27 +184,21 @@
     </tr>
     <tr>
         <th><span class="code">E[A|=&#39;V&#39;]</span></th>
-        <td>Все элементы E, у которых есть атрибут A, чье значение равно V или V-</td>
+        <td><span data-tippy-content='Пример использования: <span class="code">div[class|="main"]</span> - элементы с особым префиксом'>Все элементы</span> E, у которых есть атрибут A, чье значение равно V или V-</td>
         <td>Да</td>
     </tr>
     <tr>
         <th><span class="code">E[A~=&#39;V&#39;]</span></th>
-        <td>Все элементы E, у которых есть атрибут A, чье значение равно V или содержит V, разделенное пробелами</td>
+        <td><span data-tippy-content='Пример использования: <span class="code">span[data-technologies~="javascript"]</span> - использования как аналога класса в data-атрибутах'>Все элементы</span> E, у которых есть атрибут A, чье значение равно V или содержит V, разделенное пробелами</td>
         <td>Да</td>
     </tr>
     <tr>
         <th><span class="code">E[C1][C2]</span></th>
-        <td>Все элементы E, у которых есть атрибуты, соответствующие критериям C1 И С2</td>
+        <td><span data-tippy-content='Пример использования: <span class="code">input[type="text"][required]</span> - для форм'>Все элементы</span> E, у которых есть атрибуты, соответствующие критериям C1 И С2</td>
         <td>Да</td>
     </tr>
 </table>
-<!--todo: позже вписать в tip-->
-<p>a[href^='http://'] - нахождение всех URL-ссылок на странице.
-input[type='text']
-a[href$='.pdf'] - сслыки с определенным форматом файла
-    div[class|='main']
-    span[data-technologies~="javascript"]
-    input[type="text"][required]</p>
+
 
 <h3>Пример: элементы, имеющие атрибут</h3>
 <p>Найдем и запишем в список только элементы имеющие id:</p>
@@ -245,7 +240,7 @@ a[href$='.pdf'] - сслыки с определенным форматом фа
     </tr>
     <tr>
         <th><span class="code">:even</span></th>
-        <td>Четные элементы в пределах контекста.</td>
+        <td><span data-tippy-content='Т.к. индексирование начинается с нуля, то парадоксально конечный результат фильтров <span class="code">:even</span> и <span class="code">:odd</span> будет противоположен ожидаемому.'>Четные элементы</span> в пределах контекста.</td>
         <td>Нет</td>
     </tr>
     <tr>
@@ -255,7 +250,7 @@ a[href$='.pdf'] - сслыки с определенным форматом фа
     </tr>
     <tr>
         <th><span class="code">:eq(n)</span></th>
-        <td>n-ый элемент в пределах контекста.</td>
+        <td><span data-tippy-content='Если передать отрицательный индекс <span class="code">:eq()</span>, <span class="code">:gt()</span>, <span class="code">:lt()</span>, то элементы будут отфильтрованы начиная с последнего индекса.'>n-ый элемент</span> в пределах контекста.</td>
         <td>Нет</td>
     </tr>
     <tr>
@@ -269,9 +264,7 @@ a[href$='.pdf'] - сслыки с определенным форматом фа
         <td>Нет</td>
     </tr>
 </table>
-<!--todo: tip-->
-<p>Т.к. индесирование начинается с нуля, то парадоксально конечный результат фильтров :even и :odd будет противоположен ожидаемому.</p>
-<p>Если передать отрицательный индекс :eq(), :gt(), :lt(), то элементы будут отфильтрованы начиная с последнего индекса</p>
+
 
 <h4>Пример: следование элементов</h4>
 <p>Найдем первые 5 первых параграфов, следующих непосредственно после заголовков:</p>
@@ -284,23 +277,176 @@ a[href$='.pdf'] - сслыки с определенным форматом фа
 &lt;/script></code></pre>
 <div class="code-example-output"><ol id="ex2"></ol></div>
 <h3>Фильтры-потомки</h3>
-
+<p>Иногда возникает необходимость выбрать определенного потомка элемента. Часто, однако фильтры потомков путаются с потомками порядка. В частости <span class="code">:eq()</span> и <span class="code">:nth-child()</span>. Если используется первый, то подсчитываются только элементы, соответствующие прикрепленному к псевдоклассу селектору, независимо от числа сестринских элементов перед ним. При использовании же второго подсчитываются все потомки, содержащего элемента независимо от их типа. Другое важное отличие: <span class="code">:nth-child()</span> выводится из спецификации CSS и потому индексирование начинается с 1. </p>
+<table>
+    <tr>
+        <td>Селектор</td>
+        <td>Описание</td>
+        <td>Есть в CSS</td>
+    </tr>
+    <tr>
+        <td><span class="code">:first-child</span></td>
+        <td>Первый элемент-потомок</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:last-child</span></td>
+        <td>Последний элемент потомок</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:first-of-type</span></td>
+        <td>Первый элемент-потомок заданного типа</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:last-of-type</span></td>
+        <td>Последний элемент-потомок заданного типа</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:nth-child(n)</span>, <span class="code">:nth-child(even|odd)</span>, <span class="code">:nth-child(Xn+Y)</span></td>
+        <td>n-ый элемент-потомок указанного порядка</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:nth-last-child(n)</span>, <span class="code">:nth-last-child(even|odd)</span>, <span class="code">:nth-last-child(Xn+Y)</span></td>
+        <td>n-ый элемент-потомок указанного порядка считая от последнего</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:nth-of-type(n)</span>, <span class="code">:nth-of-type(even|odd)</span>, <span class="code">:nth-of-type(Xn+Y)</span></td>
+        <td><span data-tippy-content='Пример: <span class="code">div .description:nth-of-type(2)</span> - извлечение всех вторых элементов, содержащих класс <span class="code">description</span> внутри <span class="code">div</span>'>n-ый элемент-потомок</span> указанного порядка указанного типа</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:nth-last-of-type(n)</span>, <span class="code">:nth-last-oftype(even|odd)</span>, <span class="code">:nth-last-of-type(Xn+Y)</span></td>
+        <td>n-ый элемент-потомок указанного порядка указанного типа считая от последнего</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:only-child</span></td>
+        <td>Все элементы, у которых нет сестринских элементов</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:only-of-type</span></td>
+        <td>Все элементы, у которых нет сестринских элементов того же типа</td>
+        <td>Да</td>
+    </tr>
+</table>
+<p>Самым распространенным кейсом использования селеторов дочерних элементов является поиск по таблицам. </p>
+<h4>Пример: фильтр потомов для таблиц</h4>
+<p>Для начала получим данные для таблицы. Для этого используем один из общедоступных <a href="https://github.com/public-apis/public-apis?tab=readme-ov-file#test-data">API с фейковыми данными</a>:</p>
+<pre><code >&lt;script>
+    let fetch_event = new Event('fetch-data');
+    let user_list
+    async function getdata(){
+        const res=await fetch('https://fakestoreapi.com/users?limit=5')
+        user_list=await res.json()
+        document.dispatchEvent(fetch_event)
+    }
+    getdata()
+    document.addEventListener("fetch-data", function() {
+        $(function(){
+            list_of_dicts_to_table(user_list, '#table_ex10')
+        })
+    });
+&lt;/script>
+&lt;div id="table_ex10">&lt;/div></code></pre>
+<p>Мы получили таблицу пользователей фейкового интернет-магазина. </p>
+<div id="table_ex10"></div>
+<p>Допустим, что мы хотим поменять фон и шрифт всех адресов электронной почты в таблицы. Тогда применим следующую команду:</p>
+<pre><code >$('#table_ex10 td:nth-child(3)').css('font-family','monospace').css('background', 'cornsilk')
+</code></pre>
 
 <h3>Фильтры форм</h3>
-<ol>
-    <li><span class="code">:input</span></li>
-    <li><span class="code">:text</span> - инпут-строка типа text</li>
-    <li><span class="code">:password</span> - инпут-строка типа password</li>
-    <li><span class="code">:radio</span></li>
-    <li><span class="code">:checkbox</span></li>
-    <li><span class="code">:submit</span></li>
-    <li><span class="code">:image</span></li>
-    <li><span class="code">:reset</span></li>
-    <li><span class="code">:button</span></li>
-    <li><span class="code">:file</span></li>
-</ol>
+<p>Допустим, мы хотим выбрать все флажки в состоянии "установлен". Первое, что приходит на ум - <span class="code">$('input[type="checkbox"][checked]')</span>. Однако, такой селектор проверит только начальное состояние контрольного элемента, как тот указан в HTML-разметке. Чтобы проверить состояние флажка в режиме реального времени необходиимо использовать фильтр форм.</p>
+<table>
+    <tr>
+        <td>Селектор</td>
+        <td>Описание</td>
+        <td>Есть в CSS</td>
+    </tr>
+    <tr>
+        <td><span class="code">:button</span></td>
+        <td><span class="code">input[type=submit]</span>, <span class="code">input[type=reset]</span>, <span class="code">input[type=button]</span>, <span class="code">button</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:checkbox</span></td>
+        <td><span class="code">input[type=checkbox]</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:checked</span></td>
+        <td>Элементы флажков или реле в состоянии <span class="code">checked</span> или <span class="code">option</span> элементов <span class="code">select</span> в выбранном состоянии</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:disabled</span></td>
+        <td>Элементы в неактивном состоянии</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:enabled</span></td>
+        <td>Элементы в активном состоянии</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:file</span></td>
+        <td><span class="code">input[type=file]</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:focus</span></td>
+        <td>Элемент, у которого есть фокус на момент селектора</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td><span class="code">:image</span></td>
+        <td><span class="code">input[type=image]</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:input</span></td>
+        <td><span class="code">input</span>, <span class="code">select</span>, <span class="code">textarea</span>, <span class="code">button</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:password</span></td>
+        <td><span class="code">input[type=password]</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:radio</span></td>
+        <td><span class="code">input[type=radio]</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:reset</span></td>
+        <td><span class="code">input[type=reset]</span>, <span class="code">button[type=reset]</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:selected</span></td>
+        <td>Элементы <span class="code">option</span>, находящиеся в выбранном состоянии</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:submit</span></td>
+        <td><span class="code">button[type=submit]</span>, <span class="code">input[type=submit]</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td><span class="code">:text</span></td>
+        <td><span class="code">input[type=text]</span> или ввод без указанного типа</td>
+        <td>Нет</td>
+    </tr>
+</table>
+<p>С помощью фильтров форм можно получить выбранные переклбчатели следующим образом: <span class="code">$('input:checkbox:checked')</span></p>
 
-<h3>Доступность форм</h3>
+<h4>Пример: доступность форм</h4>
 <p>Запишем во все доступные для ввода элементы плейсхолдеры "Доступно" (наоборот для недоступных):</p>
 <pre><code class="language-html">&lt;form>
     &lt;input type="text" />&lt;label>Имя&lt;/label>&lt;br />
@@ -322,14 +468,8 @@ a[href$='.pdf'] - сслыки с определенным форматом фа
     <input type="text" disabled/><label>Номер паспорта</label><br />
     <input type="text" /><label>E-mail адрес</label><br />
 </form>
-<script>
-    $(function(){
-        $("#ex6 input:disabled").attr('placeholder',"Не доступно");
-        $("#ex6 input:enabled").attr('placeholder',"Доступно");
-    });
-</script>
 
-<h3>Отслеживание состояния элементов checkbox</h3>
+<h4>Пример: отслеживание состояния элементов checkbox</h4>
 <pre><code class="language-html">&lt;form id="ex7">
     &lt;div>&lt;/div>&lt;br/>
     &lt;input type="checkbox" checked data-years="7"/>&lt;label>Детский сад&lt;/label>&lt;br />
@@ -361,27 +501,8 @@ a[href$='.pdf'] - сслыки с определенным форматом фа
     <input type="checkbox" data-years="4"/><label>Бакалавриат</label><br />
     <input type="checkbox" data-years="2"/><label>Магистратура</label><br/>
 </form>
-<script>
-    $(function(){
-        function yearsEstimate() {
-            let years=0;
-            $("#ex7 input:checked").each(function(){
-                years+=$(this).data('years')
-            });
-            $("#ex7 div").text("Вероятный возраст — " + years);
-        }
-        yearsEstimate(); //вызов
-        $("#ex7").on('click', yearsEstimate);
-    });
-</script>
 
-
-<h3>Логические селекторы</h3>
-<h4>Оператор <span class="code">:not</span></h4>
-
-
-
-<h3>Удаление атрибутов</h3>
+<h4>Пример: включение/отключение полей</h4>
 <p>Ранее в качестве примера приводилась форма с отключенными инпутами (<a href="#ex6">см. выше</a>). Напишем кноку, которая включает отключенные инпуты и отключает отключенные.</p>
 <pre><code class="language-html">&lt;script>
     $('#ex8').on('click', function(){
@@ -393,16 +514,117 @@ a[href$='.pdf'] - сслыки с определенным форматом фа
     })
 &lt;/script></code></pre>
 <button id="ex8">Поменять <span class="code">ex6</span></button>
-<script>
-    $('#ex8').on('click', function(){
-        $('#ex6 input').each(function(){
-            $(this).is(':disabled')? $(this).removeAttr('disabled'): $(this).attr('disabled', 'true')
-
-        })
-        $('#ex6 input:enabled:eq(0)').focus()
-    })
-</script>
 <p>Как мы видим, плейсхолдеры при этом не меняются.</p>
+
+
+<h3>Фильтры содержимого</h3>
+<p><b>Фильтры содержимого</b> фильтруют элементы в зависимости от их содержания.</p>
+<table>
+    <tr>
+        <td>Селектор</td>
+        <td>Описание</td>
+        <td>Есть в CSS</td>
+    </tr>
+    <tr>
+        <td>:contains(text) </td>
+        <td>Элементы, содержащие данный текст внутри или в потомках</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>:empty</td>
+        <td>Элементы, у которых нет потомков</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td>:has(selector)</td>
+        <td>Элементы, содержащие по меньшей мере 1 элемент данного рода.</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>:parent</td>
+        <td>Элементы, у которых есть хотя бы 1 потомок</td>
+        <td>Нет</td>
+    </tr>
+</table>
+
+<h3>Другие фильтры</h3>
+<table>
+    <tr>
+        <td>Селектор</td>
+        <td>Описание</td>
+        <td>Есть в CSS</td>
+    </tr>
+    <tr>
+        <td>:animated</td>
+        <td>Элементы, которые сейчас анимируются</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>:header</td>
+        <td>Элементы заголовков h</td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>:hidden</td>
+        <td><span data-tippy-content='Элементы считаются скрытыми тогда и только тогда, когда к нему применяется <span class="code">display:none;</span> и если он не занимает места (ширина и высота равна 0)'>Скрытые элементы</span></td>
+        <td>Нет</td>
+    </tr>
+    <tr>
+        <td>:lang(язык)</td>
+        <td>Элементы на указанном языке</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td>:not(селектор)</td>
+        <td>Отрицает указанный элемент</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td>:root</td>
+        <td>Элемент-корень документа</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td>:target</td>
+        <td>Целевой элемент, указанный по идентификатору фрагмента в URI документа</td>
+        <td>Да</td>
+    </tr>
+    <tr>
+        <td>:visible</td>
+        <td>Видимые элементы</td>
+        <td>Нет</td>
+    </tr>
+</table>
+
+<h2>Пользовательские фильтры</h2>
+<p>Вы можете осуществлять один и тот же выбор, а затем одну и ту же фильтрацию извлеченного набора много раз, задействуя конструкции циклов и выборов. В подобных ситуациях можно создать ярлык для сбора узлов DOM или, выражаясь точнее, создать пользовательский фильтр (также называемый пользовательским селектором или пользовательским псевдоселектором).</p>
+<p>Чтобы объяснить способ создания пользовательского фильтра, начнем с примера. Представьте: вы разрабатываете техническую игру. У вас есть список уровней, которые следует пройти с определенной степенью сложности, количество очков, которые может заработать пользователь, а также перечень технологий для ее успешного прохождения. Ваш гипотетический список может выглядеть примерно так:</p>
+<pre><code >&lt;ul class="levels">
+    &lt;li data-level="1" data-points="1" data-technologies="javascript node
+ grunt">Уровень 1&lt;/li>
+    &lt;li data-level="2" data-points="10"
+        data-technologies="php composer">Уровень 2&lt;/li>
+    &lt;li data-level="3" data-points="100" data-technologies="jquery
+ requirejs">Уровень 3&lt;/li>
+    &lt;li data-level="4" data-points="1000" data-technologies="javascript jquery
+ backbone">Уровень 4&lt;/li>
+&lt;/ul></code></pre>
+<p>Теперь представьте, что нужно часто выбирать уровни (data-level) выше,
+    чем 2, но только тогда, когда они позволяют вам заработать больше чем 100 очков
+    (data-points) и имеют jQuery в списке технологий для использования (datatechnologies). Вы уже знаете, как искать элементы li, имеющие ключевое слово
+    jquery внутри атрибута data-technologies (li[data-technologies~="jquery"]).
+    Но как вы будете сравнивать числа с помощью селекторов? Правда в том, что вы
+    не можете этого сделать. Чтобы достичь цели, необходимо перебрать изначальный
+    выбор, а затем сохранить только нужные вам элементы, как показано здесь:</p>
+<!--<script>-->
+<!--    var $levels=$('levels li[data-techonolies~="jquery"]')-->
+<!--    //первоначальный выбор с использованием селектора атрибута-->
+<!--    var matchedLevels=[];-->
+<!--    for (var i=0; i<$levels.length; i++){-->
+<!--        if ($levels[i].get)-->
+<!--    }-->
+<!--</script>-->
+
 
 <h3>Работа с классами</h3>
 <p>Ниже приведен очень замороченный пример использования методов <span class="code">.addClass()</span>, <span class="code">.remoceClass()</span>, <span class="code">.toggleClass()</span>:</p>
@@ -813,7 +1035,12 @@ var checkedValue=jQuery('input:radio[name="some-radio-group"]:checked').val();
     })
 </script>
 
-
+<script>
+    tippy('[data-tippy-content]',
+        {
+            allowHTML: true
+        })
+</script>
 
 
 <script src="../modules/highlight.min.js"></script>

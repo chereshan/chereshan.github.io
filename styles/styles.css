@@ -283,3 +283,11 @@ pre code.hljs:hover img.copy-button:not(#site_logo){visibility: visible;}
     background-color: #ffff84;
 }
 /*todo: поставить .code-example-output на все элементы выода примеров*/
+[data-tippy-content] {
+    background-color: #89e0fc;
+    border-radius: 10px;
+}
+[data-tippy-content]:hover {
+    background-color: #32c5ff;
+    border-radius: 10px;
+}

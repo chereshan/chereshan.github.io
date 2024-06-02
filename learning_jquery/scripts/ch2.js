@@ -45,3 +45,45 @@ jQuery('[id]').each(function(){
 jQuery('a[href^="#"]').each(function(){
     jQuery('#ex5').append("<li>"+$(this).attr('href')+"</li>")
 })
+//============================================================================
+//ex6
+$("#ex6 input:disabled").attr('placeholder',"Не доступно");
+$("#ex6 input:enabled").attr('placeholder',"Доступно");
+//============================================================================
+//ex7
+function yearsEstimate() {
+    let years=0;
+    $("#ex7 input:checked").each(function(){
+        years+=$(this).data('years')
+    });
+    $("#ex7 div").text("Вероятный возраст — " + years);
+}
+yearsEstimate(); //вызов
+$("#ex7").on('click', yearsEstimate);
+//============================================================================
+//ex8
+$('#ex8').on('click', function(){
+    $('#ex6 input').each(function(){
+        $(this).is(':disabled')? $(this).removeAttr('disabled'): $(this).attr('disabled', 'true')
+
+    })
+    $('#ex6 input:enabled:eq(0)').trigger('focus')
+})
+
+
+//=============================================================================
+//ex10
+let fetch_event = new Event('fetch-data');
+let user_list
+async function getdata(){
+    const res=await fetch('https://fakestoreapi.com/users?limit=5')
+    user_list=await res.json()
+    document.dispatchEvent(fetch_event)
+}
+getdata()
+document.addEventListener("fetch-data", function() {
+    $(function(){
+        list_of_dicts_to_table(user_list, '#table_ex10')
+        $('#table_ex10 td:nth-child(3)').css('font-family','monospace').css('background', 'cornsilk')
+    })
+});
