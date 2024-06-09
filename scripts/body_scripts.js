@@ -173,21 +173,24 @@ function loadCodeTips_afterHighlight(){
 
 
 function tagTextSeparator(str){
-    var html_map=str.split('')
-    var result_list=[]
-    var intagflag=false
-    var istagopen=false
+    let html_map=str.split('')
+    let result_list=[]
+    let intagflag=false
+    let istagopen=false
     // var intagflag_1=false
-    var text_count=0
+    let text_count=0
     for (let i=0; i<html_map.length; i++){
         if (html_map[i]=='<'){intagflag=true}
         if (!istagopen && intagflag){istagopen=true}
+        else if (istagopen && !intagflag){istagopen=false}
         result_list.push([intagflag, i, text_count, istagopen])
         if (!intagflag){text_count++}
         if (intagflag && html_map[i]=='>'){intagflag=false}
-        if (istagopen && !intagflag){istagopen=false}
+
     }
+    // console.log(result_list)
     return result_list
+
 }
 //=================================================
 // function loadTips(){
@@ -293,7 +296,7 @@ function checkForSpacesBeforeComma(node){
 
 //Автоооглавление
 //todo: сделать автооглавление независимым от числа уровней
-if (!location.pathname.endsWith('index.html')){
+if (!(['/', 'index', 'index,html'].includes(window.location.pathname))){
     $(function(){
         jQuery('h1').after('<ul id="autonav"></ul>')
 
@@ -474,7 +477,7 @@ async function getChapterTitle(num, url){
 }
 
 //определяем, что находимся в оглавлении учебника
-if (!['/', '/index.html', '/chereshan.github.io/index.html'].includes(window.location.pathname) && window.location.pathname.endsWith('index.html')) {
+if (!['/', '/index', '/index.html', '/chereshan.github.io/index.html'].includes(window.location.pathname) && window.location.pathname.endsWith('index.html')) {
     let index_root = window.location.href.search('index.html')
     index_root = window.location.href.slice(0, index_root)
     let textbookIndex;
@@ -492,9 +495,9 @@ if (!['/', '/index.html', '/chereshan.github.io/index.html'].includes(window.loc
 
 //=================================================
 //футер
-$(function(){
+$(function() {
     $('body').append('<footer></footer>')
-    $("footer").load(!(
-        location.pathname=='/' ||
-        location.pathname=='/chereshan.github.io/index.html') ? "../common/footer.html" : "common/footer.html")
+    // $("footer").load(!(
+    //     location.pathname=='/' ||
+    //     location.pathname=='/chereshan.github.io/index.html') ? "../commo
 })
