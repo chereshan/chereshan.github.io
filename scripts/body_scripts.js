@@ -380,6 +380,23 @@ function list_of_dicts_to_table(list, selector){
     }
 }
 
+//Функция для быстрой генерации ПРОСТЫХ таблиц на основе списка
+function list_to_table(list, column_num, selector){
+    let rows_num=Math.ceil(list.length/column_num)
+    if ($(selector).find('table').length==0){
+        $(selector).append('<table>')
+    }
+    let td_id=0
+    for (let row=0; row<rows_num; row++){
+        $(selector).find('table').append(`<tr class="row-${row}"></tr>`)
+        for (let column=0; column<column_num; column++){
+            $(selector).find(`table tr.row-${row}`).append(`<td class="row-${row} column-${column}">${(typeof list[td_id+column]==="undefined"?'':list[td_id+column])}</td>`)
+        }
+        td_id=td_id+column_num
+
+    }
+}
+
 
 //история посещений
 //этот скрипт ведет историю просмотров страниц сайта
