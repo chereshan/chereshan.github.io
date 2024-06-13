@@ -296,7 +296,7 @@ function checkForSpacesBeforeComma(node){
 
 //Автоооглавление
 //todo: сделать автооглавление независимым от числа уровней
-if (!(['/', 'index', 'index,html'].includes(window.location.pathname))){
+if (!(['/', 'index', 'index.html'].includes(window.location.pathname))){
     $(function(){
         jQuery('h1').after('<ul id="autonav"></ul>')
 
