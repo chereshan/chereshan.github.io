@@ -19,8 +19,6 @@ $(function(){
     $("#header").load(!(
         location.pathname==='/' ||
         location.pathname==='/chereshan.github.io/index.html') ? "../common/header.html" : "common/header.html")
-    if (!(location.pathname==='/' ||
-        location.pathname==='/chereshan.github.io/index.html')){$('h1').after('<div id="autonav"></div>')}
 
     $('span.code').each(function(){
         $(this).replaceWith(`<pre class="span-code"><code>${$(this).html()}</code></pre>`)
@@ -293,42 +291,47 @@ function checkForSpacesBeforeComma(node){
     }
 }
 //
+loadChapterAutoNav();
+function loadChapterAutoNav(){
+    //Автоооглавление
+    //todo: сделать автооглавление независимым от числа уровней
+    let page_pathname=window.location.pathname.replace('/chereshan.github.io', '')
+    if (!(['/', '/index', '/index.html', ].includes(page_pathname))){
+        $(function(){
+            jQuery('h1').after('<ul id="autonav"></ul>')
 
-//Автоооглавление
-//todo: сделать автооглавление независимым от числа уровней
-if (!(['/', '/index', '/index.html'].includes(window.location.pathname))){
-    $(function(){
-        jQuery('h1').after('<ul id="autonav"></ul>')
-
-        h=[0,0,0,0]; pos_memory=0;
-        jQuery(':header:not(h1)').each(function () {
-            let pos=+($(this)[0].nodeName.slice(-1))-2
+            h=[0,0,0,0]; pos_memory=0;
+            jQuery(':header:not(h1)').each(function () {
+                let pos=+($(this)[0].nodeName.slice(-1))-2
 //            console.log($(this)[0].nodeName)
 //             console.log(h)
-            h[pos]+=1
-            // console.log(h)
-            if (pos_memory>pos) {
-                h=h.slice(0,pos+1).concat(h.slice(pos+1).map((num)=>0));
-            }
-            // console.log(h)
-            // h[pos]+=1
-            pos_memory=pos
-            $(this).attr('id','ch-'+(h.filter((n)=>n!=0).join('.')));
-            //создание класса уровней списка
-            let list_level=autonav_listLevel(h)
-            jQuery('#autonav').append(`<li class="${list_level}"><a href=${'#'+$(this).attr('id')}>${$(this).attr('id').slice(3)}. ${$(this).text()}</a></li>`);
-            // console.log($(this).attr('id'))
-            $(this).html($(this).attr('id').slice(3)+'. '+$(this).html())
-        })
+                h[pos]+=1
+                // console.log(h)
+                if (pos_memory>pos) {
+                    h=h.slice(0,pos+1).concat(h.slice(pos+1).map((num)=>0));
+                }
+                // console.log(h)
+                // h[pos]+=1
+                pos_memory=pos
+                $(this).attr('id','ch-'+(h.filter((n)=>n!=0).join('.')));
+                //создание класса уровней списка
+                let list_level=autonav_listLevel(h)
+                jQuery('#autonav').append(`<li class="${list_level}"><a href=${'#'+$(this).attr('id')}>${$(this).attr('id').slice(3)}. ${$(this).text()}</a></li>`);
+                // console.log($(this).attr('id'))
+                $(this).html($(this).attr('id').slice(3)+'. '+$(this).html())
+            })
 //
-        jQuery('span.backgr-col').each(function(){
-            $(this).css({
-                'background-color': $(this).text(),
-                'mix-blend-mode':'difference'
+            jQuery('span.backgr-col').each(function(){
+                $(this).css({
+                    'background-color': $(this).text(),
+                    'mix-blend-mode':'difference'
+                })
             })
         })
-    })
+    }
 }
+
+
 
 //Проект более эффективного алгоритма
 //Скорее всего надо написать РиВ-алгоритм
@@ -493,22 +496,25 @@ async function getChapterTitle(num, url){
     return y;
 }
 
-//определяем, что находимся в оглавлении учебника
-if (!['/', '/index', '/index.html', '/chereshan.github.io/index.html'].includes(window.location.pathname) && window.location.pathname.endsWith('index.html')) {
-    let index_root = window.location.href.search('index.html')
-    index_root = window.location.href.slice(0, index_root)
-    let textbookIndex;
-    Promise.allSettled(Array.from(Array(20).keys()).map((num) => getChapterTitle(num, index_root))).then(ch => {
-        textbookIndex = ch.filter((i) => i.status == "fulfilled").map(j => j.value)
-    }).then($(function () {
-        $('body ul').not('header ul').empty()
-        setTimeout(function () {
-            for (let i = 0; i < textbookIndex.length; i++) {
-                $('body ul').not('header ul').append(`<li><a href="${Object.values(textbookIndex[i])}">${Object.keys(textbookIndex[i])}</a></li>`)
-            }
-        }, 500)
-    }))
+$(function(){loadTextbookAutoNav()})
+function loadTextbookAutoNav(){
+    if ($('.textbook-index-page').length>0){
+        let index_root = window.location.href.search('index.html')
+        index_root = window.location.href.slice(0, index_root)
+        let textbookIndex;
+        Promise.allSettled(Array.from(Array(20).keys()).map((num) => getChapterTitle(num, index_root))).then(ch => {
+            textbookIndex = ch.filter((i) => i.status == "fulfilled").map(j => j.value)
+        }).then($(function () {
+            $('body ul').not('header ul').empty()
+            setTimeout(function () {
+                for (let i = 0; i < textbookIndex.length; i++) {
+                    $('body ul').not('header ul').append(`<li><a href="${Object.values(textbookIndex[i])}">${Object.keys(textbookIndex[i])}</a></li>`)
+                }
+            }, 500)
+        }))
+    }
 }
+
 
 //=================================================
 //футер
