@@ -5,33 +5,32 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Введение в CSS</title>
-    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <title>Глава 1. Введение в CSS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../modules/jquery-3.7.1.min.js"><'+'/script>')</script>
-    <link rel="stylesheet" href="../modules/vs2015.min.css">
     <script src="../modules/highlight.min.js"></script>
     <script src="../scripts/body_scripts.js"></script>
     <script src="../common/counters_head.js"></script>
-
+    <style>
+        @import url("../styles/styles.css");
+        @import url("../modules/vs2015.min.css");
+    </style>
 
 </head>
 <body>
 <script src="../common/counters_body.js"></script>
-<h1>Глава 1. Введение</h1>
-<h2>Источники</h2>
-<ol>
-    <li><a href="https://stepik.org/course/38218/syllabus">Stepik: Веб-разработка для начинающих: HTML и CSS</a></li>
-    <li><a href="https://stepik.org/course/135466/syllabus">Stepik: HTML CSS JS</a></li>
-    <li><a href="https://stepik.org/course/120494/syllabus">Stepik: Инди-курс по HTML и CSS</a></li>
-    <li>Дэвид Макфарланд. Новая большая книга CSS</li>
-    <li>Кристофер Шмитт. CSS рецепты программирования</li>
-</ol>
+<h1>Глава 1. Введение в CSS</h1>
+<!--<h2>Источники</h2>-->
+<!--<ol>-->
+<!--    <li><a href="https://stepik.org/course/38218/syllabus">Stepik: Веб-разработка для начинающих: HTML и CSS</a></li>-->
+<!--    <li><a href="https://stepik.org/course/135466/syllabus">Stepik: HTML CSS JS</a></li>-->
+<!--    <li><a href="https://stepik.org/course/120494/syllabus">Stepik: Инди-курс по HTML и CSS</a></li>-->
+<!--    <li>Дэвид Макфарланд. Новая большая книга CSS</li>-->
+<!--    <li>Кристофер Шмитт. CSS рецепты программирования</li>-->
+<!--</ol>-->
 <h2>Размещение CSS-стилей</h2>
-<p>Код CSS можно разместить в отдельном документе, а затем подключить его к HTML-документу с помощью link-тега в head-разделе документа.</p>
-<pre><code class="language-html">&lt;link rel = "stylesheet"
-    type = "text/css"
-    href = "style.css"&gt;</code></pre>
+
+
 
 <p>Стили CSS также можно разместить внутри документа напрямую внутри содержимого style-тега в head документа.</p>
 <pre><code class="language-html">&lt;html&gt;
@@ -58,6 +57,23 @@
     &lt;p&gt;При выводе в браузере этот абзац наследует форматирование шрифтом Arial из строкового стиля в родительском элементе.&lt;/p&gt;
     &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+
+
+
+<p>Когда стиль нужно применить не к одной странице, а ко всему сайту, лучше управлять таблицами стилей путем их полного перемещения из веб-страниц в отдельные файлы с последующим импортом той таблицы, которая вам нужна. Тем самым предоставляется возможность применения разных таблиц стилей к разным форматам подачи информации (например, в варианте просматриваемой веб-страницы и в варианте вывода на печать) без изменения HTML.</p>
+<p>Код CSS можно разместить в отдельном документе, а затем подключить его к HTML-документу с помощью link-тега в head-разделе документа.</p>
+<pre><code class="language-html">&lt;link rel = "stylesheet"
+    type = "text/css"
+    href = "style.css"&gt;</code></pre>
+
+<p>Другим способом применения стилей для всей страницы является использование директивы <span class="code">@import url("адрес стиля")</span>. Результат использования <span class="code">@import</span> будет точно таким же, как и при использовании <span class="code">&lt;link></span> , но <span class="code">&lt;link></span> является тегом, применяемым только в HTML, и не относится к стилевым директивам, поэтому он не может задействоваться в одной таблице стилей для импорта другой такой таблицы. Он также не может помещаться внутри пары тегов <span class="code">&lt;style>...&lt;/style></span>.</p>
+<p>На эту страницу стили вызываются следующим образом:</p>
+<pre><code >&lt;style>
+    @import url("../styles/styles.css");
+    @import url("../modules/vs2015.min.css");
+&lt;/style></code></pre>
+<p>Таким образом, способ с @import также является предпочтительным.</p>
+
 <h2>Селекторы</h2>
 <p>Селектор определяет каким элементам веб-страницы назначается стилевое оформление.</p>
 <ul>
