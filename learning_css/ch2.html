@@ -1,130 +1,83 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Глава 2. Оформление таблиц</title>
-
-    <style>
-        @import url("../styles/styles.css");
-        @import url("../modules/vs2015.min.css");
-    </style>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Глава 2. Форматирование текста в CSS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../modules/jquery-3.7.1.min.js"><'+'/script>')</script>
     <script src="../modules/highlight.min.js"></script>
     <script src="../scripts/body_scripts.js"></script>
     <script src="../common/counters_head.js"></script>
-
+    <style>
+        @import url("../styles/styles.css");
+        @import url("../modules/vs2015.min.css");
+    </style>
 
 </head>
-
-
 <body>
 <script src="../common/counters_body.js"></script>
-<!--TODO: ADD LEFT SLIDER-->
-<h1>Глава 2. Оформление таблиц</h1>
-<h2>Получение тестовых данных</h2>
-<p>Чтобы получить тестовые данные для наших таблиц используем общедоступный API и следующий код:</p>
-<pre><code class="language-html">&lt;script>
-    let fetch_event = new Event('fetch-data');
-    let users_list
-    async function getdata(){
-        const res=await fetch('https://jsonplaceholder.typicode.com/users')
-        users_list=await res.json()
-        document.dispatchEvent(fetch_event)
-    }
-    getdata()
+<h1>Глава 2. Форматирование текста в CSS</h1>
 
-    document.addEventListener("fetch-data", function() {
-        $(function(){
-            list_of_dicts_to_table(users_list, '#table_css_ex1')
-        })
-    });
-&lt;/script></code></pre>
-<h2></h2>
-<p>Таблица ниже отфармотирована с помощью следующих стилей:</p>
-<pre><code class="language-html">&lt;style>
-    #table_css_ex1 table {
-        border-spacing: 2px;
-    }
-    #table_css_ex1 td {
-        border-radius: 5px;
-    }
-    #table_css_ex1 tr:nth-of-type(odd):not(:has(th)) { background-color: #f5d5d5; }
-    #table_css_ex1 tr:nth-of-type(even) { background-color: #e7e7ff; }
-    #table_css_ex1 td:hover{
-        background-color: #ffff99;
-    }
-    #table_css_ex1 th:hover{
-        background-color: #ffff99;
-    }
-&lt;/style></code></pre>
-<style>
-    /*th { text-align: left; }*/
-    #table_css_ex1 table {
-        border-spacing: 2px;
-    }
-    #table_css_ex1 td {
-        border-radius: 5px;
-    }
-    #table_css_ex1 tr:nth-of-type(odd):not(:has(th)) { background-color: #f5d5d5; }
-    #table_css_ex1 tr:nth-of-type(even) { background-color: #e7e7ff; }
-    #table_css_ex1 td:hover{
-        background-color: #ffff99;
-    }
-    #table_css_ex1 th:hover{
-        background-color: #ffff99;
-    }
-</style>
-<script>
-    document.addEventListener("fetch-data", function() {
-        $(function(){
-            list_of_dicts_to_table(users_list, '#table_css_ex1')
-        })
-    });
-</script>
-<div id="table_css_ex1"></div>
 
-<h2>Всплывающая подсказка</h2>
-<pre><code class="language-html">&lt;style>
-    [data-tooltip] {
-        position: relative; /* Относительное позиционирование */
-        background: aqua;
-    }
-    [data-tooltip]::after {
-        content: attr(data-tooltip); /* Выводим текст */
-        position: absolute; /* Абсолютное позиционирование */
-        width: 300px; /* Ширина подсказки */
-        left: 0; top: 0; /* Положение подсказки */
-        background: #3989c9; /* Синий цвет фона */
-        color: #fff; /* Цвет текста */
-        padding: 0.5em; /* Поля вокруг текста */
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
-        pointer-events: none; /* Подсказка */
-        opacity: 0; /* Подсказка невидима */
-        transition: 1s; /* Время появления подсказки */
-        border-radius: 10px;
-        font-style: normal;
-        font-weight: normal;
-        text-align: justify;
-    }
-    [data-tooltip]:hover::after {
-        opacity: 1; /* Показываем подсказку */
-        top: 1em; /* Положение подсказки */
-    }
-&lt;/style></code></pre>
-<li><b><span data-tooltip="в общих чертах это означает, что вместо глобальных функций для обработки значений различных типов типы сами могут определять методы для обработки значений">Подходит для ООП</span></b></li>
+<h3>Единицы измерения</h3>
+<table><thead>
+<tr>
+    <th>Единица</th>
+    <th>Описание</th>
+    <th>Пример</th>
+</tr></thead>
+    <tbody>
+    <tr>
+        <td>Пиксель (pixel)</td>
+        <td>его размер варьируется в соответствии с размерами и глубиной пиксела на пользовательском экране. Один пиксел равен ширине и высоте отдельной точки на экране, поэтому данную единицу измерения лучше всего использовать для экранов, а не для распечаток.</td>
+        <td><span class="code">.classname { margin:5px; }</span></td>
+    </tr>
+    <tr>
+        <td>Пункт (point)</td>
+        <td>равен по размеру 1/72 дюйма. Эта единица измерения пришла из полиграфии и лучше всего подходит для той среды, но также широко используется и для отображений на экранах.</td>
+        <td><span class="code">.classname { font-size:14pt; }</span></td>
+    </tr>
+    <tr>
+        <td>Дюйм (inch)</td>
+        <td>равен 72 пунктам и также относится к типу единиц измерения, наиболее приспособленных для организации вывода на печать.</td>
+        <td><span class="code">.classname { width:3in; }</span></td>
+    </tr>
+    <tr>
+        <td>Сантиметр (centimeter) </td>
+        <td>еще одна единица измерения, которая наиболее пригодна для организации вывода на печать. Один сантиметр немного превышает по размеру 28 пунктов.</td>
+        <td><span class="code">.classname { height:2cm; }</span></td>
+    </tr>
+    <tr>
+        <td>Миллиметр (millimeter)</td>
+        <td>это 1/10 сантиметра (или почти 3 пункта). Миллиметры являются еще одной единицей измерения, наиболее подходящей для организации вывода на печать.</td>
+        <td><span class="code">.classname { font-size:5mm; }</span></td>
+    </tr>
+    <tr>
+        <td>Пика (pica)</td>
+        <td>еще одна типографская единица измерения, равная 12 пунктам</td>
+        <td><span class="code">.classname { font-size:1pc; }</span></td>
+    </tr>
+    <tr>
+        <td>Эм (em)</td>
+        <td>равен текущему размеру шрифта (ширине латинской буквы m). Это одна из наиболее полезных единиц измерения для CSS, поскольку используется для описания относительных размеров.</td>
+        <td><span class="code">.classname { font-size:2em; }</span></td>
+    </tr>
+    <tr>
+        <td>Экс (ex)</td>
+        <td>также относится к текущему размеру шрифта. Он равен высоте буквы x нижнего регистра. Это менее популярная единица измерения, которая чаще всего используется в качестве хорошего приблизительного значения, помогающего установить ширину прямоугольного блока, который будет содержать некий текст</td>
+        <td><span class="code">.classname { width:20ex; }</span></td>
+    </tr>
+    <tr>
+        <td>Процент (percent)</td>
+        <td>эта единица сродни эму (em) и ровно в 100 раз больше (применительно к шрифту). Если 1 em эквивалентен текущему размеру шрифта, в процентах тот же размер выражается цифрой 100. Когда эта единица не относится к шрифту, она относится к размеру того контейнера, к которому применяется данное свойство</td>
+        <td><span class="code">.classname { height:120%; }</span></td>
+    </tr>
+    </tbody></table>
 
-<script>
-    let fetch_event = new Event('fetch-data');
-    let users_list
-    async function getdata(){
-        const res=await fetch('https://jsonplaceholder.typicode.com/users')
-        users_list=await res.json()
-        document.dispatchEvent(fetch_event)
-    }
-    getdata()
-</script>
+
+
 </body>
 </html>
