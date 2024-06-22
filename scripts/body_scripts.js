@@ -295,8 +295,7 @@ loadChapterAutoNav();
 function loadChapterAutoNav(){
     //Автоооглавление
     //todo: сделать автооглавление независимым от числа уровней
-    let page_pathname=window.location.pathname.replace('/chereshan.github.io', '')
-    if (!(['/', '/index', '/index.html', ].includes(page_pathname))){
+    if (!($('.main-page').length>0 || $('.textbook-index-page').length>0)){
         $(function(){
             jQuery('h1').after('<ul id="autonav"></ul>')
 
