@@ -499,6 +499,7 @@ async function getChapterTitle(num, url){
 $(function(){loadTextbookAutoNav()})
 function loadTextbookAutoNav(){
     if ($('.textbook-index-page').length>0){
+        $('.textbook-index-page').after('ul.autonav')
         let index_root = window.location.href.search('index.html')
         index_root = window.location.href.slice(0, index_root)
         let textbookIndex;
