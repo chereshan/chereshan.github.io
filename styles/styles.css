@@ -25,7 +25,7 @@ p {
 
 #header ul {
     margin: 0; /* Обнуляем значение отступов */
-    padding: 0px; /* Значение полей */
+    padding: 0; /* Значение полей */
 }
 
 #header ul li {
@@ -33,6 +33,11 @@ p {
     margin-right: 5px; /* Отступ слева */
     border: 1px solid #000; /* Рамка вокруг текста */
     padding: 3px; /* Поля вокруг текста */
+    border-radius: 10px;
+    vertical-align: middle;
+}
+#header ul li:hover{
+    background-color: #00ffcf;
 }
 
 /*
