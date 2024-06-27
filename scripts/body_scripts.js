@@ -155,7 +155,7 @@ function loadCodeTips_afterHighlight(){
             test_container[i]['tips'][j]['test6']=relevant_pos1[j]
 
         }
-        console.log(relevant_pos)
+        // console.log(relevant_pos)
         for (let k=0; k<relevant_pos.length;k++){
 
             // console.log('test1:', code_text.slice(relevant_pos[k][0][1], relevant_pos[k][0][relevant_pos[k].length-1])==codeTipContainer[i].tips[k].inner_tip_text)
@@ -290,7 +290,7 @@ function checkForSpacesBeforeComma(node){
         checkForSpacesBeforeComma(node)
     }
 }
-//
+
 loadChapterAutoNav();
 function loadChapterAutoNav(){
     //Автоооглавление
@@ -315,8 +315,8 @@ function loadChapterAutoNav(){
                     $(this).attr('id','ch-'+(h.filter((n)=>n!=0).join('.')));
                     //создание класса уровней списка
                     let list_level=autonav_listLevel(h)
-                    jQuery('#autonav').append(`<li class="${list_level}"><a href=${'#'+$(this).attr('id')}>${$(this).attr('id').slice(3)}. ${$(this).text()}</a></li>`);
-                    // console.log($(this).attr('id'))
+                    jQuery('#autonav').append(`<li class="${list_level}"><a href=${'#'+$(this).attr('id')}>${$(this).attr('id').slice(3)}. ${$(this).text().replace(/\</g, '&lt;')}</a></li>`);
+                    console.log($(this).text())
                     $(this).html($(this).attr('id').slice(3)+'. '+$(this).html())
                 })
 //
@@ -508,6 +508,7 @@ async function getChapterTitle(num, url){
     return y;
 }
 
+//todo: исправить атонав по учебнику. При медленной загрузке скрипт не отрабатывает
 //todo: добавить вариант без index.html
 $(function(){loadTextbookAutoNav()})
 function loadTextbookAutoNav(){
