@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Глава 3. Цвет и фон</title>
+    <style>
+        @import url("../styles/styles.css");
+        @import url("../modules/vs2015.min.css");
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../modules/jquery-3.7.1.min.js"><'+'/script>')</script>
+    <script src="../modules/highlight.min.js"></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <script src="../common/counters_head.js"></script>
+</head>
+
+<!--todo: вынести часть изображений на внешний хостинг-->
+<body>
+<script src="../common/counters_body.js"></script>
+<!--TODO: ADD LEFT SLIDER-->
+<h1>Глава 3. Цвет и фон</h1>
+<!--todo: программа подбора цвета (RGB)-->
+<script>
+    $(function(){
+        $('.css-color').each(function(){
+            $(this).css('background-color', $(this).text())
+        })
+    })
+</script>
+
+<h2>Цвета CSS</h2>
+
+
+<p>Каждый элемент в документе обладает цветами фона и переднего плана. Цвета могут применяться к первому плану, а также к фону текста и объектов путем использования свойства цвета — <span class="code">color</span> и фонового цвета — <span class="code">background-color</span> (или путем предоставления единственного аргумента свойству фона —
+    <span class="code">background</span>). Указанный цвет может быть одним из именованных цветов (например, <span class="css-color">red</span> или <span class="css-color">blue</span>), цветом, составленным из трех шестнадцатеричных чисел <span class="code">RGB</span>
+    (например, <span class="css-color">#ff0000</span> или <span class="css-color">#0000ff</span>), или цветом, составленным с использованием
+    CSS-функции rgb.</p>
+<p>Названия стандартных 16 цветов CSS следующие: аквамарин — <span class="css-color">aqua</span>, черный — <span class="css-color">black</span>, синий — <span class="css-color">blue</span>, яркий пурпурно-красный, или фуксия, — <span class="css-color">fuchsia</span>, серый — <span class="css-color">gray</span>,
+    зеленый — <span class="css-color">green</span>, яркий светло-зеленый — <span class="css-color">lime</span>, красно-коричневый — <span class="css-color">maroon</span>,
+    темно-синий — <span class="css-color">navy</span>, оливковый — <span class="css-color">olive</span>, фиолетовый — <span class="css-color">purple</span>, красный — <span class="css-color">red</span>,
+    серебристый — <span class="css-color">silver</span>, зеленовато-голубой — <span class="css-color">teal</span>, белый — <span class="css-color">white</span> и желтый —
+    <span class="css-color">yellow</span>.</p>
+<p>Дочерний элемент в HTML/XHTML обычно наследует цвет переднего плана от родительского элемента. В частности, если вы назначили тексту в теге <span class="code">&lt;body></span> красный цвет, поддерживающий стили броузер будет отображать текст заголовков и абзацев красным.</p>
+
+
+<h2>Фон</h2>
+<p>Свойства фона ведут себя иначе – они не наследуются. Вместо этого каждый элемент имеет принятый по умолчанию прозрачный цвет фона, позволяющий фону родительского элемента проступать сквозь него. Таким образом, установка изображения фоном для тега <span class="code">&lt;body></span> не приведет к постоянной его перезагрузке при выводе каждого элемента в теле документа. Вместо этого броузер однажды загрузит изображение и сделает его задником документа, который будет служить фоном для всех элементов, не имеющих своего собственного, явно выраженного в цвете или рисунке.</p>
+
+<h3>Свойство <span class="code">background-color</span></h3>
+<p>Свойство <span class="code">background-color</span> управляет (вы угадали!) цветом фона элемента. Присваивайте этому свойству в качестве значения цвет или ключевое слово <span class="code">transparent</span>. Значение по умолчанию – <span class="code">transparent</span> (прозрачный). Результат будет естественным.</p>
+<pre><code>&lt;p style="background-color: #ffff99">background-color: #ffff99&lt;/p>
+&lt;p style="background-color: transparent">background-color: #ffff99&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="background-color: #ffff99">background-color: #ffff99</p>
+<p style="background-color: transparent">background-color: #ffff99</p>
+</pre>
+</div>
+</div>
+<h3>Свойство <span class="code">background-image</span></h3>
+<p>Свойство <span class="code">background-image</span> помещает изображение позади содержимого элемента. Его значением является либо URL, либо ключевое слово<span class="code">none</span>, которое принимается по умолчанию.</p>
+<pre><code>&lt;p style="background-image: url(https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif); color: white">Пример текста&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="background-image: url(https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif); color: white">Пример текста</p>
+</pre>
+</div>
+</div>
+<p>Если изображение больше, чем содержащий его элемент, оно будет обрезано по границам области, занимаемой элементом. Если изображеие окажется меньше, броузер «замостит» его копиями пространство,
+отведенное под элемент. Способ укладки изображения определяется
+значением атрибута <span class="code">background-repeat</span>.</p>
+<p>Вы управляете начальным положением изображения по отношению
+к элементу при помощи свойства <span class="code">background-position</span>. Поведение изображения при прокручивании документа определяется свойством <span class="code">background-attachment</span>.</p>
+<p>Если вы используете в качестве фона элемента изображение, свойство
+<span class="code">background-attachment</span> позволит управлять тем, каким образом это изображение прикреплено к окну броузера. При принятом по умолчанию значении <span class="code">scroll</span> броузер перемещает фоновое изображение вместе с элементами, когда пользователь прокручивает документ. Значение <span class="code">fixed</span>
+делает изображение неподвижным.</p>
+<pre><code>&lt;p style="background-image: url(https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif); color: white; background-attachment: fixed">Пример текста&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="background-image: url(https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif); color: white; background-attachment: fixed">Пример текста</p>
+</pre>
+</div>
+</div>
+<p>По умолчанию поддерживающие стили броузеры выводят фоновое
+изображение, начиная с левого верхнего угла выделенного пространства. С помощью свойства <span class="code">background-position</span> можно сместить начальное
+положение фонового изображения. Смещение может быть абсолютным
+(длина) и относительным (процентное значение или ключевое слово).
+В результате потенциально «обрезанное» изображение будет заполнять прямоугольную область от этой сдвинутой начальной точки.</p>
+
+<h3>Свойство <span class="code">background-repeat</span></h3>
+Обычно броузер, чтобы заполнить выделенное пространство, размножает фоновое изображение и по горизонтали, и по вертикали. Используйте
+свойство background	repeat, чтобы уклониться от этого принятого по
+умолчанию образа действий броузера. Чтобы изображение повторялось
+только по горизонтали, но не по вертикали, применяйте значение <span class="code">repeat-x</span>. Для повторения только по вертикали используйте <span class="code">repeat-y</span>. Чтобы прекратить укладывание плитки вообще, употребляйте no	<span class="code">repeat</span>.
+<pre><code>&lt;p style="background-image: url(https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif); color: white; background-attachment: fixed; background-repeat: space">Пример текста&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="background-image: url(https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif); color: white; background-attachment: fixed; background-repeat: space">Пример текста</p>
+</pre>
+</div>
+</div>
+
+
+
+<h2>Градиенты</h2>
+<p>Вместо использования сплошного цветового фона можно применить градиент,
+    который будет автоматически переходить от выбранного исходного до выбранного конечного цвета. Градиент лучше использовать в связке с простым цветовым
+    правилом, чтобы браузеры, не поддерживающие градиенты, отображали хотя
+    бы сплошной цвет.</p>
+<pre><code >&lt;style>
+    .orangegrad {
+        background:orange;
+        background:linear-gradient(top, #fb0, #f50);
+&lt;/style>
+&lt;div class='orangegrad'>Черный текст &lt;br>
+    на оранжевом &lt;br>линейном градиенте&lt;/div></code></pre>
+<style>
+    .orangegrad {
+        background: orange;
+        background: linear-gradient(top, #fb0, #f50);
+    }
+</style>
+<div class='orangegrad'>Черный текст <br>на оранжевом <br>линейном градиенте</div>
+<p>Для создания градиента нужно выбрать, где он будет начинаться: вверху (<span class="code">top</span>),
+    внизу (<span class="code">bottom</span>), слева (<span class="code">left</span>), справа (<span class="code">right</span>), по центру (<span class="code">center</span>) или в любых
+    составных местах, например в левом верхнем углу (<span class="code">top left</span>) или от центра
+    вправо (<span class="code">center right</span>). Затем следует ввести нужные начальный и конечный
+    цвета и применить правило либо линейного (<span class="code">linear-gradient</span>), либо радиального (<span class="code">radial-gradient</span>) градиента, обеспечив правила для всех браузеров, на
+    которые вы нацелились.</p>
+
+
+</body>
+</html>

@@ -11,6 +11,7 @@
     <script src="../modules/highlight.min.js"></script>
     <script src="../scripts/body_scripts.js"></script>
     <script src="../common/counters_head.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         @import url("../styles/styles.css");
         @import url("../modules/vs2015.min.css");
@@ -31,32 +32,91 @@
 </ol>
 <h3>Свойство <span class="code">font-family</span></h3>
 <p>Это свойство назначает используемый шрифт. Оно также поддерживает перечисление множества шрифтов в порядке предпочтения слева направо, чтобы стилевое оформление при отсутствии у пользователя установленного предпочитаемого шрифта постепенно переходило в сторону менее предпочитаемых шрифтов. Например, для установки шрифта по умолчанию для абзацев можно воспользоваться следующим CSS-правилом:</p>
-<pre><code >p { font-family:Verdana, Arial, Helvetica, sans-serif; }</code></pre>
+<pre><code>&lt;p style="font-family:Verdana, Arial, Helvetica, sans-serif;">font-family:Verdana, Arial, Helvetica, sans-serif;&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="font-family:Verdana, Arial, Helvetica, sans-serif;">font-family:Verdana, Arial, Helvetica, sans-serif;</p>
+</pre>
+</div>
+</div>
 <p>Если название шрифта состоит из двух и более слов, его нужно заключить
     в кавычки:</p>
-<pre><code >p { font-family:"Times New Roman", Georgia, serif; }</code></pre>
+<pre><code>&lt;p style="font-family:'Times New Roman', Georgia, serif;">font-family:"Times New Roman", Georgia, serif;&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="font-family:Times New Roman, Georgia, serif;">font-family:Times New Roman, Georgia, serif;</p>
+</pre>
+</div>
+</div>
 <!--todo: добавить запасные шрифты для сайта-->
 <h3>Свойство <span class="code">font-style</span></h3>
 <p>С помощью этого свойства можно выбрать вывод шрифта в обычном — <span class="code">normal</span>,
 курсивном — <span class="code">italic</span> или наклонном — <span class="code">oblique</span> виде. Следующие правила создают три класса (<span class="code">normal</span>, <span class="code">italic</span> и <span class="code">oblique</span>), которые могут применяться к элементам для создания соответствующих эффектов:</p>
-<pre><code >.normal { font-style:normal; }
-.italic { font-style:italic; }
-.oblique { font-style:oblique; }</code></pre>
+<pre><code>&lt;style>
+    .normal { font-style:normal; }
+    .italic { font-style:italic; }
+    .oblique { font-style:oblique; }
+&lt;/style>
+&lt;p class="normal">normal&lt;/p>
+&lt;p class="italic">italic&lt;/p>
+&lt;p class="oblique">oblique&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<style>
+    .normal { font-style:normal; }
+    .italic { font-style:italic; }
+    .oblique { font-style:oblique; }
+</style>
+<p class="normal">normal</p>
+<p class="italic">italic</p>
+<p class="oblique">oblique</p>
+</pre>
+</div>
+</div>
+
+
+
+
 <h3>Свойство <span class="code">font-size</span></h3>
-<pre><code >h1 { font-size:240%; }
-h2 { font-size:200%; }
-h3 { font-size:160%; }
-h4 { font-size:120%; }</code></pre>
+<pre><code>&lt;p style="font-size:240%;">font-size:240%;&lt;/p>
+&lt;p style="font-size:200%;">font-size:200%;"&lt;/p>
+&lt;p style="font-size:160%;">font-size:160%;&lt;/p>
+&lt;p style="font-size:120%;">font-size:120%;&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="font-size:240%;">font-size:240%;</p>
+<p style="font-size:200%;">font-size:200%;"</p>
+<p style="font-size:160%;">font-size:160%;</p>
+<p style="font-size:120%;">font-size:120%;</p>
+</pre>
+</div>
+</div>
 <p>Свойство <span class="code">font-size</span>, определяющее размер шрифта, в качестве значений может принимать абсолютные и относительные длины, проценты и ключевые слова. В частности:</p>
-<pre><code>p {font	size: 12pt}
-p {font	size: 120%}
-p {font	size: +2pt}
-p {font	size: medium}
-p {font	size: larger}</code></pre>
+
+
+<pre><code>&lt;p style="font-size: 12pt">font-size: 12pt&lt;/p>
+&lt;p style="font-size: 120%">font-size: 120%&lt;/p>
+&lt;p style="font-size: 2pc">font-size: +2pt&lt;/p>
+&lt;p style="font-size: medium">font-size: medium&lt;/p>
+&lt;p style="font-size: larger">font-size: larger&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="font-size: 12pt">font-size: 12pt</p>
+<p style="font-size: 120%">font-size: 120%</p>
+<p style="font-size: 2pc">font-size: 2pc</p>
+<p style="font-size: medium">font-size: medium</p>
+<p style="font-size: larger">font-size: larger</p>
+</pre>
+</div>
+</div>
 <p>В четвертой строке выбирается заранее определенный браузером размер, обозначенный словом <span class="code">medium</span>. Допустимыми ключевыми словами для абсолютного размера могут служить <span class="code">xx-small</span>, <span class="code">x-small</span>, <span class="code">small</span>, <span class="code">medium</span>, <span class="code">large</span>, <span class="code">x-large</span> и <span class="code">xx-large</span>, которые обычно соответствуют семи размерам шрифта, используемым для атрибута size тега <span class="code">&lt;font></span></p>
 
 <p>Единицы измерения приведены в таблице ниже. </p>
-<!--todo: написать функцию для генерации тоггл-кнопки-->
 <script>
     generateToggleButton('#measurements_table')
 </script>
@@ -111,7 +171,7 @@ p {font	size: larger}</code></pre>
         <td><span class="code">.classname { width:20ex; }</span></td>
     </tr>
     <tr>
-        <td>Процент (percent)</td>
+        <td>Процент (<span class="code">percent</span>)</td>
         <td>эта единица сродни эму (em) и ровно в 100 раз больше (применительно к шрифту). Если 1 em эквивалентен текущему размеру шрифта, в процентах тот же размер выражается цифрой 100. Когда эта единица не относится к шрифту, она относится к размеру того контейнера, к которому применяется данное свойство</td>
         <td><span class="code">.classname { height:120%; }</span></td>
     </tr>
@@ -124,13 +184,86 @@ p {font	size: larger}</code></pre>
 растянуты. Применяйте свойство <span class="code">font-stretch</span> для выбора более сжатых или более растянутых символов вашего шрифта.</p>
 <p>Используйте значение свойства <span class="code">normal</span>, чтобы остановиться на версии шрифта нормального размера. Относительные значения <span class="code">wider</span> и <span class="code">narrower</span> выбирают следующий, более широкий или соответственно более узкий варианты начертания шрифта, но не шире и не уже крайних
 («<span class="code">ultra</span>») версий семейства.</p>
-Оставшиеся значения свойства <span class="code">font-stretch</span> назначают определенные варианты из семейства шрифтов. Начиная с самого плотного и заканчивая самым жидким, значения таковы: <span class="code">ultra-condensed</span>, <span class="code">extra-condensed</span>, <span class="code">condensed</span>, <span class="code">semi-condensed</span>, <span class="code">semi-expanded</span>, <span class="code">expanded</span>, <span class="code">extra-expanded</span> и <span class="code">ultra-expanded</span>.
+<p>Оставшиеся значения свойства <span class="code">font-stretch</span> назначают определенные варианты из семейства шрифтов. Начиная с самого плотного и заканчивая самым жидким, значения таковы: <span class="code">ultra-condensed</span>, <span class="code">extra-condensed</span>, <span class="code">condensed</span>, <span class="code">semi-condensed</span>, <span class="code">semi-expanded</span>, <span class="code">expanded</span>, <span class="code">extra-expanded</span> и <span class="code">ultra-expanded</span>.</p>
 
 
 
 <h3>Свойство <span class="code">font-size-adjust</span></h3>
+<p>Если не вдаваться в тонкости, то разборчивость и видимый размер шрифта зависят в основном от его <b>характеристического отношения</b> (<i>aspect ratio</i>) – отношения высоты строчной буквы к номинальному размеру (измеряемому по высоте заглавной буквы). Шрифты с характеристическим отношением, приближающимся к единице, разборчивей при мелком размере, чем шрифты с этим отношением вблизи нуля.</p>
+<p>Кроме того, в зависимости от величины характеристического отношения видимый размер одного шрифта может быть явно больше или меньше другого шрифта, хотя их номинальные размеры одинаковы. Поэтому, когда один шрифт оказывается недоступным для броузера, применение его заменителя может исказить внешний вид документа.</p>
+<p>Свойство <span class="code">font-size-adjust</span> позволяет подогнать размер замещающего шрифта с учетом его характеристического отношения, чтобы он наилучшим образом подходил для отображения. Используйте значение этого свойства <span class="code">none</span>, чтобы игнорировать характеристическое отношение. В противном случае присвойте свойству десятичное дробное число в интервале от нуля до единицы. Обычно назначается характеристическое отношение для шрифта, который должен быть выбран в первую очередь. Владеющий стилями броузер выведет тогда замещающий
+шрифт с размером, вычисленным по формуле: \(s = (n/a) * fs\)</p>
+<p>где \(s\) – это новый размер, используемый для вывода замещающего
+шрифта, вычисленный как частное от деления значения \(n\) свойства <span class="code">font-size-adjust</span> на характеристическое отношение замещающего шрифтаа и умноженное затем на размер текущего шрифта \(fs\). К примеру, предположим, что вы предлагаете вывести текст шрифтом <span class="code">Times New Roman</span> с характеристическим отношением \(0.45\), но броузер его не обнаруивает и применяет вместо него шрифт <span class="code">Comic Sans MS</span> с отношением
+\(0.54\). Тогда, чтобы сохранить приблизительно тот же видимый размер
+(для <span class="code">Times New Roman</span> это <span class="code">18px</span>), поддерживающий стандарт CSS2
+броузер, учитывая значение свойства <span class="code">font-size-adjust</span> (\(0.45\) для <span class="code">Times New Roman</span>), выведет на экран или напечатает текст шрифтом <span class="code">Comic Sans Microsoft</span> с меньшим размером \(0.45/0.54×18px = 15px\). К сожалению, мы не можем показать вам, как популярные броузеры это делают, так как они это не поддерживают.</p>
 
+<h3>Свойство <span class="code">font-variant</span></h3>
+<p>Свойство <span class="code">font-variant</span> позволяет выводить текст маленькими заглавными буквами. Принятое по умолчанию значение этого свойства –
+<span class="code">normal</span> – указывает на традиционную версию шрифта. Но вы можете придать этому свойству значение small-caps, выбирая версию, в которой строчные буквы заменяются маленькими заглавными (т. е. капителью).</p>
 
+<pre><code>&lt;p style="font-variant: unicase">Первый пример&lt;/p>
+&lt;p style="font-variant: proportional-width">Второй пример&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="font-variant: unicase">Первый пример</p>
+<p style="font-variant: proportional-width">Второй пример</p>
+</pre>
+</div>
+</div>
+
+<h3>Свойство <span class="code">font-weight</span></h3>
+<p>Свойство <span class="code">font-weight</span> заведует весом или жирностью букв. По умолчанию принимается значение <span class="code">normal</span>. Можно установить значение <span class="code">bold</span>, чтобы получить жирную версию шрифта, или использовать относительные значения <span class="code">bolder</span> и <span class="code">lighter</span> для применения версии, которая будет более или соответственно менее жирной, чем принятая для родительского элемента.</p>
+
+<pre><code>&lt;p style="font-weight: bold">Первый пример&lt;/p>
+&lt;p style="font-weight: lighter">Второй пример&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="font-weight: bold">Первый пример</p>
+<p style="font-weight: lighter">Второй пример</p>
+</pre>
+</div>
+</div>
+
+<h3>Свойство <span class="code">font</span></h3>
+<p>Чтобы сократить полную спецификацию шрифта, используйте всеобъемлющее свойство <span class="code">font</span> и соберите все объявления в одно:</p>
+<pre><code >p {font: bold 12pt/14pt Times, Garamond, serif}</code></pre>
+<p>Порядок спецификации шрифта:</p>
+<pre><code >font: {font-style; font-width; font-variant; font-size/font-height; font-family}</code></pre>
+
+<h3>Алгоритм соответствия шрифтов</h3>
+<p>Алгоритм соответствия шрифтов состоит из четырех шагов:</p>
+<ol>
+    <li>применение указанного шрифта, если он находится на компьютере пользователя. Это может быть одно из нескольких семейств шрифтов, указанных в стилевом правиле и подставленных в порядке появления.</li>
+    <li>Если ни один из шрифтов, перечисленных в правиле, не установлен на компьютере пользователя. Браузер пытается найти наиболее похожий из локальных шрифтов. Например, запрос на шрифт <span class="code">Helvetica</span> может привести к использованию шрифта <span class="code">Arial</span> – аналогичного шрифта без засечек.</li>
+    <li>Попытка браузера синтезировать шрифт путем модифицирования локального шрифта в соответствии с указанным. Например, запрос на шрифт <span class="code">Helvetica</span> размером 72 пункта можно удовлетворить за счет масштабирования 12-пунктового шрифта <span class="code">Arial</span> до требуемого размера.</li>
+    <li>При неудачном завершении трех предыдущих шагов броузер может
+        предпринять четвертый и загрузить требуемый шрифт, если автор
+        предоставил подходящее определение внешнего шрифта.</li>
+</ol>
+<p>Такие определения создаются с помощью специальной директивы @font-face,
+имеющей такой синтаксис:</p>
+<pre><code >@font-face {
+descriptor : value;
+...
+descriptor : value
+}</code></pre>
+
+<h3>Дескрипторы шрифта</h3>
+<p>Базовые дескрипторы шрифта, указываемые в специальной директиве
+<span class="code">@font-face</span>, соответствуют шрифтовым свойствам CSS2 и принимают те же значения, что и эти свойства. Иными словами, вы можете указывать дескрипторы <span class="code">font-family</span>, <span class="code">font-style</span>, <span class="code">font-variant</span>, <span class="code">font-weight</span>, <span class="code">font-stretch</span> и <span class="code">font-size</span> и их допустимые значения, чтобы определить
+новый шрифт для броузера.</p>
+<pre><code >&lt;style>
+@font-face {
+font-family : "Kumquat Sans";
+font-style : normal, italic;
+src : url("http://www.kumquat.com/foundry/kumquat-sans"), local("Lucida Sans");
+}
+/*т.к. другие дескрипторы не указаны, то браузер будет предполагать, что они заданы в шрифте*/
+&lt;/style></code></pre>
 
 
 
@@ -139,22 +272,69 @@ p {font	size: larger}</code></pre>
 <p>Независимо от используемого шрифта в способ вывода текста можно внести
 дополнительные изменения, меняя его оформление — <span class="code">decoration</span>, разрядку —
 <span class="code">spacing</span> и выравнивание — <span class="code">alignment</span>.</p>
+
+
 <h3>Оформление (<span class="code">decoration</span>)</h3>
 Используя свойство <span class="code">text-decoration</span>, можно применить к тексту такие эффекты, как подчеркивание — <span class="code">underline</span>, перечеркивание — <span class="code">line-through</span>, верхнее
 подчеркивание — <span class="code">overline</span> и мигание — <span class="code">blink</span>. Следующее правило создает новый класс по имени <span class="code">over</span>, который применяет верхнее подчеркивание к тексту (насыщенность линий, используемых для подчеркивания снизу и сверху и для перечеркивания, будет соответствовать насыщенности шрифта):
-<pre><code >.over { text-decoration :overline; }</code></pre>
+<pre><code>&lt;style>
+    .ex.over { text-decoration :overline; }
+    .ex.under { text-decoration :underline; }
+&lt;/style>
+&lt;p class="ex over">Надчеркнутый текст&lt;/p>
+&lt;p class="ex under">Подчеркнутый текст&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<style>
+    .ex.over { text-decoration :overline; }
+    .ex.under { text-decoration :underline; }
+</style>
+<p class="ex over">Надчеркнутый текст</p>
+<p class="ex under">Подчеркнутый текст</p>
+</pre>
+</div>
+</div>
+
 <h3>Разрядка (<span class="code">spacing</span>)</h3>
 <p>Существуют свойства, позволяющие изменить разрядку строк, слов и букв.
 Например, следующие правила настраивают разрядку строк для абзацев путем
-изменения свойства <span class="code">line-height</span>, делая его на 25% больше, устанавливают свойство <span class="code">word-spacing</span> равным 30 пикселам и разрядку букв 3 пиксела:</p>
-<pre><code >p {
-line-height :125%;
+изменения свойства <span class="code">line-height</span>, делая его на 25% больше, устанавливают свойство <span class="code">word-spacing</span> равным 30 пикселям и разрядку букв 3 пикселя:</p>
+<pre><code>&lt;p style="line-height :125%;
 word-spacing :30px;
-letter-spacing:3px;
-}</code></pre>
+letter-spacing:3px;">Пример&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="line-height :125%;
+word-spacing :30px;
+letter-spacing:3px;">Пример</p>
+</pre>
+</div>
+</div>
+
+
 <h3>Выравнивание (<span class="code">alignment</span>)</h3>
+
 <p>В CSS доступны четыре типа выравнивания текста: по левому краю — <span class="code">left</span>, по правому краю — <span class="code">right</span>, по центру — <span class="code">center</span> и по ширине содержимого — <span class="code">justify</span>. В следующем правиле текст абзаца изначально настроен на полное выравнивание по ширине:</p>
-<pre><code>p { text-align:justify; }</code></pre>
+<pre><code>&lt;div style="font-size: 70%">
+&lt;p style="text-align: left">...&lt;/p>
+&lt;p style="text-align: center">...&lt;/p>
+&lt;p style="text-align: end">...&lt;/p>
+&lt;/div></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<div style="font-size: 70%">
+<p style="text-align: left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Que Manilium, ab iisque M. Quid, de quo nulla dissensio est? Duo Reges: constructio interrete. Sed utrum hortandus es nobis, Luci, inquit, an etiam tua sponte propensus es? <i>Utilitatis causa amicitia est quaesita.</i> Consequentia exquirere, quoad sit id, quod volumus, effectum. Nihilne te delectat umquam -video, quicum loquar-, te igitur, Torquate, ipsum per se nihil delectat? Cum autem in quo sapienter dicimus, id a primo rectissime dicitur. </p>
+
+<p style="text-align: center">An ea, quae per vinitorem antea consequebatur, per se ipsa curabit? <b>Qui est in parvis malis.</b> Sed emolumenta communia esse dicuntur, recte autem facta et peccata non habentur communia. Non enim ipsa genuit hominem, sed accepit a natura inchoatum. Rapior illuc, revocat autem Antiochus, nec est praeterea, quem audiamus. Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit; Atque his de rebus et splendida est eorum et illustris oratio. </p>
+
+<p style="text-align: end">Ego quoque, inquit, didicerim libentius si quid attuleris, quam te reprehenderim. Te autem hortamur omnes, currentem quidem, ut spero, ut eos, quos novisse vis, imitari etiam velis. Suam denique cuique naturam esse ad vivendum ducem. Sin kakan malitiam dixisses, ad aliud nos unum certum vitium consuetudo Latina traduceret. <b>Hic ambiguo ludimur.</b> Si enim ita est, vide ne facinus facias, cum mori suadeas. Videamus igitur sententias eorum, tum ad verba redeamus. Si id dicis, vicimus. </p>
+</div>
+</div>
+</div>
+
+
 
 <h3>Преобразование (<span class="code">text-transform</span>)</h3>
 <p>Для преобразования текста доступны четыре свойства: отсутствие преобразования — <span class="code">none</span>, преобразование первых букв слов в заглавные — <span class="code">capitalize</span>,
@@ -163,11 +343,59 @@ letter-spacing:3px;
 гарантирующий при его применении вывод всего текста в верхнем регистре:</p>
 <pre><code>.upper { text-transform:uppercase; }</code></pre>
 
-<h2>Отступы</h2>
+<h3>Свойство <span class="code">line-height</span></h3>
+<p>Используйте свойство <span class="code">line-height</span> (высота строки) для определения минимального расстояния между строками в тексте, являющемся содержимым тега.
+<pre><code>&lt;p style="line-height: 14pt">line-height: 14pt&lt;/p>
+&lt;p style="line-height: 120%">line-height: 120%&lt;/p>
+&lt;p style="line-height: 2.0">line-height: 2.0&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="line-height: 14pt">line-height: 14pt</p>
+<p style="line-height: 120%">line-height: 120%</p>
+<p style="line-height: 2.0">line-height: 2.0</p>
+</pre>
+</div>
+</div>
+
+<h3>Отступы</h3>
 <p>С помощью свойства <span class="code">text-indent</span> можно создать отступ первой строки блока
 текста на указанную величину. Следующее правило создает отступ первой строки каждого абзаца на 20 пикселов, но могут быть применены и другие единицы
 измерения или процентное увеличение:</p>
-<pre><code>p { text-indent:20px; }</code></pre>
+<pre><code>&lt;p style="text-indent:20px;">...&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<p style="text-indent:20px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tum Piso: Quoniam igitur aliquid omnes, quid Lucius noster? Unum nescio, quo modo possit, si luxuriosus sit, finitas cupiditates habere.</p>
+</div>
+</div>
+
+<h3>Свойство <span class="code">text-shadow</span></h3>
+Свойство <span class="code">text-shadow</span> позволяет придать вашему тексту трехмерный вид при помощи выдержавших проверку временем теней. Значениями
+свойства являются обязательный сдвиг и необязательные цвет и радиус растушевки. У свойства может быть несколько наборов значений,
+разделенных запятыми, что позволяет получить последовательность
+теней, причем каждый очередной набор значений находится на слое
+выше предыдущего, но всегда остается под оригинальным текстом.
+<pre><code>&lt;p style="text-shadow: 10px 10px 2px green">Зеленая тень&lt;/p></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre>
+<p style="text-shadow: 10px 10px 2px green">Зеленая тень</p>
+</pre>
+</div>
+</div>
+
+<h3>Свойство <span class="code">vertical-align</span></h3>
+<p>Свойство <span class="code">vertical-align</span> управляет положением элемента по отношению к содержащей его строке. Его допустимыми значениями являются:</p>
+<ul>
+    <li><span class="code">baseline</span> - Выравнивает базовую линию элемента с базовой линией охватывающего элемента.</li>
+    <li><span class="code">middle</span> - Выравнивает середину элемента с серединой охватывающего элемента. (Обычно середина – это верх строчной буквы).</li>
+    <li><span class="code">sub</span> - Элемент выводится как подстрочный индекс.</li>
+    <li><span class="code">super</span> - Элемент выводится как надстрочный индекс.</li>
+    <li><span class="code">text-top</span> - Выравнивает верхний край элемента с верхним краем шрифта охватывающего элемента.</li>
+    <li><span class="code">bottom</span> - Выравнивает нижний край элемента по нижнему выносному элементу текущей строки.
+    </li>
+</ul>
+
 
 
 </body>
