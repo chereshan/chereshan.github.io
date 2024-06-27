@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Глава Y. Адаптивность</title>
+
+    <style>
+        @import url("../styles/styles.css");
+        @import url("../modules/vs2015.min.css");
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../modules/jquery-3.7.1.min.js"><'+'/script>')</script>
+    <script src="../modules/highlight.min.js"></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <script src="../common/counters_head.js"></script>
+
+
+</head>
+
+<!--todo: вынести часть изображений на внешний хостинг-->
+<body>
+<script src="../common/counters_body.js"></script>
+<!--TODO: ADD LEFT SLIDER-->
+<h1>Глава Y. Адаптивность</h1>
+<p>В наши дни HTML- и XHTML-документы можно встретить в самых неожиданных местах, даже в сотовых телефонах. Чтобы помочь броузеру выбрать лучший способ вывода документа, включите в тег <span class="code">&lt;style></span> атрибут <span class="code">media</span>. Его значением является средство обмена информацией, для которого этот документ предназначен, хотя это и не препятствует выводу документа другим устройством. Значением атрибута по умолчанию является screen (дисплей компьютера).</p>
+<p>Другие определенные в стандарте значения – это <span class="code">tty</span> (телетайпы, терминалы или портативные устройства с ограниченными возможностями дисплея), <span class="code">tv</span> (устройства типа телевизора с низким разрешением и плохой цветопередачей),
+<span class="code">projection</span> (проекционные аппараты), <span class="code">handheld</span> (портативные компьютеры и сотовые телефоны), <span class="code">print</span> (принтеры, печатающие чернилами на
+бумаге), <span class="code">braille</span> (тактильные устройства), <span class="code">embossed</span> (устройства для вывода текста в коде Брайля, для слепых), <span class="code">aural</span> (аудиоустройства или,
+например, синтезаторы речи) и <span class="code">all</span> (многие другие типы устройств).</p>
+<p>Если вы хотите вместо <span class="code">all</span> явно перечислить несколько типов уст
+ройств, вы можете использовать в качестве значения атрибута <span class="code">media</span>
+заключенный в кавычки список, элементы которого разделяются за
+пятыми. Например:</p>
+<pre><code >&lt;style type="text/css" media="screen,print"></code></pre>
+<p>говорит броузеру, что документ содержит таблицу стилей и предназна
+чен для вывода на принтер или на дисплей компьютера.</p>
+<p>Таким образом, броузер
+не будет применять разработанные для <span class="code">media="screen,print"</span> стили из
+нашего примера, если пользователь соединяется с сетью с помощью,
+скажем, карманного компьютера.</p>
+
+
+<p>Помимо атрибута media для тега <span class="code">&lt;style></span> стандарт CSS2 содержит еще
+    два средства, которые позволяют применять различные таблицы сти
+    лей в зависимости от того, какой агент или устройство будут выводить
+    документ. С помощью этих способов можно применять один или це
+    лую таблицу стилей, когда документ отображается на экране компью
+    тера, и другую группу стилей, когда содержимое выводится на принте
+    ре, печатающем по системе Брайля. А как же обходиться с сотовыми
+    телефонами в сети?</p>
+<p>Подобно тому как атрибут media для тега <span class="code">&lt;style></span> сообщает, в каких
+    случаях нужно применять описанную в теге таблицу стилей, сущест
+    вует возможность указать обработчику документов1, следует ли ему
+    загружать и использовать внешнюю таблицу в зависимости от того,
+    какое устройство будет доносить до человека содержание документа.
+    Это можно сделать, добавив в конец команды <span class="code">@import</span> один или не
+    сколько отделенных друг от друга запятыми типов посредников.</p>
+<pre><code >@import url(http://www.kumquats.com/styles/visual_styles.css) screen,print;
+@import "http://www.kumquats.com/styles/speech_styles.css" aural;</code></pre>
+<p>В CSS2 включены следующие типы устройств вывода: <span class="code">all</span>, <span class="code">aural</span>,
+    <span class="code">braille</span>, <span class="code">embossed</span>, <span class="code">handheld</span>, <span class="code">print</span>, <span class="code">projection</span>, <span class="code">screen</span>, <span class="code">tty</span> и <span class="code">tv</span>.</p>
+
+
+
+</body>
+</html>

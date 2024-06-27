@@ -21,9 +21,49 @@
 <script src="../common/counters_body.js"></script>
 <h1>Глава 2. Форматирование текста в CSS</h1>
 
+<h2>Свойства шрифтов</h2>
+<p>У шрифтов есть 4 основных свойства:</p>
+<ol>
+    <li><span class="code">family</span> - семейство</li>
+    <li><span class="code">style</span> - стиль</li>
+    <li><span class="code">size</span> - размер</li>
+    <li><span class="code">weight</span> - насыщенность</li>
+</ol>
+<h3>Свойство <span class="code">font-family</span></h3>
+<p>Это свойство назначает используемый шрифт. Оно также поддерживает перечисление множества шрифтов в порядке предпочтения слева направо, чтобы стилевое оформление при отсутствии у пользователя установленного предпочитаемого шрифта постепенно переходило в сторону менее предпочитаемых шрифтов. Например, для установки шрифта по умолчанию для абзацев можно воспользоваться следующим CSS-правилом:</p>
+<pre><code >p { font-family:Verdana, Arial, Helvetica, sans-serif; }</code></pre>
+<p>Если название шрифта состоит из двух и более слов, его нужно заключить
+    в кавычки:</p>
+<pre><code >p { font-family:"Times New Roman", Georgia, serif; }</code></pre>
+<!--todo: добавить запасные шрифты для сайта-->
+<h3>Свойство <span class="code">font-style</span></h3>
+<p>С помощью этого свойства можно выбрать вывод шрифта в обычном — <span class="code">normal</span>,
+курсивном — <span class="code">italic</span> или наклонном — <span class="code">oblique</span> виде. Следующие правила создают три класса (<span class="code">normal</span>, <span class="code">italic</span> и <span class="code">oblique</span>), которые могут применяться к элементам для создания соответствующих эффектов:</p>
+<pre><code >.normal { font-style:normal; }
+.italic { font-style:italic; }
+.oblique { font-style:oblique; }</code></pre>
+<h3>Свойство <span class="code">font-size</span></h3>
+<pre><code >h1 { font-size:240%; }
+h2 { font-size:200%; }
+h3 { font-size:160%; }
+h4 { font-size:120%; }</code></pre>
+<p>Свойство <span class="code">font-size</span>, определяющее размер шрифта, в качестве значений может принимать абсолютные и относительные длины, проценты и ключевые слова. В частности:</p>
+<pre><code>p {font	size: 12pt}
+p {font	size: 120%}
+p {font	size: +2pt}
+p {font	size: medium}
+p {font	size: larger}</code></pre>
+<p>В четвертой строке выбирается заранее определенный браузером размер, обозначенный словом <span class="code">medium</span>. Допустимыми ключевыми словами для абсолютного размера могут служить <span class="code">xx-small</span>, <span class="code">x-small</span>, <span class="code">small</span>, <span class="code">medium</span>, <span class="code">large</span>, <span class="code">x-large</span> и <span class="code">xx-large</span>, которые обычно соответствуют семи размерам шрифта, используемым для атрибута size тега <span class="code">&lt;font></span></p>
 
-<h3>Единицы измерения</h3>
-<table><thead>
+<p>Единицы измерения приведены в таблице ниже. </p>
+<!--todo: написать функцию для генерации тоггл-кнопки-->
+<script>
+    generateToggleButton('#measurements_table')
+</script>
+
+<!--todo: заменить все большие таблицы на toggle-->
+
+<table id="measurements_table" class="no-headers"><thead>
 <tr>
     <th>Единица</th>
     <th>Описание</th>
@@ -31,42 +71,42 @@
 </tr></thead>
     <tbody>
     <tr>
-        <td>Пиксель (pixel)</td>
+        <td>Пиксель (<span class="code">pixel</span>)</td>
         <td>его размер варьируется в соответствии с размерами и глубиной пиксела на пользовательском экране. Один пиксел равен ширине и высоте отдельной точки на экране, поэтому данную единицу измерения лучше всего использовать для экранов, а не для распечаток.</td>
         <td><span class="code">.classname { margin:5px; }</span></td>
     </tr>
     <tr>
-        <td>Пункт (point)</td>
+        <td>Пункт (<span class="code">point</span>)</td>
         <td>равен по размеру 1/72 дюйма. Эта единица измерения пришла из полиграфии и лучше всего подходит для той среды, но также широко используется и для отображений на экранах.</td>
         <td><span class="code">.classname { font-size:14pt; }</span></td>
     </tr>
     <tr>
-        <td>Дюйм (inch)</td>
+        <td>Дюйм (<span class="code">inch</span>)</td>
         <td>равен 72 пунктам и также относится к типу единиц измерения, наиболее приспособленных для организации вывода на печать.</td>
         <td><span class="code">.classname { width:3in; }</span></td>
     </tr>
     <tr>
-        <td>Сантиметр (centimeter) </td>
+        <td>Сантиметр (<span class="code">centimeter</span>) </td>
         <td>еще одна единица измерения, которая наиболее пригодна для организации вывода на печать. Один сантиметр немного превышает по размеру 28 пунктов.</td>
         <td><span class="code">.classname { height:2cm; }</span></td>
     </tr>
     <tr>
-        <td>Миллиметр (millimeter)</td>
+        <td>Миллиметр (<span class="code">millimeter</span>)</td>
         <td>это 1/10 сантиметра (или почти 3 пункта). Миллиметры являются еще одной единицей измерения, наиболее подходящей для организации вывода на печать.</td>
         <td><span class="code">.classname { font-size:5mm; }</span></td>
     </tr>
     <tr>
-        <td>Пика (pica)</td>
+        <td>Пика (<span class="code">pica</span>)</td>
         <td>еще одна типографская единица измерения, равная 12 пунктам</td>
         <td><span class="code">.classname { font-size:1pc; }</span></td>
     </tr>
     <tr>
-        <td>Эм (em)</td>
+        <td>Эм (<span class="code">em</span>)</td>
         <td>равен текущему размеру шрифта (ширине латинской буквы m). Это одна из наиболее полезных единиц измерения для CSS, поскольку используется для описания относительных размеров.</td>
         <td><span class="code">.classname { font-size:2em; }</span></td>
     </tr>
     <tr>
-        <td>Экс (ex)</td>
+        <td>Экс (<span class="code">ex</span>)</td>
         <td>также относится к текущему размеру шрифта. Он равен высоте буквы x нижнего регистра. Это менее популярная единица измерения, которая чаще всего используется в качестве хорошего приблизительного значения, помогающего установить ширину прямоугольного блока, который будет содержать некий текст</td>
         <td><span class="code">.classname { width:20ex; }</span></td>
     </tr>
@@ -77,6 +117,57 @@
     </tr>
     </tbody></table>
 
+<!--todo: починить bold второй строки для таблиц, у которых есть головные элементы-->
+
+<h3>Свойство <span class="code">font-stretch</span></h3>
+<p>Помимо шрифтов различных размеров их семейства содержат уплотненные и разреженные версии, символы в которых либо сжаты, либо
+растянуты. Применяйте свойство <span class="code">font-stretch</span> для выбора более сжатых или более растянутых символов вашего шрифта.</p>
+<p>Используйте значение свойства <span class="code">normal</span>, чтобы остановиться на версии шрифта нормального размера. Относительные значения <span class="code">wider</span> и <span class="code">narrower</span> выбирают следующий, более широкий или соответственно более узкий варианты начертания шрифта, но не шире и не уже крайних
+(«<span class="code">ultra</span>») версий семейства.</p>
+Оставшиеся значения свойства <span class="code">font-stretch</span> назначают определенные варианты из семейства шрифтов. Начиная с самого плотного и заканчивая самым жидким, значения таковы: <span class="code">ultra-condensed</span>, <span class="code">extra-condensed</span>, <span class="code">condensed</span>, <span class="code">semi-condensed</span>, <span class="code">semi-expanded</span>, <span class="code">expanded</span>, <span class="code">extra-expanded</span> и <span class="code">ultra-expanded</span>.
+
+
+
+<h3>Свойство <span class="code">font-size-adjust</span></h3>
+
+
+
+
+
+
+<h2>Стили текста</h2>
+<p>Независимо от используемого шрифта в способ вывода текста можно внести
+дополнительные изменения, меняя его оформление — <span class="code">decoration</span>, разрядку —
+<span class="code">spacing</span> и выравнивание — <span class="code">alignment</span>.</p>
+<h3>Оформление (<span class="code">decoration</span>)</h3>
+Используя свойство <span class="code">text-decoration</span>, можно применить к тексту такие эффекты, как подчеркивание — <span class="code">underline</span>, перечеркивание — <span class="code">line-through</span>, верхнее
+подчеркивание — <span class="code">overline</span> и мигание — <span class="code">blink</span>. Следующее правило создает новый класс по имени <span class="code">over</span>, который применяет верхнее подчеркивание к тексту (насыщенность линий, используемых для подчеркивания снизу и сверху и для перечеркивания, будет соответствовать насыщенности шрифта):
+<pre><code >.over { text-decoration :overline; }</code></pre>
+<h3>Разрядка (<span class="code">spacing</span>)</h3>
+<p>Существуют свойства, позволяющие изменить разрядку строк, слов и букв.
+Например, следующие правила настраивают разрядку строк для абзацев путем
+изменения свойства <span class="code">line-height</span>, делая его на 25% больше, устанавливают свойство <span class="code">word-spacing</span> равным 30 пикселам и разрядку букв 3 пиксела:</p>
+<pre><code >p {
+line-height :125%;
+word-spacing :30px;
+letter-spacing:3px;
+}</code></pre>
+<h3>Выравнивание (<span class="code">alignment</span>)</h3>
+<p>В CSS доступны четыре типа выравнивания текста: по левому краю — <span class="code">left</span>, по правому краю — <span class="code">right</span>, по центру — <span class="code">center</span> и по ширине содержимого — <span class="code">justify</span>. В следующем правиле текст абзаца изначально настроен на полное выравнивание по ширине:</p>
+<pre><code>p { text-align:justify; }</code></pre>
+
+<h3>Преобразование (<span class="code">text-transform</span>)</h3>
+<p>Для преобразования текста доступны четыре свойства: отсутствие преобразования — <span class="code">none</span>, преобразование первых букв слов в заглавные — <span class="code">capitalize</span>,
+преобразование всех букв в заглавные — <span class="code">uppercase</span> и преобразование всех букв
+в строчные — <span class="code">lowercase</span>. Следующее правило создает класс по имени <span class="code">upper</span>,
+гарантирующий при его применении вывод всего текста в верхнем регистре:</p>
+<pre><code>.upper { text-transform:uppercase; }</code></pre>
+
+<h2>Отступы</h2>
+<p>С помощью свойства <span class="code">text-indent</span> можно создать отступ первой строки блока
+текста на указанную величину. Следующее правило создает отступ первой строки каждого абзаца на 20 пикселов, но могут быть применены и другие единицы
+измерения или процентное увеличение:</p>
+<pre><code>p { text-indent:20px; }</code></pre>
 
 
 </body>

@@ -298,3 +298,7 @@ pre code.hljs:hover img.copy-button:not(#site_logo){visibility: visible;}
     background-color: #32c5ff;
     border-radius: 10px;
 }
+
+.toggle-button{
+    border-radius: 5px;
+}

@@ -400,6 +400,18 @@ function list_to_table(list, column_num, selector){
     }
 }
 
+//функция генерация toggle-кнопки
+function generateToggleButton(table_str){
+    $(function(){
+        $(table_str).css('display', 'none')
+        $(table_str).wrap(`<div id="${table_str.replace('#', '')}-div"></div>`)
+        $(`${table_str}-div`).before(`<button id="${table_str.replace('#', '')}-toggle" class="toggle-button">Показать/скрыть таблицу</button>`)
+        $(`${table_str}-toggle`).on('click', function(){
+            $(table_str).toggle('display')
+        })
+    })
+}
+
 
 //история посещений
 //этот скрипт ведет историю просмотров страниц сайта
@@ -496,6 +508,7 @@ async function getChapterTitle(num, url){
     return y;
 }
 
+//todo: добавить вариант без index.html
 $(function(){loadTextbookAutoNav()})
 function loadTextbookAutoNav(){
     if ($('.textbook-index-page').length>0){
