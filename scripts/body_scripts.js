@@ -539,3 +539,16 @@ $(function() {
     //     location.pathname=='/' ||
     //     location.pathname=='/chereshan.github.io/index.html') ? "../commo
 })
+//======================================
+//функция добавляющая строку к выводу
+function addOutputString(jq, str){
+    $(function(){
+        console.log($(jq).html().replace(/(<script>[\s\S]+<\/script>)/i, '').trim())
+        if ($(jq).html().replace(/(<script>[\s\S]+<\/script>)/i, '').trim()==''){
+            $(jq).html(str)
+        }
+        else{
+            $(jq).html($(jq).html()+'\n'+str)
+        }
+    })
+}

@@ -21,229 +21,537 @@
 <script src="../common/counters_body.js"></script>
 
 <h1>Глава 4. Функции и ООП в JS</h1>
-<h2>Функции</h2>
+<h2>Функции Javascript</h2>
 <p>Функции в JS являются объектами и, как результат, могут привсваиваться переменным и передаваться другими функциям.</p>
 <pre><code class="language-js">function printText() {                   //Определение функции
-document.write("Hello World!");        //Тело функции - вывод текста в документ
+    document.write("Hello World!");   //Тело функции - вывод текста в документ
 };</code></pre>
-<p>У функции может не быть имени:</p>
+<p>У функции JS может вовсе не быть имени:</p>
 <pre><code class="language-js">var printText = function(a) {document.write(a);};</code></pre>
 
-<h3>Рекурсия</h3>
-<pre><code class="language-js">function my_function(n) {
-if (n==1) {return 1}
-return (my_function(n-1)).toString()+" "+n
-}
-my_function(9)
-//1 2 3 4 5 6 7 8 9</code></pre>
+<h3><span class="code">return</span></h3>
+<p>Функции могут не иметь инструкции <span class="code">return</span> и их единственным результатом будет <span class="code">undefined</span>:</p>
+<pre><code>const makeNoise = function() {
+    console.log("Эгегей!");
+};</code></pre>
+<p>Значение, которое возвращает функция, определяет инструкция <span class="code">return</span>. Когда управление программой доходит до этой инструкции, оно сразу выходит из текущей функции и передает возвращенное значение в код, ее вызвавший. Ключевое слово <span class="code">return</span> без следующего за ним выражения приводит к тому, что функция возвращает <span class="code">undefined</span>:</p>
+<pre><code>const power = function(base, exponent) {
+    let result = 1;
+    for (let count = 0; count &lt; exponent; count++) {
+        result *= base;
+    }
+    return result;
+};</code></pre>
+<p>Параметры, передаваемые функции, ведут себя как обычные <i>привязки</i>, но
+их начальные значения задаются <i>вызывающим объектом</i>, а не кодом самой
+функции.</p>
 
-<h3>Замыкания</h3>
-<p><b>Замыкание</b> это такая функция, которая была объявлена внутри другой функции. Такая функция (замыкание) имеет доступ к данным внутри себя и внутри родительской функции.
-</p>
-<p>Рассмотрим практический пример:</p>
-<pre><code class="language-js">function greetPirate(pirateName) {            // Объявление родительской функции
-var greeting = "Hello ";
-function checkCaptain() {                   // Объявление замыкания
-if (pirateName != "Jack Sparrow")
-return greeting + pirateName;
-else
-return greeting + "CAPTAIN " + pirateName + "!";
+<h2>Привязки и области видимости</h2>
+<p>Каждая привязка имеет <b>область видимости</b> — это часть программы, в которой видна данная привязка. Для привязок, определенных вне какой-либо
+функции или блока, область видимости — вся программа, и вы можете
+ссылаться на такие привязки где хотите. Они называются <b>глобальными</b>.</p>
+<p>Но на <i>привязки, созданные как параметры функции или объявленные внутри нее, можно ссылаться только в данной функции</i>, поэтому они называются <b>локальными привязками</b>.</p>
+<p>Каждый раз, когда вызывается функция, создаются новые экземпляры этих привязок. Так обеспечивается некоторая изоляция между функциями — каждый их вызов действует в собственной локальной среде, и часто его легко понять, практически ничего не зная о том, что происходит в глобальной среде.</p>
+<p>Привязки, объявленные с помощью ключевых слов <span class="code">let</span> и <span class="code">const</span>, на самом
+деле являются локальными для блока, внутри которого они объявлены. Поэтому если вы создадите одну из таких привязок внутри цикла, то код до
+и после данного цикла не сможет его «увидеть». До 2015 года в JavaScript
+только функции могли создавать новые области видимости, поэтому привязки, созданные в старом стиле с помощью ключевого слова <span class="code">var</span>, видны во
+всей функции, в которой они появились, либо во всей глобальной области
+видимости, если они не входят в функцию.</p>
+<pre><code>&lt;script>
+let x = 10;
+if (true) {
+    let y = 20;
+    var z = 30;
+    console.log(x + y + z);
 }
-return checkCaptain();
+// привязка y здесь не видна
+console.log(x + z);
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex2">
+<script>
+let x1 = 10;
+if (true) {
+    let y = 20;
+    var z = 30;
+    addOutputString("#link-ex2",x1 + y + z);
+}
+// привязка y здесь не видна
+addOutputString("#link-ex2",x1 + z);
+</script>
+</pre>
+</div>
+</div>
+<!--todo: дополнить livetemplate для примера заменой console.log() на addOutputString-->
+<p>Каждая область видимости может <i>«выглядывать»</i> в область, которая ее
+окружает, поэтому в данном примере привязка x видна внутри блока.</p>
+<p>Исключение составляют случаи, когда несколько привязок имеют одно и то же имя — тогда код может видеть только самую внутреннюю из привязок. Например, когда код внутри функции <span class="code">halve</span> ссылается на <span class="code">n</span>, то он видит собственную привязку <span class="code">n</span>, а не глобальную <span class="code">n</span>.</p>
+<pre><code>&lt;script>
+    const halve = function(n) {
+        return n / 2;
+    };
+    let n = 10;
+    console.log(halve(100));
+    console.log(n);
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex3">
+<script>
+    const halve = function(n) {
+        return n / 2;
+    };
+    let n = 10;
+    addOutputString("#link-ex3",halve(100));
+    addOutputString("#link-ex3", n);
+</script>
+</pre>
+</div>
+</div>
+
+<h3>Вложенные области видимости</h3>
+<p>JavaScript различает не только <b>глобальные</b> и <b>локальные</b> привязки. Внутри блоков и функций можно создавать другие блоки и функции, образуя несколько степеней локальности.</p>
+<p>Например, внутри этой функции, которая выводит ингредиенты, необходимые для приготовления порции хумуса, есть еще одна функция:</p>
+<pre><code>&lt;script>
+    const hummus = function(factor) {
+        const ingredient = function(amount, unit, name) {
+            let ingredientAmount = amount * factor;
+            if (ingredientAmount > 1) {
+                unit += "s";
+            }
+            console.log(`${ingredientAmount} ${unit} ${name}`);
+        };
+        ingredient(1, "can", "chickpeas");
+        ingredient(0.25, "cup", "tahini");
+        ingredient(0.25, "cup", "lemon juice");
+        ingredient(1, "clove", "garlic");
+        ingredient(2, "tablespoon", "olive oil");
+        ingredient(0.5, "teaspoon", "cumin");
+    };
+    hummus(2)
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex4">
+<script>
+    const hummus = function(factor) {
+        const ingredient = function(amount, unit, name) {
+            let ingredientAmount = amount * factor;
+            if (ingredientAmount > 1) {
+                unit += "s";
+            }
+            addOutputString("#link-ex4",`${ingredientAmount} ${unit} ${name}`);
+        };
+        ingredient(1, "can", "chickpeas");
+        ingredient(0.25, "cup", "tahini");
+        ingredient(0.25, "cup", "lemon juice");
+        ingredient(1, "clove", "garlic");
+        ingredient(2, "tablespoon", "olive oil");
+        ingredient(0.5, "teaspoon", "cumin");
+    };
+    hummus(2)
+</script>
+</pre>
+</div>
+</div>
+<p>Код, размещенный внутри функции <span class="code">ingredient</span>, видит привязку <span class="code">factor</span> из
+внешней функции. Но ее локальные привязки, такие как unit и componentAmount, во внешней функции не видны.</p>
+<p>Множество привязок, видимых внутри блока, определяется его положением
+в тексте программы. Каждая локальная область видимости также видит все
+локальные области, которые ее содержат, и все области видят глобальную
+область. Такой подход к видимости привязок называется <b>лексической областью видимости</b>.</p>
+
+<h2>Три способа задания функций</h2>
+<h3>Присвоение функции переменной</h3>
+<p><b>Привязка функции</b> — это обычно просто имя для определенной части программы. Такая привязка определяется один раз и никогда не изменяется,
+в связи с чем можно легко перепутать функцию и ее имя.</p>
+<p>Но это разные вещи. Значение функции может делать все то же, что и другие
+значения, — его можно не только вызывать, но и использовать в произвольных выражениях. Можно сохранить значение функции в новой привязке,
+передать ее в качестве аргумента другой функции и т. д. Аналогично привязка, которая содержит функцию, тем не менее представляет собой обычную
+привязку и может, если только не является константой, получить новое
+значение, например, так:</p>
+<pre><code >&lt;script>
+    let launchMissiles = function() {
+        missileSystem.launch("now");
+    };
+    if (safeMode) {
+        launchMissiles = function() {/* ничего не делаем */};
+    }
+&lt;/script></code></pre>
+
+<h3>Объявление функции ключевым словом <span class="code">function</span></h3>
+<p>Существует несколько более короткий способ создания привязки для функции. Если в начале инструкции поставить ключевое слово <span class="code">function</span>, то это будет работать немного по-другому.</p>
+<pre><code >function square(x) {
+    return x * x;
 }</code></pre>
-<p>Свойства замыканий:</p>
-<ol>
-    <li>Замыкание может обращаться к переменным своей внешней функции даже после ее окончания выполнения.</li>
-    <p>На практике это означает что даже после того как выполнение внешней функции завершено, внутренняя все еще может быть вызвана и имеет доступ к переменным внешней функции:</p>
-    <pre><code class="language-js">function pirate() {
-    var pirateName = "noname";
-    return {
-        getName: function() {
-            return pirateName;
-        },
-        setName: function(newName) {
-            pirateName = newName;
-        }
-        }
-        }</code></pre>
-    <pre><code class="language-js">var newPirate = pirate();
-console.log(newPirate.getName());    // Выводим текущее содержимое переменной - там изначальный "noname"
-newPirate.setName("Jack Sparrow");   //Изменяем значение переменной на "Jack Sparrow"
-console.log(newPirate.getName());    //Выводим текущее содержимое переменной - получаем "Jack Sparrow"</code></pre>
-    <li>Замыкания хранят не содержимое переменных внешней функции, а ссылки на эти переменные.</li>
-    <p>Давайте в этом контексте рассмотрим классический пример замыкания, описываемый в большинстве источников - счетчик.</p>
-    <pre><code class="language-js">function makeCounter(initialValue) {
-        var currentState = initialValue;
-        return function () {
-        currentState = currentState + 1;
-        return currentState;
-        }
-        }</code></pre>
-    <pre><code class="language-js">var myCounter = makeCounter(5);  // Создаем экземпляр счетчика и устанавливаем его начальное значение = 5
-        console.log(myCounter());        // В консоль будет выведено значение 6
-        console.log(myCounter());        // В консоль будет выведено значение 7
-        console.log(myCounter());        // В консоль будет выведено значение 8</code></pre>
-</ol>
-<pre><code class="language-js">function createCounter() {
-var numberOfCalls = 0;
-return function() {
-return ++numberOfCalls;
+<p>Это <b>объявление функции</b>. Инструкция определяет привязку <span class="code">square</span> и назначает ей ссылку на данную функцию. Такую инструкцию немного проще писать и можно не ставить после функции точку с запятой.</p>
+<p>У подобной формы определения функции есть один нюанс.</p>
+<pre><code>console.log("Голос из будущего:", future());
+function future() {
+    return "Летающих машин не будет";
+}</code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex5">
+<script>
+addOutputString("#link-ex5","Голос из будущего:", future());
+function future() {
+    return "Летающих машин не будет";
 }
-}
-var fn = createCounter();
-fn(); //1
-fn(); //2
-fn(); //3</code></pre>
-<pre><code class="language-js">А</code></pre>
-
+</script>
+</pre>
+</div>
+</div>
+<p>Этот код работает, несмотря на то что функция определена после кода, в котором она применяется. </p>
+<p><b>Объявления функций не являются частью обычной построчной последовательности выполнения программы сверху вниз. Они концептуально перемещаются в верхнюю часть своей области видимости и могут использоваться любой частью кода в пределах данной области.</b></p>
+<p>Это иногда полезно, поскольку открывает возможность упорядочить код таким образом, который кажется вам более осмысленным, не беспокоясь о необходимости определить все функции прежде, чем они будут использованы.</p>
 
 <h3>Стрелочные функции</h3>
 <p>Стрелочные функции – это более компактный и краткий синтаксис для определения функций в JS.</p>
 <pre><code class="language-js">let addNumbers = (a, b) => a + b;</code></pre>
 <pre><code class="language-js">let greet = () => console.log("Все понятно");</code></pre>
-<pre><code class="language-js">let addNumbers = (a, b) => {
-let result = a + b;
-return result; // если мы используем фигурные скобки, то нам нужно указать "return"
+<pre><code>&lt;script>
+let addNumbers = (a, b) => {
+    let result = a + b;
+    return result; // если мы используем фигурные скобки, то нам нужно указать "return"
 };
-console.log( addNumbers(1, 2) ); // 3</code></pre>
+console.log( addNumbers(1, 2) ); // 3
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex6">
+<script>
+let addNumbers = (a, b) => {
+    let result = a + b;
+    return result; // если мы используем фигурные скобки, то нам нужно указать "return"
+};
+addOutputString("#link-ex6", addNumbers(1, 2) ); // 3
+</script>
+</pre>
+</div>
+</div>
+<p>Если имя параметра только одно, можно опустить круглые скобки, в которые заключен список параметров. Если тело функции представляет собой единственное выражение, а не блок в фигурных скобках, то функция будет возвращать это выражение. Таким образом, следующие два определения <span class="code">square</span> делают одно и то же:</p>
+<pre><code >const square1 = (x) => { return x * x; };
+const square2 = x => x * x;</code></pre>
+<p>Если у стрелочной функции вообще нет параметров, то ее список параметров
+представляет собой просто пустые скобки.</p>
+<pre><code >const horn = () => {
+    console.log("Toot");
+};</code></pre>
 
-<h3>Функциональные выражения</h3>
+<h2>Стек вызовов</h2>
+Отдельный интерес представляет собой передача управления в процессе
+выполнения программы с функциями. Давайте внимательнее присмотримся
+к этому. Вот простая программа с несколькими вызовами функций:
+<pre><code>&lt;script>
+    function greet(who) {
+        console.log("Привет, " + who);
+    }
+    greet("Гарри");
+    console.log("Пока!");
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex7">
+<script>
+    function greet(who) {
+        addOutputString("#link-ex7","Привет, " + who);
+    }
+    greet("Гарри");
+    addOutputString("#link-ex7","Пока!");
+</script>
+</pre>
+</div>
+</div>
+<p>Выполнение этой программы происходит примерно так: при вызове функции <span class="code">greet</span> управление переходит к началу данной функции (строка 2). Она, в свою очередь, вызывает функцию <span class="code">console.log</span>, которая берет управление на себя, выполняет свою работу, а затем возвращает управление в строку 2. Там функция <span class="code">greet</span> заканчивается, поэтому управление возвращается к месту, откуда она была вызвана, — к строке 4. В следующей строке снова вызывается <span class="code">console.log</span>, после чего программа заканчивается</p>
+Схематически передачу управления можно было бы представить так:
+<pre><code >за пределами функции
+    в функции greet
+        в функции console.log
+    в функции greet
+за пределами функции
+    в функции console.log
+за пределами функции</code></pre>
+<p>Поскольку после выполнения функция должна вернуться в ту точку, откуда была вызвана эта функция, компьютер должен запомнить контекст,
+из которого произошел вызов. В первом случае функция <span class="code">console.log</span> после
+выполнения должна вернуться в функцию <span class="code">greet</span>; во втором — она возвращается в конец программы.</p>
+<p>Место, где компьютер хранит этот контекст, является <b>стеком вызовов</b>. При каждом вызове функции текущий контекст сохраняется вверху данного
+стека. Когда функция возвращает управление, она удаляет из стека верхний
+контекст и использует его для продолжения выполнения.</p>
+<p>Хранение этого стека требует места в компьютерной памяти. Если стек становится слишком большим, компьютер может дать сбой и вывести сообщение типа «недостаточно места в стеке» или «слишком глубокая рекурсия».</p>
+<pre><code >function chicken() {
+    return egg();
+}
+function egg() {
+    return chicken();
+}
+console.log(chicken() + " пришел первым.");</code></pre>
+
+<h2>Необязательные аргументы</h2>
+<p>Следующий код является допустимым и выполняется без проблем:</p>
+<pre><code>&lt;script>
+    function square(x) { return x * x; }
+    console.log(square(4, true, "ежик"));
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex8">
+<script>
+    function square(x) { return x * x; }
+    addOutputString("#link-ex8",square(4, true, "ежик"));
+</script>
+</pre>
+</div>
+</div>
+<p>Мы определили функцию <span class="code">square</span> только с одним параметром. Тем не менее,
+когда мы вызываем ее с тремя аргументами, язык не жалуется. Он вычисляет
+квадрат первого из них и игнорирует остальные.</p>
+<p>JavaScript чрезвычайно терпимо относится к количеству аргументов, которые вы передаете функции. Если передать их слишком много, то лишние
+игнорируются. Если передать слишком мало, то отсутствующим параметрам
+будет присвоено значение <span class="code">undefined</span>.</p>
+
+<p>Положительный момент в том, что такое поведение можно использовать
+для вызова функции с разным количеством аргументов. Например, следующая функция <span class="code">minus</span> имитирует оператор <span class="code">-</span>, воздействуя на один или два
+аргумента:</p>
+
+<pre><code>&lt;script>
+    function minus(a, b) {
+        if (b === undefined) return -a;
+        else return a - b;
+    }
+    console.log(minus(10));
+    console.log(minus(10, 5));
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex9">
+<script>
+    function minus(a, b) {
+        if (b === undefined) return -a;
+        else return a - b;
+    }
+    addOutputString("#link-ex9",minus(10));
+    addOutputString("#link-ex9",minus(10, 5));
+</script>
+</pre>
+</div>
+</div>
+<p>Если после параметра поставить оператор <span class="code">=</span>, а затем выражение, то значение
+этого выражения будет заменять аргумент, если он не задан.</p>
+<pre><code>&lt;script>
+    function power(base, exponent = 2) {
+        let result = 1;
+        for (let count = 0; count &lt; exponent; count++) {
+            result *= base;
+        }
+        return result;
+    }
+    console.log(power(4));
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex10">
+<script>
+    function power(base, exponent = 2) {
+        let result = 1;
+        for (let count = 0; count < exponent; count++) {
+            result *= base;
+        }
+        return result;
+    }
+    addOutputString("#link-ex10",power(4));
+</script>
+</pre>
+</div>
+</div>
+
+
+<h2>Замыкания</h2>
+<p><b>Замыкание</b> - это такая функция, которая была объявлена внутри другой функции. Эта функция (<i>замыкание</i>) имеет доступ к данным внутри себя и внутри родительской функции.
+</p>
+<p>Рассмотрим практический пример:</p>
+<pre><code class="language-js">function greetPirate(pirateName) {// Объявление родительской функции
+    var greeting = "Hello ";
+    function checkCaptain() {// Объявление замыкания
+        if (pirateName != "Jack Sparrow")
+            return greeting + pirateName;
+        else
+            return greeting + "CAPTAIN " + pirateName + "!";
+    }
+    return checkCaptain();
+}</code></pre>
+<p>Возможность рассматривать функции как значения в сочетании с тем фактом, что локальные привязки создаются заново при каждом вызове функции, вызывает интересный вопрос. Что происходит с локальными привязками, когда создавший их вызов функции больше не активен?</p>
+<p>Пример такой ситуации показан в следующем коде. Здесь определена
+функция <span class="code">wrapValue</span>, создающая локальную привязку. Затем данная функция
+возвращает другую функцию, которая обращается к этой локальной привязке и возвращает ее.</p>
+<pre><code>&lt;script>
+    function wrapValue(n) {
+        let local = n;
+        return () => local;
+    }
+    let wrap1 = wrapValue(1);
+    let wrap2 = wrapValue(2);
+    console.log(wrap1());
+    console.log(wrap2());
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex11">
+<script>
+    function wrapValue(n) {
+        let local = n;
+        return () => local;
+    }
+    let wrap1 = wrapValue(1);
+    let wrap2 = wrapValue(2);
+    addOutputString("#link-ex11",wrap1());
+    addOutputString("#link-ex11",wrap2());
+</script>
+</pre>
+</div>
+</div>
+<p>Такая ситуация является хорошей демонстрацией того,
+что локальные привязки создаются заново для каждого вызова, и один вызов не может уничтожить локальные привязки другого.</p>
+<p>Такое свойство — возможность ссылаться на конкретный экземпляр локальной привязки в пределах замкнутой области видимости — называется <b>замыканием</b>. Функция, которая ссылается на привязки из окружающих ее
+локальных областей видимости, называется <b>замыканием</b>. Такое поведение
+не только избавляет нас от необходимости беспокоиться о времени жизни
+привязок, но также позволяет творчески использовать значения функций.</p>
+<pre><code>&lt;script>
+    function multiplier(factor) {
+        return number => number * factor;
+    }
+    let twice = multiplier(2);
+    console.log(twice(5));
+    console.log(twice(1234134134));
+&lt;/script></code></pre>
+<div class="code-example-output-title"><span>Вывод:</span>
+<div class="code-example-output">
+<pre id="link-ex12">
+<script>
+    function multiplier(factor) {
+        return number => number * factor;
+    }
+    let twice = multiplier(2);
+    addOutputString("#link-ex12",twice(5));
+    addOutputString("#link-ex12",twice(1234134134));
+</script>
+</pre>
+</div>
+</div>
+
+<p>Чтобы понимать такие программы, нужно немного практики. Хорошая
+ментальная модель — представлять, что функции — это значения, содержащие и тело с кодом, и окружение, в котором они созданы. При вызове
+тело функции видит не то окружение, где вызвана функция, а то, где она
+была создана.</p>
+<p>В рассмотренном примере вызванная функция <span class="code">multiplier</span> создает окружение, где ее параметр <span class="code">factor</span> привязан к значению 2. Возвращаемое значение
+функции, которое сохраняется в <span class="code">twice</span>, запоминает это окружение. Поэтому,
+когда данное значение вызывается, оно умножает свой аргумент на 2.</p>
+
+<h3>Свойства замыканий</h3>
+<p><b>Свойства замыканий</b>:</p>
+<ol>
+    <li><i>Замыкание может обращаться к переменным своей внешней функции даже после окончания ее выполнения.</i></li>
+    <p>На практике это означает, что даже после того как выполнение внешней функции завершено, внутренняя функция все еще может быть вызвана и будет иметь доступ к переменным внешней функции:</p>
+    <pre><code>&lt;script>
+    function pirate() {
+        var pirateName = "noname";
+        return {
+            getName: function() {return pirateName;},
+            setName: function(newName) {pirateName = newName;}
+        }
+    }
+    var newPirate = pirate();
+    //вывод
+    $(function(){
+        $('#pirate-ex1').html(newPirate.getName());    // Выводим текущее содержимое переменной - там изначальный "noname"
+        newPirate.setName("Jack Sparrow");   //Изменяем значение переменной на "Jack Sparrow"
+        $('#pirate-ex1').html($('#pirate-ex1').html()+'\n'+newPirate.getName());    //Выводим текущее содержимое переменной - получаем "Jack Sparrow"
+    })
+&lt;/script></code></pre>
+    <div class="code-example-output-title"><span>Вывод:</span>
+    <div class="code-example-output">
+    <pre id="pirate-ex1">
+    <script>
+            function pirate() {
+                var pirateName = "noname";
+                return {
+                    getName: function() {
+                        return pirateName;
+                    },
+                    setName: function(newName) {
+                        pirateName = newName;
+                    }
+                }
+            }
+            var newPirate = pirate();
+            $(function(){
+                $('#pirate-ex1').html(newPirate.getName());    // Выводим текущее содержимое переменной - там изначальный "noname"
+                newPirate.setName("Jack Sparrow");   //Изменяем значение переменной на "Jack Sparrow"
+                $('#pirate-ex1').html($('#pirate-ex1').html()+'\n'+newPirate.getName());    //Выводим текущее содержимое переменной - получаем "Jack Sparrow"
+            })
+        </script>
+    </pre>
+    </div>
+    </div>
+    <li><i>Замыкания хранят не содержимое переменных внешней функции, а ссылки на эти переменные.</i></li>
+    <p>Давайте в этом контексте рассмотрим классический пример замыкания, описываемый в большинстве источников - счетчик.</p>
+</ol>
+<pre><code class="language-js">function createCounter() {
+    var numberOfCalls = 0;
+    return function() {
+        return ++numberOfCalls;
+    }
+}
+var fn = createCounter();
+fn(); //1
+fn(); //2
+fn(); //3</code></pre>
+
+<h2>Функциональные выражения</h2>
 <pre><code class="language-js">let greet = function(name) {
 console.log("Привет, " + name + "!");
 };
 greet('Василий'); // Выведет "Привет, Василий!"</code></pre>
 
-<h2>Объекты</h2>
-<p><b>Объект</b> - это особый вид данных, обладающий свойствами, описывающими его состояние, и методами, позволяющими работать с объектом. Объект в JavaScript представляет собой ассоциативный массив, то есть фактически является набором пар <span class="code">"ключ: значение"</span>.</p>
-<p><b>Свойства объекта</b> - это некоторые значения, связанные с этим <pre><code class="language-js">объектом.&lt;/p>
-var textString = "Hello world!";
-console.log(textString.length);</code></pre>
-<p><b>Методы</b> - это действия, которые могут быть выполнены над объектом. Они могут присутствовать у объекта, а могут и не присутствовать.</p>
-<pre><code class="language-js">var textString = "Hello world!";
-console.log(textString.toUpperCase());</code></pre>
-
-<h3>Создание объекта</h3>
-<p>Для создания объекта есть два пути - создание напрямую экземпляра объекта и создание конструктора - отдельной функции, которая создает и инициализирует объект.</p>
-<p>Для создания непосредственно экземпляра объекта мы можем воспользоваться двумя конструкциями:</p>
-<pre><code class="language-js">var person = new Object();
-//или просто
-var person = {};</code></pre>
-<p>Для создания объекта через конструктор мы должны описать функцию, которая будет создавать объект и присваивать значения его свойствам. Функция будет выглядеть следующим образом:</p>
-<pre><code class="language-js">function Person(name, age, year) {
-this.name = name;
-this.age = age;
-this.year = year;
-}</code></pre>
-<p><span class="code">this</span> - обращение к текущему экземпляру объекта</p>
-<p>Создание экземпляра объекта с помощью нашего конструктора осуществляется следующим образом:</p>
-<pre><code class="language-js">var employee1 = new Person("Ivan","25","2017");
-var employee2 = new Person("Olga","21","2016");
-var employee3 = new Person("Oleg","32","2010");</code></pre>
-
-<h3>Свойства объектов</h3>
-<pre><code class="language-js">Person.name = "Ivan"
-//или
-Person['name'] = "Ivan</code></pre>
-<p>Также можно добавлять свойства сразу при создании объекта, указав список свойств в фигурных скобках:</p>
-<pre><code class="language-js">var Person = {
-    name : "Ivan",
-    age : 25,
-    hiredYear : 2017
-}</code></pre>
-<p>Соответственно, для доступа к этому свойству тоже можно воспользоваться двумя вариантами:</p>
-<pre><code class="language-js">console.log(Person.name);
-console.log(Person['name'])</code></pre>
-<p>Для удаления свойства используется оператор delete:</p>
-<pre><code class="language-js">delete Person.name;</code></pre>
-
-<h3>Методы объекта</h3>
-<p>Добавление метода в объект осуществляется с помощью следующего синтаксиса:</p>
-<pre><code class="language-js">var person = {};                                  //Объявляем объект person
-person.sayAge = function(n) {                    //Объявляем метод sayAge для объекта person
-    console.log("Person is " + n + " years old");  //Тело метода sayAge - вывод текста
-};</code></pre>
-<p>Добавление метода в объект - это фактически присвоение функции некоторому свойству объекта. В предыдущем примере мы присвоили функцию function(n) свойству sayAge объекта person .</p>
-<p>Как правило нам необходимо чтобы метод не просто выполнял некоторые действия, а использовал какие-либо свойства объекта, в котором он хранится. Для того, чтобы получить доступ к свойствам объекта из метода используется ключевое слово this. Слово this никаким образом не связано с самим объектом, оно всего лишь обозначает объект, вызвавший этот метод. В данном примере метод sayName будет выводить фразу "My name is Ivan"</p>
-<pre><code class="language-js">var person = {
-    name : "Ivan",
-    age : 25,
-    hiredYear : 2017
+<h2>Рекурсия</h2>
+<p>Функция, вызывающая себя, называется <b>рекурсивной</b>.</p>
+<pre><code class="language-js">function my_function(n) {
+    if (n==1) {return 1}
+    return (my_function(n-1)).toString()+" "+n
 }
-person.sayName = function() {
-    console.log("My name is " + this.name);
-}
-</code></pre>
-
-<h3>Перебор свойств и методов объекта</h3>
-<p>Теперь мы можем более подробно рассмотреть оператор, осуществляющий  перебор всех свойств и методов объекта, мельком упомянутый в предыдущем модуле - конструкцию for .. in.</p>
-<p>Давайте рассмотрим пример, создадим объект и в нем метод, выводящий в консоль все свойства этого объекта:</p>
-<pre><code class="language-js">var person = {
-    name : "Ivan",
-    age : 25,
-    hiredYear : 2017
-}
-
-person.sayAll = function() {
-    for (var i in this) {
-        console.log(i + " is " + this[i]);
-}
-}</code></pre>
-
-<h3>Взаимодействие со свойствами м методами объекта</h3>
-<h4>Добавление, удаление и изменение свойств</h4>
-<p>Добавление свойства:</p>
-<pre><code class="language-js">const person = {};
-person.occupation = "programmer";
-console.log(person.occupation); // Выведет programmer</code></pre>
-<p>Удаление свойства:</p>
-<pre><code class="language-js">let person = {name: 'Татьяна'};
-delete person.name;
-console.log(person.name); // Выведет undefined</code></pre>
+my_function(9)
+//1 2 3 4 5 6 7 8 9</code></pre>
 
 
-<h4>Отличие объекта и примитива</h4>
-<p>Примитивы являются значимым типом данных, и при их присвоении или передаче они копируются полностью. Изменения в копии не повлияют на оригинальное значение.</p>
-<pre><code class="language-js">let x = 10;
-let y = x; // y получает копию значения x
-y = 20; // Изменение y не влияет на x
-console.log(x); // Выведет 10</code></pre>
-<p>Объекты являются ссылочным типом данных. Это означает, что, когда объект присваивается другой переменной, передается не сам объект, а ссылка на его местоположение в памяти. Изменения в копии объекта повлияют на оригинальное значение объекта.</p>
-<pre><code class="language-js">const apple = {color: "green"};
-const banana = apple; // теперь banana ссылается на тот же объект, что и apple
-banana.color = "yellow"; // Изменение banana также изменит apple
-console.log(apple.color); // Выведет yellow</code></pre>
+<h2>Разрастание функций</h2>
+Существует два более или менее естественных способа ввести функцию
+в программу.
+<ol>
+    <li>Первый — когда обнаруживается, что вы несколько раз написали весьма похожий код. Вы бы предпочли такого не делать. Чем больше кода — тем больше места для скрытых ошибок и больше строк придется прочитать людям, пытающимся понять программу. Поэтому вы берете повторяющуюся функциональность, присваиваете ей подходящее имя и помещаете ее в функцию.</li>
+    <li>Второй способ заключается в том, что обнаруживается: вам нужен некий функционал, который вы еще не написали, и он, похоже, заслуживает собственной функции. Вы начинаете с ее названия, а затем пишете ее тело. Вы можете даже сначала написать код, использующий эту функцию, и только потом фактически определить ее саму.</li>
+</ol>
 
-<h4>Методы объектов</h4>
-<p><b>Методы объекта </b>— это функции, которые связаны с определенным объектом. В простых словах они представляют собой действия или операции, которые можно выполнить с объектом.</p>
-<pre><code class="language-js">let car1 = {
-    brand: "Toyota",
-    model: "Camry",
-    start: function() {
-        console.log("Автомобиль заведен");
-    },
-    stop: function() {
-        console.log("Автомобиль заглушен");
-    },
-};</code></pre>
-<pre><code class="language-js">car1.stop() // Выведет "Автомобиль заглушен"</code></pre>
+<h2>Функции и побочные эффекты</h2>
+<p>Функции можно условно разделить на те, которые вызываются ради выполнения побочных эффектов, и те, которые вызываются ради возвращаемого
+значения. (Хотя функция может делать и то и другое: и выполнять побочные
+эффекты, и возвращать значение.)</p>
+<p><b>Чистая функция</b> — это особый вид функции, возвращающей значение.
+Она не только не имеет побочных эффектов, но и не зависит от побочных
+эффектов, создаваемых в других частях кода, — например, она не читает
+глобальные привязки, значение которых может изменяться. </p>
+<p>Приятное свойство чистой функции заключается в том, что такая функция, вызываемая с одинаковыми аргументами, всегда возвращает одно и то же
+значение (и больше ничего не делает). Вызов такой функции может быть
+заменен ее возвращаемым значением, и остальной код не пострадает. </p>
+<p>Если вы не уверены, что чистая функция работает правильно, вы можете легко
+ее протестировать, просто вызвав ее и зная, что если она работает в данном
+контексте, то будет работать в любом. Для тестирования нечистых функций,
+как правило, требуется специальное окружение.</p>
 
-<pre><code class="language-js">const person = {
-    name: "Василий",
-    age: 97,
-    sayHello() {
-        console.log(“Hello”);
-    }
-};</code></pre>
 
-<h4>Ключевое слово <span class="code">this</span></h4>
-<p>Ключевое слово <span class="code">this</span> внутри метода ссылается на сам объект, в котором он находится. Пример:</p>
-<pre><code class="language-js">const person = {
-    name: "Василий",
-    sayName: function() {
-        console.log(this.name); // по смыслу то же, что и console.log(person.name)
-    }
-};</code></pre>
-<p>Ключевое слово <span class="code">this</span> позволяет обращаться к свойствам и методам объекта, даже если имя объекта меняется или неизвестно заранее.</p>
+
+
 
 
 </body>
