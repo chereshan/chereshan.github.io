@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Глава 2. Выборка jQuery</title>
 
     <style>
@@ -17,8 +16,6 @@
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 
     <script src="../common/counters_head.js"></script>
-
-
 </head>
 
 
@@ -27,7 +24,7 @@
 <!--TODO: ADD LEFT SLIDER-->
 <h1>Глава 2. Выборка jQuery</h1>
 <h2>Базовые правила</h2>
-<p>В JS есть собственный API для работы с элементами DOM с таким функциями как <span class="code">getElementById()</span> и <span class="code">getElementsByClassName()</span>, предназначенных для работы с определенным типом селектора. Однако эти функции поддерживаются не всеми браузерами. В этом случае jQuery приходит на помощь, т.к. эта библиотека использует использует нативный метод, если он поддерживается браузером и свой, если нет. Поэтому с jQuery не приходится надеяться на поддержку со стороны браузеров. </p>
+<p>В JS есть собственный API для работы с элементами DOM с таким функциями как <span class="code">getElementById()</span> и <span class="code">getElementsByClassName()</span>, предназначенных для работы с определенным типом селектора. Однако эти функции поддерживаются не всеми браузерами. В этом случае jQuery приходит на помощь, т.к. эта библиотека использует использует нативный метод, если он поддерживается браузером и свой, если нет. Поэтому с jQuery не приходится надеяться и полагаться на поддержку со стороны браузеров. </p>
 <p>Более того, между селекторами jQuery и селекторами CSS3 нет никаких несовместимостей. </p>
 <p>Элементы в коллекции jQuery будут храниться в том порядке, в котором они появляются в дереве DOM.</p>
 <table>
@@ -45,37 +42,37 @@
     </tr>
     <tr>
         <th><span class="code">#special-id</span></th>
-        <td><span data-tippy-content="Настоятельно не рекомендуется предворять селектор ID селектором типа, т.к. jQuery будет, как правило, искать элемент, опираясь на свои менее эффективные методы, разыскивая сначала все элементы с данным типом.">Элемент со значением ID</span> special-id</td>
+        <td><span data-tippy-content="Настоятельно не рекомендуется предворять селектор ID селектором типа, т.к. jQuery будет, как правило, искать элемент, опираясь на свои менее эффективные методы, разыскивая сначала все элементы с данным типом.">Элемент со значением ID</span> <i>special-id</i></td>
         <td><span class="code">getElementsById("special-id")</span></td>
         <td>Да</td>
     </tr>
     <tr>
         <th><span class="code">.special-class</span></th>
-        <td>Элемент с классом special-class</td>
+        <td>Элемент с классом <i>special-class</i></td>
         <td><span class="code">getElementsByClassName('special-class')</span></td>
         <td>Да</td>
     </tr>
     <tr>
         <th><span class="code">a</span></th>
-        <td>Все элементы ссылок (a)</td>
+        <td>Все элементы ссылок (<i>a</i>)</td>
         <td><span class="code">getElementsByTagName("a")</span></td>
         <td>Да</td>
     </tr>
     <tr>
         <th><span class="code">a.special-class</span></th>
-        <td>Все элементы ссылок (a), у которых есть класс special-class </td>
+        <td>Все элементы ссылок (<i>a</i>), у которых есть класс <i>special-class</i></td>
         <td></td>
         <td>Да</td>
     </tr>
     <tr>
         <th><span class="code">.class.special-class</span></th>
-        <td>Все элементы с классом class и классом special-class</td>
+        <td>Все элементы с классом <i>class</i> и классом <i>special-class</i></td>
         <td></td>
         <td>Да</td>
     </tr>
     <tr>
-        <th><span class="code">type1, class2</span></th>
-        <td><span data-tippy-content="Коллекция jQuery - это множество без повторов, так что все совпадающие элементы будут объединены в один.">Все элементы</span> селектированные type1 и все элементы селектированные и class2</td>
+        <th><span class="code">type1, .class2</span></th>
+        <td><span data-tippy-content="Коллекция jQuery - это множество без повторов, так что все совпадающие элементы будут объединены в один.">Все элементы</span> селектированные <i>type1</i> и все элементы селектированные с классом <i>class2</i></td>
         <td></td>
         <td>Да</td>
     </tr>
@@ -84,12 +81,13 @@
 
 
 <h3>Пример: селекторы элементов</h3>
-<p>Отыщем и разместим в таблице первые 5 элементов <span class="code">head</span>:</p>
+<p>Отыщем и разместим в списке первые 3 элемента <span class="code">head</span>-тега данной страницы:</p>
 <pre><code class="language-html">&lt;script>
-    let body_tags=jQuery('head *');
-    let ex1=jQuery('#ex1 ol');
-    for (let i=0; i&lt;5; i++){
-        ex1.append("&lt;li>"+"&lt;span class=\"code\">"+body_tags[i].outerHTML.replace('&lt;','&lt;')+"&lt;/span>"+"&lt;/li>")
+let body_tags=jQuery('head *');
+let ex1=jQuery('#ex1 ol');
+for (let i=0; i&lt;3; i++){
+    ex1.append("&lt;li>"+"&lt;span class=\"code\">"+
+    body_tags[i].outerHTML.replace('&lt;','&lt;')+"&lt;/span>"+"&lt;/li>")
     }
 &lt;/script></code></pre>
 <div class="code-example-output" id="ex1">
@@ -102,16 +100,17 @@
 
 <h2>Селекторы по иерархии</h2>
 <table>
-    <tr>
+    <thead>
         <th>Пример</th>
         <td>Описание</td>
         <td>Есть в CSS</td>
-    </tr>
+    </thead>
     <tr>
         <th><span class="code">E F</span></th>
         <td>Все элементы F, которые входят в тег E</td>
         <td>Да</td>
     </tr>
+    <tbody>
     <tr>
         <th><span class="code">E&gt;F</span></th>
         <td>Все элементы с F, которые являются прямыми потомками F</td>
@@ -127,6 +126,7 @@
         <td>Все элементы F, которым на том же уровне предшествует E</td>
         <td>Да</td>
     </tr>
+    </tbody>
 </table>
 
 <h3>Пример: поиск всех сестринских элементов</h3>
@@ -214,7 +214,7 @@
 
 
 <h3>Пример: элементы, имеющие атрибут равный некоторому значению</h3>
-<p>Найдем все ссылки с якорем места в тексте. Для этого используем равенство типа "начинается с...":</p>
+<p>Найдем все ссылки с якорем места в тексте. Для этого используем равенство типа <i>"начинается с..."</i>:</p>
 <pre><code >&lt;script>
     jQuery('a[href^="#"]').each(function(){
         jQuery('#ex5').append("&lt;li>"+$(this).attr('href')+"&lt;/li>")
@@ -223,7 +223,7 @@
 <ol class="code-example-output" id="ex5"></ol>
 
 <h2>Фильтры</h2>
-<p>Фильтры - это селекторы, как правило, работающие с другими типами селектором, чтобы уменьшить набор совпавших элементов. Их обозначают двоеточием (<span class="code">:</span>).</p>
+<p>Фильтры - это селекторы, как правило, работающие с другими типами селекторов, чтобы уменьшить набор совпавших элементов. Их обозначают двоеточием (<span class="code">:</span>).</p>
 <h3>Фильтры позиции</h3>
 <table>
     <tr>
@@ -280,7 +280,9 @@
 &lt;/script></code></pre>
 <div class="code-example-output"><ol id="ex2"></ol></div>
 <h3>Фильтры-потомки</h3>
-<p>Иногда возникает необходимость выбрать определенного потомка элемента. Часто, однако фильтры потомков путаются с потомками порядка. В частости <span class="code">:eq()</span> и <span class="code">:nth-child()</span>. Если используется первый, то подсчитываются только элементы, соответствующие прикрепленному к псевдоклассу селектору, независимо от числа сестринских элементов перед ним. При использовании же второго подсчитываются все потомки, содержащего элемента независимо от их типа. Другое важное отличие: <span class="code">:nth-child()</span> выводится из спецификации CSS и потому индексирование начинается с 1. </p>
+<p>Иногда возникает необходимость выбрать определенного потомка элемента. Часто, однако фильтры потомков путаются с потомками порядка. В частости <span class="code">:eq()</span> и <span class="code">:nth-child()</span>.</p>
+<p>Если используется <span class="code">:eq()</span>, то подсчитываются только элементы, соответствующие прикрепленному к псевдоклассу селектору, независимо от числа сестринских элементов перед ним.</p>
+<p>При использовании же <span class="code">:nth-child()</span> подсчитываются все потомки, содержащего элемента независимо от их типа. Другое важное отличие: <span class="code">:nth-child()</span> выводится из спецификации CSS и потому индексирование начинается с 1. </p>
 <table>
     <tr>
         <td>Селектор</td>
@@ -364,7 +366,7 @@
 </code></pre>
 
 <h3>Фильтры форм</h3>
-<p>Допустим, мы хотим выбрать все флажки в состоянии "установлен". Первое, что приходит на ум - <span class="code">$('input[type="checkbox"][checked]')</span>. Однако, такой селектор проверит только начальное состояние контрольного элемента, как тот указан в HTML-разметке. Чтобы проверить состояние флажка в режиме реального времени необходиимо использовать фильтр форм.</p>
+<p>Допустим, мы хотим выбрать все флажки в состоянии "установлен". Первое, что приходит на ум - <span class="code">$('input[type="checkbox"][checked]')</span>. Однако, селектор проверит только начальное состояние контрольного элемента, как тот указан в HTML-разметке. Чтобы проверить состояние флажка в режиме реального времени необходимо использовать фильтр форм.</p>
 <table>
     <tr>
         <td>Селектор</td>
@@ -447,7 +449,7 @@
         <td>Нет</td>
     </tr>
 </table>
-<p>С помощью фильтров форм можно получить выбранные переклбчатели следующим образом: <span class="code">$('input:checkbox:checked')</span></p>
+<p>Типичным use-кейсом для фильтров форм служит фильтр по выбранным переключателям. С помощью фильтров форм можно получить выбранные переключатели следующим образом: <span class="code">$('input:checkbox:checked')</span></p>
 
 <h4>Пример: доступность форм</h4>
 <p>Запишем во все доступные для ввода элементы плейсхолдеры "Доступно" (наоборот для недоступных):</p>
@@ -529,7 +531,7 @@
         <td>Есть в CSS</td>
     </tr>
     <tr>
-        <td><span class="code">:contains(text)</span></td>
+        <td><span class="code">:contains("text")</span></td>
         <td>Элементы, содержащие данный текст внутри или в потомках</td>
         <td>Нет</td>
     </tr>
@@ -614,20 +616,20 @@
 &lt;/ul></code></pre>
 <p>Теперь представьте, что нужно часто выбирать уровни (<span class="code">data-level</span>) выше, чем 2, но только тогда, когда они позволяют вам заработать больше чем 100 очков (data-points) и имеют jQuery в списке технологий для использования (data-technologies). Вы уже знаете, как искать элементы <span class="code">li</span>, имеющие ключевое слово jquery внутри атрибута <span class="code">data-technologies</span> (<span class="code">li[data-technologies~="jquery"]</span>).</p>
 <p>Но как вы будете сравнивать числа с помощью селекторов? Правда в том, что вы не можете этого сделать. Чтобы достичь цели, необходимо перебрать изначальный выбор, а затем сохранить только нужные вам элементы, как показано здесь:</p>
-<span class="code">&lt;script>
+<pre><code >&lt;script>
     var $levels = $('.levels li[data-technologies~="jquery"]');
-    //первоначальный ыбор с использоанием селектора атрибута
+    //первоначальный выбор с использованием селектора атрибута
     var matchedLevels = [];
     for (var i = 0; i &lt; $levels.length; i++) {
     //проход по совпадающему набору элементов
         if ($levels[i].getAttribute('data-level') > 2 && $levels[i].getAttribute('data-points') > 100) {
-        //проверка соответстует ли текущий элемент требоаниям
+        //проверка соответствует ли текущий элемент требованиям
             matchedLevels.push($levels[i]);
-            //добаление к финальному набору элементов
+            //добавление к финальному набору элементов
         }
     }
-&lt;/script></span>
-<p>Вместо многократного повторения можно создать пользоательский фильтр:</p>
+&lt;/script></code></pre>
+<p>Вместо многократного повторения можно создать пользовательский фильтр:</p>
 <pre><code >&lt;script>
     //фильтр объявляется с помощью функции createPseudo
     $.expr[':'].requiredLevel = $.expr.createPseudo(function (filterParam) {
@@ -654,7 +656,7 @@
 <span class="code">&lt;script>var $elements = $('.levels li:pointsHigherThan(50)');&lt;/script></span>
 <!--todo: breadcrumbs для каждой страницы, кроме главной-->
 
-
+<h2>Сложные примеры</h2>
 <h3>Работа с классами</h3>
 <p>Ниже приведен очень замороченный пример использования методов <span class="code">.addClass()</span>, <span class="code">.remoceClass()</span>, <span class="code">.toggleClass()</span>:</p>
 <pre><code class="language-html">&lt;style>
@@ -674,8 +676,8 @@
 &lt;button id="ex9-add">Добавить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
 &lt;button id="ex9-remove">Удалить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
 &lt;button id="ex9-toggle">Переключить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
-&lt;button id="ex9-has">Проверить класс &lt;span class="code">ex9&lt;/span>&lt;/button>
-&lt;script>
+&lt;button id="ex9-has">Проверить класс &lt;span class="code">ex9&lt;/span>&lt;/button></code></pre>
+<pre><code >&lt;script>
     function check_if_correct(){
         ex9_value=$('#ex9-input')
         if(ex9_value.val()==''){
@@ -716,7 +718,7 @@
                 $('#ex9-output').html(`Класса нет в параграфе ${inp_val+1}`)
             }}})
 
-&lt;style></code></pre>
+&lt;/script></code></pre>
 <style>
     .ex9 {
         background-color:#369; 

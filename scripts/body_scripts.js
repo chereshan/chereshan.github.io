@@ -110,7 +110,7 @@ function loadCodeTips_beforeHighlight(){
     })
 }
 
-//todo: весь хайлайтинг должен быть вынесен отдельный скрипт, который будет подключаться из осноного скрипта
+//todo: весь хайлайтинг должен быть вынесен отдельный скрипт, который будет подключаться из основного скрипта
 
 var test_container= {}
 //test: совпадение слайса и текста
@@ -366,6 +366,7 @@ function list_of_dicts_to_table(list, selector){
             }
         }
     }
+
     $(selector).append('<table>')
     for (let j=-1; j<list.length; j++){
         if (j==-1){

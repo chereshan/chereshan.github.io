@@ -107,11 +107,7 @@ table, th, td {
 td:nth-child(1) {
     text-align: center;
 }
-/*Первая строка таблицы*/
-tr:first-child td {
-    text-align: center;
-    font-weight: bold;
-}
+
 /*TODO: адекватно оформить блок навигации по странице*/
 #autonav{
     list-style-type: none;

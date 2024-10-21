@@ -1,8 +1,8 @@
 //ex1
-//Отыщем и разместим в таблице первые 5 элементов head
+//Отыщем и разместим в таблице первые 3 элементов head
 let body_tags=jQuery('head *');
 let ex1=jQuery('#ex1 ol');
-for (let i=0; i<5; i++){
+for (let i=0; i<3; i++){
     ex1.append("<li>"+"<span class=\"code\">"+body_tags[i].outerHTML.replace('<','&lt;')+"</span>"+"</li>")
 }
 //============================================================================
@@ -82,6 +82,12 @@ async function getdata(){
 }
 getdata()
 document.addEventListener("fetch-data", function() {
+    user_list.map(function(l){
+        l['address']=`${l['address'].city}, ${l['address'].street}, ${l['address'].number}`
+        l['name']=`${l['name'].firstname
+        } ${l['name'].lastname}`
+        return l
+    })
     $(function(){
         list_of_dicts_to_table(user_list, '#table_ex10')
         $('#table_ex10 td:nth-child(3)').css('font-family','monospace').css('background', 'cornsilk')
