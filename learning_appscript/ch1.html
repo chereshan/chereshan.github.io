@@ -1,0 +1,41 @@
+<!--TODO: LEARN HOW TO DO HIGHLIGHT.JS SUBSTRINGS <span>-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url("../styles/styles.css");
+        @import url("../modules/vs2015.min.css");
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../modules/jquery-3.7.1.min.js"><'+'/script>')</script>
+    <script src="../modules/highlight.min.js"></script>
+    <script src="../scripts/body_scripts.js"></script>
+    <script src="../common/counters_head.js"></script>
+    <title>Глава 1. Введение в Google App Script</title>
+</head>
+<body>
+<script src="../common/counters_body.js"></script>
+<h1>Глава 1. Введение в Google App Script</h1>
+<p></p>
+
+<h2>Библиотека <span class="code">clasp</span></h2>
+<p><span class="code">clasp</span>— это инструмент командной строки, который позволяет разработчикам работать с проектами Google Apps Script (GAS) локально, используя редакторы кода и системы контроля версий, такие как Git. Он упрощает процесс разработки, позволяя создавать, развертывать и управлять проектами Apps Script из командной строки.</p>
+<p>Чтобы работать с <span class="code">clasp</span> надо включить API у проекта. Это можно сделать по ссылке <a href="https://script.google.com/home/usersettings">https://script.google.com/home/usersettings</a>.</p>
+
+
+<pre><code >npm install -g @google/clasp //установить библиотеку clasp глобально
+clasp login //залогиниться в GAS
+clasp open // открыть проект GAS
+clasp clone &lt;id> //клонировать проект в локальную область
+clasp pull //выпулить проект в локальную область
+clasp push //запушить локальную версию проект на GAS</code></pre>
+<!--todo: добавить несколько других команд-->
+<p>О других функциях пакета можно узнать в README-разделе <a href="https://github.com/google/clasp">GitHub'а библиотеки</a>. </p>
+
+
+</body>
+
+</html>

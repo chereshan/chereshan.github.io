@@ -64,7 +64,7 @@ $(function(){
     if ($('.code-selection').length>0){
         loadCodeDropdown()
     }
-
+    if (tippy!=null){tippy('[data-tippy-content]',{allowHTML: true})}
 })
 //todo: tippy для фрагментов кода
 //todo: пострендерер для фрагментов кода, который вносит в код кастомный функционал (инпуты, селекты, всплывающие подсказки)
