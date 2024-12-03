@@ -7,6 +7,8 @@
 
     <style>
         @import url("https://chereshan.github.io/styles/textbook-style.css");
+        @import url("../styles/textbook-style.css");
+        @import url("../styles/custom.css");
         @import url("../modules/vs2015.min.css");
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -61,11 +63,13 @@ else{document.write("a равно 100")}</code></pre>
     }
 &lt;/script></code></pre>
 <script>
-    counter=0
-    while (counter < 5)
-    {
-        document.write("Счетчик: " + counter + "<br>")
-        ++counter
+    if (true){
+        let counter=0
+        while (counter < 5)
+        {
+            document.write("Счетчик: " + counter + "<br>")
+            ++counter
+        }
     }
 </script>
 
@@ -84,11 +88,13 @@ while(i) { // когда i будет равно 0, условие станет 
     } while (++count &lt;= 4)
 &lt;/script></code></pre>
 <script>
-    count = 1
-    do
-    {
-        document.write(count + " умножить на 7 равно " + count * 7 + "<br>")
-    } while (++count <= 4)
+    if (true){
+        let count = 1
+        do
+        {
+            document.write(count + " умножить на 7 равно " + count * 7 + "<br>")
+        } while (++count <= 4)
+    }
 </script>
 <!--todo: написать css или шаблон для вывода примеров-->
 
@@ -106,9 +112,11 @@ while(i) { // когда i будет равно 0, условие станет 
     }
 &lt;/script></code></pre>
 <script>
-    for (count = 1 ; count <= 4 ; ++count)
-    {
-        document.write(count + " умножить на 7 равно " + count * 7 + "<br>");
+    if (true){
+        for (let count = 1 ; count <= 4 ; ++count)
+        {
+            document.write(count + " умножить на 7 равно " + count * 7 + "<br>");
+        }
     }
 </script>
 <h3>Обход двумерного массива</h3>
@@ -133,16 +141,18 @@ while(i) { // когда i будет равно 0, условие станет 
     }
 &lt;/script></code></pre>
 <script>
-    haystack = new Array()
-    haystack[17] = "Иголка"
-    for (j = 0 ; j < 20 ; ++j)
-    {
-        if (haystack[j] == "Иголка")
+    if (true){
+        let haystack = new Array()
+        haystack[17] = "Иголка"
+        for (j = 0 ; j < 20 ; ++j)
         {
-            document.write("<br>- найдена в элементе " + j)
-            break
+            if (haystack[j] == "Иголка")
+            {
+                document.write("<br>- найдена в элементе " + j)
+                break
+            }
+            else document.write(j + ", ")
         }
-        else document.write(j + ", ")
     }
 </script>
 
@@ -161,17 +171,19 @@ while(i) { // когда i будет равно 0, условие станет 
     }
 &lt;/script></code></pre>
 <script>
-    haystack = new Array()
-    haystack[4] = "Иголка"
-    haystack[11] = "Иголка"
-    haystack[17] = "Иголка"
-    for (j = 0 ; j < 20 ; ++j) {
-        if (haystack[j] == "Иголка")
-        {
-            document.write("<br>- найдена в элементе " + j + "<br>")
-            continue
+    if (true){
+        let haystack = new Array()
+        haystack[4] = "Иголка"
+        haystack[11] = "Иголка"
+        haystack[17] = "Иголка"
+        for (j = 0 ; j < 20 ; ++j) {
+            if (haystack[j] == "Иголка")
+            {
+                document.write("<br>- найдена в элементе " + j + "<br>")
+                continue
+            }
+            document.write(j + ", ")
         }
-        document.write(j + ", ")
     }
 </script>
 
@@ -207,17 +219,20 @@ function errorHandler(message, url, line)
 }
 &lt;/script></code></pre>
 <script>
-    onerror = errorHandler
-    document.writ("Добро пожаловать на этот сайт!") // Преднамеренная ошибка
-    function errorHandler(message, url, line)
-    {
-        out = "К сожалению, обнаружена ошибка.<br>";
-        out += "Ошибка: " + message + "<br>";
-        out += "URL: " + url + "<br>";
-        out += "Строка: " + line + "<br>";
-        out += "Нажмите кнопку OK для продолжения работы. <br>";
-        document.write(out);
-        return true;
+    if (true){
+        let onerror = errorHandler
+        document.write("Добро пожаловать на этот сайт!") // Преднамеренная ошибка
+        let out
+        function errorHandler(message, url, line)
+        {
+            out = "К сожалению, обнаружена ошибка.<br>";
+            out += "Ошибка: " + message + "<br>";
+            out += "URL: " + url + "<br>";
+            out += "Строка: " + line + "<br>";
+            out += "Нажмите кнопку OK для продолжения работы. <br>";
+            document.write(out);
+            return true;
+        }
     }
 </script>
 <p>В первой строке скрипту предписывается использовать новую функцию <span class="code">errorHandler</span>, которая принимает 3 параметра: сообщение, URL-адрес и номер строки. Затем мы преднамеренно допускаем ошибку. </p>

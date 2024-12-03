@@ -13,8 +13,9 @@
     <script src="../common/counters_head.js"></script>
     <style>
         @import url("https://chereshan.github.io/styles/textbook-style.css");
-        @import url("https://chereshan.github.io/styles/textbook-style.css");
-        @import url("../modules/vs2015.min.css");
+        @import url("../styles/textbook-style.css");
+@import url("../styles/custom.css");
+@import url("../modules/vs2015.min.css");
     </style>
 
 </head>
@@ -81,7 +82,9 @@
 <p>На эту страницу стили вызываются следующим образом:</p>
 <pre><code >&lt;style>
     @import url("../styles/styles.css");
-    @import url("../modules/vs2015.min.css");
+    @import url("../styles/textbook-style.css");
+@import url("../styles/custom.css");
+@import url("../modules/vs2015.min.css");
 &lt;/style></code></pre>
 <p>Директива <span class="code">@import</span> ожидает параметр в виде URL, указывающего путь в сети к внешней таблице стилей. Как показано в этом примере, URL может быть заключенной в двойные кавычки строкой, заканчивающейся точкой с запятой, или следовать за ключевым словом <span class="code">url</span>, так же оканчиваясь точкой с запятой, но помещаясь при этом в скобки. URL может быть абсолютным или относительным, отсчитываемым от базового URL документа.</p>
 <p>Директива <span class="code">@import</span> может появиться в определениях стиля на уровне документа или даже в другой таблице стилей, что позволяет создавать вложенные таблицы стилей.</p>
