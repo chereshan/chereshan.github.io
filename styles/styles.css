@@ -16,19 +16,19 @@ p {
     text-align: justify;
 }
 /*Оформление шапки*/
-#header header {
+header.classic {
     border-color: black;
     background: aliceblue;
     border-width:1px;
     border-style:solid
 }
 
-#header ul {
+header.classic ul {
     margin: 0; /* Обнуляем значение отступов */
     padding: 0; /* Значение полей */
 }
 
-#header ul li {
+header.classic ul li {
     display: inline; /* Отображать как строчный элемент */
     margin-right: 5px; /* Отступ слева */
     border: 1px solid #000; /* Рамка вокруг текста */
@@ -36,7 +36,7 @@ p {
     border-radius: 10px;
     vertical-align: middle;
 }
-#header ul li:hover{
+header.classic ul li:hover{
     background-color: #00ffcf;
 }
 
@@ -60,7 +60,6 @@ div.html_tag_description{
     border-style:solid;
     border-radius: 4px;
 }
-
 
 span.code, span span.html_tag_description_name{
     font-family: "Courier New";
@@ -107,7 +106,11 @@ table, th, td {
 td:nth-child(1) {
     text-align: center;
 }
-
+/*Первая строка таблицы*/
+tr:first-child td:not(.no-headers tr td) {
+    text-align: center;
+    font-weight: bold;
+}
 /*TODO: адекватно оформить блок навигации по странице*/
 #autonav{
     list-style-type: none;
@@ -313,4 +316,35 @@ pre code.hljs:hover img.copy-button:not(#site_logo){visibility: visible;}
 
 .toggle-button{
     border-radius: 5px;
+}
+
+/*Navigation Sidebar*/
+nav[data-toggle="toc"] {
+    top: 42px;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+    /* override stickyness so that the navigation does not follow scrolling */
+    nav[data-toggle="toc"] {
+        margin-bottom: 42px;
+        /*position: static;*/
+    }
+
+    /* PICK ONE */
+    /* don't expand nested items, which pushes down the rest of the page when navigating */
+    nav[data-toggle="toc"] .nav .active .nav {
+        display: none;
+    }
+    /* alternatively, if you *do* want the second-level navigation to be shown (as seen on this page on mobile), use this */
+    /*
+    nav[data-toggle='toc'] .nav .nav {
+      display: block;
+    }
+    */
+}
+/*кастомные цвета для сайдбара навигации*/
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover {
+    color: #005ef2;
+    border-left: 2px solid #005ef2;
 }

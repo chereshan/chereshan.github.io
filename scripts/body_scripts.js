@@ -15,10 +15,16 @@ $(function(){
 * подсветка для span.code
 * */
 $(function(){
-    $('body').prepend('<div id="header"></div>')
-    $("#header").load(!(
+    $.get(!(
         location.pathname==='/' ||
-        location.pathname==='/chereshan.github.io/index.html') ? "../common/header.html" : "common/header.html")
+        location.pathname==='/chereshan.github.io/index.html') ? "../common/header.html" : "common/header.html",
+        function(data){
+        $('body').prepend(data)
+    })
+    // $('body').prepend('<div id="header"></div>')
+    // $("#header").load(!(
+    //     location.pathname==='/' ||
+    //     location.pathname==='/chereshan.github.io/index.html') ? "../common/header.html" : "common/header.html")
 
     $('span.code').each(function(){
         $(this).replaceWith(`<pre class="span-code"><code>${$(this).html()}</code></pre>`)
