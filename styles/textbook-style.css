@@ -126,7 +126,7 @@ td:nth-child(1) {
     text-align: center;
 }
 /*Первая строка таблицы*/
-tr:first-child td:not(.no-headers tr td) {
+table:not(:has(thead)) tr:first-child td:not(.no-headers tr td) {
     text-align: center;
     font-weight: bold;
 }
